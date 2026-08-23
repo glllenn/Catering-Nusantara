@@ -15,7 +15,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'tier' => 'nullable|in:Silver,Gold,Premium',
+          'tier'             => 'required|string|in:Silver,Gold,Premium',
             'package_category' => 'required|string',
             'event_category' => 'required|string',
             'main_menu' => 'required|string',

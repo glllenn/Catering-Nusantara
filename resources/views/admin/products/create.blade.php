@@ -40,6 +40,17 @@
                                 <x-text-input id="name" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm" type="text" name="name" :value="old('name')" required placeholder="Contoh: Paket Nasi Box Ayam Lengkuas" />
                             </div>
 
+                            {{-- Kasta / Tier Paket (Opsi Ditentukan Admin) --}}
+                            <div>
+                                <x-input-label for="tier" :value="__('Kasta / Tier Paket')" />
+                                <select id="tier" name="tier" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm" required>
+                                    <option value="">-- Pilih Kasta Paket --</option>
+                                    <option value="Silver" {{ old('tier') == 'Silver' ? 'selected' : '' }}>Silver</option>
+                                    <option value="Gold" {{ old('tier') == 'Gold' ? 'selected' : '' }}>Gold</option>
+                                    <option value="Premium" {{ old('tier') == 'Premium' ? 'selected' : '' }}>Premium</option>
+                                </select>
+                            </div>
+
                             {{-- Kategori Paket Dinamis (Dari Database) --}}
                             <div>
                                 <x-input-label for="package_category" :value="__('Kategori Paket')" />
@@ -52,7 +63,6 @@
                                             </option>
                                         @endforeach
                                     @else
-                                        {{-- Fallback jika kategori belum diisi di DB --}}
                                         <option value="Nasi Box" {{ old('package_category') == 'Nasi Box' ? 'selected' : '' }}>Nasi Box</option>
                                         <option value="Prasmanan" {{ old('package_category') == 'Prasmanan' ? 'selected' : '' }}>Prasmanan</option>
                                         <option value="Snack Box" {{ old('package_category') == 'Snack Box' ? 'selected' : '' }}>Snack Box</option>
@@ -86,7 +96,7 @@
                             </div>
 
                             {{-- Jenis Kemasan --}}
-                            <div>
+                            <div class="md:col-span-2">
                                 <x-input-label for="packaging_type" :value="__('Jenis Kemasan')" />
                                 <x-text-input id="packaging_type" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm" type="text" name="packaging_type" :value="old('packaging_type')" placeholder="Box Kertas Food Grade / Tampah / Mika" />
                             </div>

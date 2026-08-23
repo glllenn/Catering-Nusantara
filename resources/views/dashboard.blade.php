@@ -11,7 +11,7 @@
             {{-- Banner Top --}}
             <div class="bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-3xl shadow-sm p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h3 class="text-2xl font-extrabold">Selamat Datang, {{ Auth::user()->name }}! 👋</h3>
+                    <h3 class="text-2xl font-extrabold">Selamat Datang, {{ Auth::user()->name }}!</h3>
                     <p class="text-orange-100 text-sm mt-1">Pantau statistik penjualan katalog menu dan kelola data produk Catering Nusantara.</p>
                 </div>
                 <div class="flex items-center gap-2">

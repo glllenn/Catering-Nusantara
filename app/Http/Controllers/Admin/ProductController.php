@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
+use App\Models\Category;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -14,12 +15,15 @@ class ProductController extends Controller
     /**
      * Menampilkan daftar semua produk (Katalog)
      */
-    public function index()
+public function index()
     {
+        // Ambil data produk dan kategori dari database
         $products = Product::latest()->paginate(10);
-        return view('admin.products.index', compact('products'));
-    }
+        $categories = Category::all();
 
+        // Kirimkan kedua variabel ke view
+        return view('admin.products.index', compact('products', 'categories'));
+    }
     /**
      * Menampilkan form tambah paket menu baru
      */

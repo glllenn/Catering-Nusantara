@@ -41,6 +41,16 @@
                                 <x-text-input id="name" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm" type="text" name="name" :value="old('name', $product->name)" required />
                             </div>
 
+                            {{-- Kasta / Tier Paket (Opsi Ditentukan Admin) --}}
+                            <div>
+                                <x-input-label for="tier" :value="__('Kasta / Tier Paket')" />
+                                <select id="tier" name="tier" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm" required>
+                                    <option value="Silver" {{ old('tier', $product->tier) == 'Silver' ? 'selected' : '' }}>Silver</option>
+                                    <option value="Gold" {{ old('tier', $product->tier) == 'Gold' ? 'selected' : '' }}>Gold</option>
+                                    <option value="Premium" {{ old('tier', $product->tier) == 'Premium' ? 'selected' : '' }}>Premium</option>
+                                </select>
+                            </div>
+
                             {{-- Kategori Paket Dinamis --}}
                             <div>
                                 <x-input-label for="package_category" :value="__('Kategori Paket')" />
@@ -83,7 +93,7 @@
                             </div>
 
                             {{-- Jenis Kemasan --}}
-                            <div>
+                            <div class="md:col-span-2">
                                 <x-input-label for="packaging_type" :value="__('Jenis Kemasan')" />
                                 <x-text-input id="packaging_type" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm" type="text" name="packaging_type" :value="old('packaging_type', $product->packaging_type)" />
                             </div>

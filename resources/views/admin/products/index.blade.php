@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-8 bg-gray-50/50 min-h-screen">
+    <div class="py-8 bg-gray-50/50 min-h-screen" x-data="{ activeTab: 'all_category', activeTier: 'all_tier' }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
             {{-- Alert Sukses --}}
@@ -27,10 +27,70 @@
                 </a>
             </div>
 
-            {{-- Grid Katalog Card UI (Presisi dengan Dashboard) --}}
+            {{-- Filter Kategori & Kasta (Tab Interaktif) --}}
+            <div class="bg-white p-4 rounded-3xl border border-gray-100 shadow-sm space-y-4">
+                {{-- Group Filter 1: Kategori Paket --}}
+             <div class="flex flex-wrap items-center gap-2">
+    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mr-2">Kategori:</span>
+    
+    <button @click="activeTab = 'all_category'" 
+        :class="activeTab === 'all_category' ? 'bg-orange-500 text-white shadow-sm' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'"
+        class="px-4 py-2 rounded-xl text-xs font-bold transition">
+        Semua Kategori
+    </button>
+
+    @if(isset($categories) && $categories->count() > 0)
+        @foreach($categories as $cat)
+            <button @click="activeTab = '{{ Str::slug($cat->name) }}'" 
+                :class="activeTab === '{{ Str::slug($cat->name) }}' ? 'bg-orange-500 text-white shadow-sm' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'"
+                class="px-4 py-2 rounded-xl text-xs font-bold transition">
+                {{ $cat->name }}
+            </button>
+        @endforeach
+    @endif
+</div>
+
+                {{-- Group Filter 2: Kasta / Tier Paket --}}
+                <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-gray-100">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mr-2">Kasta Paket:</span>
+
+                    <button @click="activeTier = 'all_tier'" 
+                        :class="activeTier === 'all_tier' ? 'bg-amber-600 text-white shadow-sm' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'"
+                        class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition">
+                        Semua Kasta
+                    </button>
+
+                    <button @click="activeTier = 'silver'" 
+                        :class="activeTier === 'silver' ? 'bg-amber-600 text-white shadow-sm' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'"
+                        class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition">
+                        Silver
+                    </button>
+
+                    <button @click="activeTier = 'gold'" 
+                        :class="activeTier === 'gold' ? 'bg-amber-600 text-white shadow-sm' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'"
+                        class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition">
+                        Gold
+                    </button>
+
+                    <button @click="activeTier = 'premium'" 
+                        :class="activeTier === 'premium' ? 'bg-amber-600 text-white shadow-sm' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'"
+                        class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition">
+                        Premium
+                    </button>
+                </div>
+            </div>
+
+            {{-- Grid Katalog Card UI (Dengan Filter Interaktif Alpine.js) --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($products as $product)
-                    <div class="bg-white rounded-3xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                    @php
+                        $categorySlug = Str::slug($product->package_category);
+                        $tierSlug = Str::slug($product->tier ?? 'general');
+                    @endphp
+
+                    <div x-show="(activeTab === 'all_category' || activeTab === '{{ $categorySlug }}') && (activeTier === 'all_tier' || activeTier === '{{ $tierSlug }}')"
+                         x-transition
+                         class="bg-white rounded-3xl p-4 border-2 border-orange-200 hover:border-orange-500 shadow-sm hover:shadow-md transition duration-200 flex flex-col justify-between">
                         <div>
                             {{-- Thumbnail Foto Rounded --}}
                             <div class="relative h-52 rounded-2xl overflow-hidden bg-gray-100">
@@ -42,6 +102,7 @@
                                     </div>
                                 @endif
 
+                                {{-- Badge Best Seller & Kategori --}}
                                 @if($product->is_bestseller)
                                     <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm text-orange-600 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1.5">
                                         <svg class="w-3.5 h-3.5 fill-current text-amber-500" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
@@ -49,9 +110,16 @@
                                     </span>
                                 @endif
 
-                                <span class="absolute top-3 right-3 bg-orange-600 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm">
-                                    {{ $product->package_category }}
-                                </span>
+                                <div class="absolute top-3 right-3 flex flex-col items-end gap-1">
+                                    <span class="bg-orange-600 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm">
+                                        {{ $product->package_category }}
+                                    </span>
+                                    @if($product->tier)
+                                        <span class="bg-amber-700/90 backdrop-blur-sm text-white text-[10px] uppercase font-bold px-2 py-0.5 rounded-full shadow-sm">
+                                            {{ $product->tier }}
+                                        </span>
+                                    @endif
+                                </div>
                             </div>
 
                             {{-- Informasi Judul & Harga --}}
@@ -63,9 +131,9 @@
                             </div>
 
                             {{-- Detail Min Order & Menu Utama --}}
-                            <div class="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-gray-100 text-xs">
+                            <div class="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-orange-100 text-xs">
                                 <div class="flex items-start gap-2">
-                                    <div class="text-gray-400 mt-0.5">
+                                    <div class="text-orange-500 mt-0.5">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                                     </div>
                                     <div>
@@ -75,7 +143,7 @@
                                 </div>
 
                                 <div class="flex items-start gap-2">
-                                    <div class="text-gray-400 mt-0.5">
+                                    <div class="text-orange-500 mt-0.5">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                                     </div>
                                     <div>
@@ -108,11 +176,6 @@
                         Belum ada paket menu yang ditambahkan.
                     </div>
                 @endforelse
-            </div>
-
-            {{-- Navigasi Pagination --}}
-            <div class="mt-6">
-                {{ $products->links() }}
             </div>
 
         </div>
