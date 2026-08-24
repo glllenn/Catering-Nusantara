@@ -23,7 +23,7 @@
                 </div>
                 <a href="{{ route('admin.products.create') }}" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-5 py-2.5 rounded-2xl text-sm transition shadow-sm flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-                    Tambah Paket Baru
+                    Tambah Menu Baru
                 </a>
             </div>
 
@@ -52,12 +52,12 @@
 
                 {{-- Group Filter 2: Kasta / Tier Paket --}}
                 <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-gray-100">
-                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mr-2">Kasta Paket:</span>
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mr-2">Paket:</span>
 
                     <button @click="activeTier = 'all_tier'" 
                         :class="activeTier === 'all_tier' ? 'bg-amber-600 text-white shadow-sm' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'"
                         class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition">
-                        Semua Kasta
+                        Semua Paket
                     </button>
 
                     <button @click="activeTier = 'silver'" 

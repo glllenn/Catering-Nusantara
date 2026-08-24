@@ -11,14 +11,8 @@
                     </a>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.*')">
-                        {{ __('Katalog Menu') }}
-                    </x-nav-link>
-                </div>
+               <!-- Navigation Links -->
+
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">

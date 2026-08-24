@@ -27,7 +27,7 @@ return new class extends Migration
             $table->decimal('price', 12, 2);
             $table->integer('daily_capacity')->nullable();
             $table->text('description')->nullable();
-            $table->string('image')->nullable(); // Path foto produk
+            $table->string('image')->nullable(); // Path foto produk  
             $table->boolean('is_bestseller')->default(false);
             $table->timestamps();
         });
