@@ -21,7 +21,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// 2. Group Route Khusus Admin (Terproteksi Auth & Verified)
+ // 2. Halaman Customer / Publik
+Route::get('/customer', function () {
+    return view('pengguna.landing');
+})->name('customer.home');
+
+
+// 3. Group Route Khusus Admin (Terproteksi Auth & Verified)
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     
     // Dashboard Admin
@@ -31,14 +37,14 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('products', ProductController::class);
 });
 
-// 3. Route Profil Admin (Bawaan Breeze untuk Menu Dropdown Profil)
+// 4. Route Profil Admin (Bawaan Breeze untuk Menu Dropdown Profil)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// 4. Alias Route 'dashboard' bawaan Breeze
+// 5. Alias Route 'dashboard' bawaan Breeze
 Route::get('/dashboard', function () {
     return redirect()->route('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -49,5 +55,5 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('categories', CategoryController::class)->except(['create', 'show', 'edit']);
 });
 
-// 5. Route Otentikasi Breeze (Login, Logout, Reset Password)
+// 6. Route Otentikasi Breeze (Login, Logout, Reset Password)
 require __DIR__.'/auth.php';
