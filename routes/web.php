@@ -19,14 +19,14 @@ use Illuminate\Support\Facades\Route;
 // 1. HALAMAN UTAMA & PUBLIK (CUSTOMER)
 // ==========================================
 
-// Route Utama (Direct ke Landing Page jika belum Login, ke Dashboard jika sudah Login)
+// Route Utama (Landing Page dengan data produk & kategori)
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('admin.dashboard');
     }
     
-    // Ambil produk aktif & favorit, serta kategori dari database untuk ditampilkan di landing page
-    $products = Product::where('is_active', true)->latest()->get();
+    // Ambil data produk & kategori untuk katalog filter & modal pop-up
+    $products = Product::latest()->get();
     $categories = Category::all();
 
     return view('welcome', compact('products', 'categories'));
@@ -34,7 +34,7 @@ Route::get('/', function () {
 
 // Alias Route khusus Customer
 Route::get('/customer', function () {
-    $products = Product::where('is_active', true)->latest()->get();
+    $products = Product::latest()->get();
     $categories = Category::all();
 
     return view('welcome', compact('products', 'categories'));
@@ -46,13 +46,13 @@ Route::get('/customer', function () {
 // ==========================================
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     
-    // Dashboard Admin
+    // Dashboard Admin (Penggabungan statistik + katalog)
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // CRUD Katalog Produk
     Route::resource('products', ProductController::class);
 
-    // CRUD Kategori Paket Menu (Tanpa halaman terpisah create/show/edit karena berupa modal/inline)
+    // CRUD Kategori Paket Menu
     Route::resource('categories', CategoryController::class)->except(['create', 'show', 'edit']);
 });
 
@@ -70,7 +70,7 @@ Route::middleware('auth')->group(function () {
 // ==========================================
 // 4. ALIAS ROUTE DASHBOARD & AUTHENTICATION
 // ==========================================
-// Redirect /dashboard biasa bawaan Breeze langsung ke /admin/dashboard
+// Redirect /dashboard bawaan Breeze langsung ke /admin/dashboard
 Route::get('/dashboard', function () {
     return redirect()->route('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
