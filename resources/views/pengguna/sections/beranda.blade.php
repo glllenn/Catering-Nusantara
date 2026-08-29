@@ -18,7 +18,7 @@
 
             <div class="flex flex-wrap items-center justify-center lg:justify-start gap-[24px] pt-[16px]">
 
-                <a href="https://wa.me/"
+                <a href="https://wa.me/628561155113?text=Halo%20Catering%20Nusantara,%20saya%20ingin%20berkonsultasi%20mengenai%20pemesanan%20catering."
                     target="_blank"
                     class="inline-flex items-center justify-center bg-brand-orange text-white font-semibold text-[16px] px-[24px] py-[10px] rounded-full shadow-lg shadow-orange-500/20 hover:bg-brand-orange-dark hover:shadow-orange-500/30 transition-all transform hover:-translate-y-0.5">
 
