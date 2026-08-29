@@ -1,5 +1,5 @@
 <header
-    class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md z-50 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0,0.03)] border-b border-gray-100/60">
+    class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md z-50 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-b border-gray-100/60">
 
     <div class="max-w-7xl mx-auto px-6 md:px-12 h-18 flex items-center justify-between relative">
 
@@ -56,8 +56,11 @@
 
         </nav>
 
-        <!-- Spacer -->
-        <div class="hidden md:block w-18"></div>
+        <!-- Button Login -->
+        <a href="#login"
+            class="hidden md:inline-flex items-center justify-center bg-brand-orange text-white font-semibold text-[16px] px-[24px] py-[10px] rounded-full shadow-lg shadow-orange-500/20 hover:bg-brand-orange-dark hover:shadow-orange-500/30 transition-all transform hover:-translate-y-0.5">
+            Login
+        </a>
 
         <!-- Mobile Menu -->
         <button class="md:hidden text-gray-700 focus:outline-none">
