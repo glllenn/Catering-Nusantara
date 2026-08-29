@@ -43,25 +43,26 @@
 
 <section id="beranda" class="relative min-h-screen flex items-center overflow-hidden bg-[#140d07]">
 
-    {{-- FOTO MENTAHAN SEBAGAI BACKGROUND PENUH --}}
-    <div class="absolute inset-0">
-        <img src="{{ asset('images/edit1.png') }}" alt="Catering Tumpeng Nusantara"
-            class="w-full h-full object-cover object-right"
-            onerror="this.onerror=null; this.src='/image/edit1.png';" />
+   {{-- FOTO MENTAHAN SEBAGAI BACKGROUND PENUH (STRETCH / NO CROP) --}}
+    <div class="absolute inset-0 w-full h-full">
+        <img src="{{ asset('images/herobaru.jpg') }}" alt="Catering Tumpeng Nusantara"
+            class="w-full h-full object-fill"
+            onerror="this.onerror=null; this.src='/image/herobaru.jpg';" />
     </div>
 
-    {{-- NAVBAR — fixed (ikut kescroll), transparan di hero, transparan tipis+blur+garis halus begitu masuk section lain --}}
+    {{-- NAVBAR — Fixed, Full-Width Mentok Ujung ke Ujung --}}
     <header id="site-header" class="fixed top-0 left-0 w-full z-20 border-b border-transparent transition-all duration-300">
-        <div class="max-w-[1280px] mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
+        {{-- Mengubah max-w-[1280px] mx-auto menjadi w-full px-6 sm:px-10 lg:px-16 --}}
+        <div class="w-full px-6 sm:px-10 lg:px-16 h-20 flex items-center justify-between">
 
-            <a href="#beranda" class="flex items-center gap-3">
+            {{-- Logo --}}
+            <a href="#beranda" class="flex items-center gap-3 shrink-0">
                 <img src="{{ asset('images/logo.png') }}" alt="Logo"
                     class="h-16 md:h-20 w-auto object-contain transition-transform duration-300 hover:scale-105"
                     onerror="this.onerror=null; this.src='/image/logo.png';" />
             </a>
 
-            {{-- style="color:#fff" dipasang sebagai jaring pengaman kalau ada CSS lain di project
-                 (mis. .nav-item di file css terpisah) yang bikin warnanya ketimpa jadi bukan putih --}}
+            {{-- Menu Navigasi Utama --}}
             <nav class="hidden md:flex items-center gap-10 text-[15px] font-medium relative"
                 id="nav-menu">
                 <span id="nav-indicator"
@@ -96,7 +97,7 @@
     </header>
 
     {{-- KONTEN HERO — headline & tagline sama persis, tipografi & warna baru --}}
-    <div class="relative z-10 max-w-[1280px] mx-auto px-6 md:px-20 w-full">
+    <div class="relative z-10 w-full px-6 md:px-12">
         <div class="max-w-xl pt-20 lg:pt-0">
 
             <h1
