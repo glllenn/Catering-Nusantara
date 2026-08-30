@@ -35,6 +35,7 @@
         .shadow-canva-orange {
             box-shadow: 0 10px 25px -5px rgba(246, 161, 26, 0.35);
         }
+
         [x-cloak] {
             display: none !important;
         }
@@ -44,152 +45,154 @@
 <body x-data
     class="font-['Plus_Jakarta_Sans',sans-serif] bg-white text-gray-900 antialiased selection:bg-[#f6a11a] selection:text-white">
 
-<section id="beranda" class="relative min-h-screen flex items-center overflow-hidden bg-[#140d07]">
+    <section id="beranda" class="relative min-h-screen flex items-center overflow-hidden bg-[#140d07]">
 
-   {{-- FOTO MENTAHAN SEBAGAI BACKGROUND PENUH (STRETCH / NO CROP) --}}
-    <div class="absolute inset-0 w-full h-full">
-        <img src="{{ asset('images/herobaru.jpg') }}" alt="Catering Tumpeng Nusantara"
-            class="w-full h-full object-fill"
-            onerror="this.onerror=null; this.src='/image/herobaru.jpg';" />
-    </div>
+        {{-- FOTO MENTAHAN SEBAGAI BACKGROUND PENUH (STRETCH / NO CROP) --}}
+        <div class="absolute inset-0 w-full h-full">
+            <img src="{{ asset('images/herobaru.jpg') }}" alt="Catering Tumpeng Nusantara"
+                class="w-full h-full object-fill" onerror="this.onerror=null; this.src='/image/herobaru.jpg';" />
+        </div>
 
-    {{-- NAVBAR — Fixed, Full-Width Mentok Ujung ke Ujung --}}
-    <header id="site-header" class="fixed top-0 left-0 w-full z-20 border-b border-transparent transition-all duration-300">
-        {{-- Mengubah max-w-[1280px] mx-auto menjadi w-full px-6 sm:px-10 lg:px-16 --}}
-        <div class="w-full px-6 sm:px-10 lg:px-16 h-20 flex items-center justify-between">
+        {{-- NAVBAR — Fixed, Full-Width Mentok Ujung ke Ujung --}}
+        <header id="site-header"
+            class="fixed top-0 left-0 w-full z-20 border-b border-transparent transition-all duration-300">
+            {{-- Mengubah max-w-[1280px] mx-auto menjadi w-full px-6 sm:px-10 lg:px-16 --}}
+            <div class="w-full px-6 sm:px-10 lg:px-16 h-20 flex items-center justify-between">
 
-            {{-- Logo --}}
-            <a href="#beranda" class="flex items-center gap-3 shrink-0">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo"
-                    class="h-16 md:h-20 w-auto object-contain transition-transform duration-300 hover:scale-105"
-                    onerror="this.onerror=null; this.src='/image/logo.png';" />
-            </a>
+                {{-- Logo --}}
+                <a href="#beranda" class="flex items-center gap-3 shrink-0">
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo"
+                        class="h-16 md:h-20 w-auto object-contain transition-transform duration-300 hover:scale-105"
+                        onerror="this.onerror=null; this.src='/image/logo.png';" />
+                </a>
 
-            {{-- Menu Navigasi Utama --}}
-            <nav class="hidden md:flex items-center gap-10 text-[15px] font-medium relative"
-                id="nav-menu">
-                <span id="nav-indicator"
-                    class="absolute -bottom-2 h-[2px] bg-[#f6a11a] rounded-full transition-all duration-300 ease-in-out"></span>
+                {{-- Menu Navigasi Utama --}}
+                <nav class="hidden md:flex items-center gap-10 text-[15px] font-medium relative" id="nav-menu">
+                    <span id="nav-indicator"
+                        class="absolute -bottom-2 h-[2px] bg-[#f6a11a] rounded-full transition-all duration-300 ease-in-out"></span>
 
-                <a href="#beranda" class="nav-item !text-white py-2 hover:!text-[#f6a11a] transition"
-                    style="color:#ffffff" data-section="beranda">Beranda</a>
-                <a href="#tentang-kami" class="nav-item !text-white py-2 hover:!text-[#f6a11a] transition"
-                    style="color:#ffffff" data-section="tentang-kami">Tentang Kami</a>
-                <a href="#paket" class="nav-item !text-white py-2 hover:!text-[#f6a11a] transition"
-                    style="color:#ffffff" data-section="paket">Paket</a>
-                <a href="#galeri" class="nav-item !text-white py-2 hover:!text-[#f6a11a] transition"
-                    style="color:#ffffff" data-section="galeri">Galeri</a>
-                <a href="#testimoni" class="nav-item !text-white py-2 hover:!text-[#f6a11a] transition"
-                    style="color:#ffffff" data-section="testimoni">Testimoni</a>
-            </nav>
+                    <a href="#beranda" class="nav-item !text-white py-2 hover:!text-[#f6a11a] transition"
+                        style="color:#ffffff" data-section="beranda">Beranda</a>
+                    <a href="#tentang-kami" class="nav-item !text-white py-2 hover:!text-[#f6a11a] transition"
+                        style="color:#ffffff" data-section="tentang-kami">Tentang Kami</a>
+                    <a href="#paket" class="nav-item !text-white py-2 hover:!text-[#f6a11a] transition"
+                        style="color:#ffffff" data-section="paket">Paket</a>
+                    <a href="#galeri" class="nav-item !text-white py-2 hover:!text-[#f6a11a] transition"
+                        style="color:#ffffff" data-section="galeri">Galeri</a>
+                    <a href="#testimoni" class="nav-item !text-white py-2 hover:!text-[#f6a11a] transition"
+                        style="color:#ffffff" data-section="testimoni">Testimoni</a>
+                    <a href="#cara_pemesanan" class="nav-item !text-white py-2 hover:!text-[#f6a11a] transition"
+                        style="color:#ffffff" data-section="testimoni">Order</a>
+                </nav>
 
-            <div class="flex items-center gap-3 sm:gap-4">
-                {{-- Tombol Keranjang Belanja di Navbar --}}
-                <button type="button" 
-                    @click="$store.cart.toggle()"
-                    class="relative p-2.5 rounded-full text-white/90 hover:text-white hover:bg-white/10 transition-all flex items-center justify-center cursor-pointer group"
-                    title="Buka Keranjang Belanja">
-                    <svg class="w-6 h-6 transform group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                <div class="flex items-center gap-3 sm:gap-4">
+                    {{-- Tombol Keranjang Belanja di Navbar --}}
+                    <button type="button" @click="$store.cart.toggle()"
+                        class="relative p-2.5 rounded-full text-white/90 hover:text-white hover:bg-white/10 transition-all flex items-center justify-center cursor-pointer group"
+                        title="Buka Keranjang Belanja">
+                        <svg class="w-6 h-6 transform group-hover:scale-110 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <span x-show="$store.cart && $store.cart.totalCount > 0"
+                            x-text="$store.cart ? $store.cart.totalCount : 0"
+                            x-transition:enter="transition ease-out duration-200 transform"
+                            x-transition:enter-start="scale-0" x-transition:enter-end="scale-100"
+                            class="absolute -top-1 -right-1 bg-[#f6a11a] text-white text-[11px] font-black h-5 min-w-[20px] px-1.5 rounded-full flex items-center justify-center border-2 border-[#140d07] shadow-lg animate-pulse"
+                            style="display: none;">
+                        </span>
+                    </button>
+
+                    @auth
+                        <a href="{{ route('admin.dashboard') }}"
+                            class="inline-flex items-center justify-center bg-canva-orange text-white font-semibold text-[14px] px-[26px] py-[9px] rounded-full shadow-canva-orange hover:opacity-90 transition-all transform hover:-translate-y-0.5">
+                            Dashboard
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}"
+                            class="inline-flex items-center justify-center bg-canva-orange text-white font-semibold text-[14px] px-[26px] py-[9px] rounded-full shadow-canva-orange hover:opacity-90 transition-all transform hover:-translate-y-0.5">
+                            Login
+                        </a>
+                    @endauth
+                </div>
+            </div>
+        </header>
+
+        {{-- KONTEN HERO — headline & tagline sama persis, tipografi & warna baru --}}
+        <div class="relative z-10 w-full px-6 md:px-12">
+            <div class="max-w-xl pt-20 lg:pt-0">
+
+                <h1
+                    class="font-['Playfair_Display',serif] text-5xl sm:text-6xl lg:text-[70px] leading-[1.08] tracking-tight">
+                    <span class="block text-white font-semibold">Catering</span>
+                    <span class="block text-[#e2a542] font-semibold italic">Nusantara</span>
+                </h1>
+
+                {{-- divider ornamen kecil, gaya sama seperti referensi --}}
+                <div class="flex items-center gap-3 mt-6 mb-6 max-w-sm">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-[#e2a542] shrink-0">
+                        <path d="M12 0l2 10 10 2-10 2-2 10-2-10L0 12l10-2z" />
                     </svg>
-                    <span x-show="$store.cart && $store.cart.totalCount > 0"
-                        x-text="$store.cart ? $store.cart.totalCount : 0"
-                        x-transition:enter="transition ease-out duration-200 transform"
-                        x-transition:enter-start="scale-0"
-                        x-transition:enter-end="scale-100"
-                        class="absolute -top-1 -right-1 bg-[#f6a11a] text-white text-[11px] font-black h-5 min-w-[20px] px-1.5 rounded-full flex items-center justify-center border-2 border-[#140d07] shadow-lg animate-pulse"
-                        style="display: none;">
-                    </span>
-                </button>
+                    <span class="flex-1 h-px bg-[#e2a542]/40"></span>
+                </div>
 
-                @auth
-                    <a href="{{ route('admin.dashboard') }}"
-                        class="inline-flex items-center justify-center bg-canva-orange text-white font-semibold text-[14px] px-[26px] py-[9px] rounded-full shadow-canva-orange hover:opacity-90 transition-all transform hover:-translate-y-0.5">
-                        Dashboard
+                <p class="text-white/70 text-base sm:text-lg leading-relaxed font-normal max-w-md">
+                    Hidangan cita rasa autentik khas Nusantara, diracik dengan bahan segar pilihan untuk menyempurnakan
+                    setiap momen istimewa Anda.
+                </p>
+
+                <div class="flex flex-wrap items-center gap-8 pt-8">
+                    <a href="https://wa.me/628561155113?text=Halo%20Catering%20Nusantara,%20saya%20ingin%20berkonsultasi%20mengenai%20pemesanan%20catering."
+                        target="_blank"
+                        class="inline-flex items-center justify-center bg-canva-orange hover:bg-[#e09015] text-white font-medium text-md px-8 py-3 rounded-full shadow-canva-orange transition-all transform hover:-translate-y-0.5">
+                        Pesan Sekarang
                     </a>
-                @else
-                    <a href="{{ route('login') }}"
-                        class="inline-flex items-center justify-center bg-canva-orange text-white font-semibold text-[14px] px-[26px] py-[9px] rounded-full shadow-canva-orange hover:opacity-90 transition-all transform hover:-translate-y-0.5">
-                        Login
+
+                    <a href="#paket"
+                        class="group relative inline-flex items-center justify-center font-medium text-md text-[#e2a542] py-2 transition">
+                        <span>Lihat Menu</span>
+                        <span
+                            class="absolute -bottom-1 left-0 w-full h-[1px] bg-[#e2a542]/60 group-hover:bg-[#e2a542] transition-all"></span>
                     </a>
-                @endauth
+                </div>
             </div>
         </div>
-    </header>
+    </section>
 
-    {{-- KONTEN HERO — headline & tagline sama persis, tipografi & warna baru --}}
-    <div class="relative z-10 w-full px-6 md:px-12">
-        <div class="max-w-xl pt-20 lg:pt-0">
+    <script>
+        // Header tetap transparan selama masih di section #beranda (hero).
+        // Begitu discroll melewati hero (masuk section lain yang terang), header
+        // dapat background gelap + blur + garis tipis di bawahnya biar tetap kebaca.
+        document.addEventListener('DOMContentLoaded', function () {
+            const header = document.getElementById('site-header');
+            const hero = document.getElementById('beranda');
+            if (!header || !hero) return;
 
-            <h1
-                class="font-['Playfair_Display',serif] text-5xl sm:text-6xl lg:text-[70px] leading-[1.08] tracking-tight">
-                <span class="block text-white font-semibold">Catering</span>
-                <span class="block text-[#e2a542] font-semibold italic">Nusantara</span>
-            </h1>
+            function toggleHeader() {
+                const heroBottom = hero.offsetTop + hero.offsetHeight;
+                const scrolledPastHero = window.scrollY + header.offsetHeight >= heroBottom;
 
-            {{-- divider ornamen kecil, gaya sama seperti referensi --}}
-            <div class="flex items-center gap-3 mt-6 mb-6 max-w-sm">
-                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-[#e2a542] shrink-0">
-                    <path d="M12 0l2 10 10 2-10 2-2 10-2-10L0 12l10-2z" />
-                </svg>
-                <span class="flex-1 h-px bg-[#e2a542]/40"></span>
-            </div>
-
-            <p class="text-white/70 text-base sm:text-lg leading-relaxed font-normal max-w-md">
-                Hidangan cita rasa autentik khas Nusantara, diracik dengan bahan segar pilihan untuk menyempurnakan
-                setiap momen istimewa Anda.
-            </p>
-
-            <div class="flex flex-wrap items-center gap-8 pt-8">
-                <a href="https://wa.me/628561155113?text=Halo%20Catering%20Nusantara,%20saya%20ingin%20berkonsultasi%20mengenai%20pemesanan%20catering." target="_blank"
-                    class="inline-flex items-center justify-center bg-canva-orange hover:bg-[#e09015] text-white font-medium text-md px-8 py-3 rounded-full shadow-canva-orange transition-all transform hover:-translate-y-0.5">
-                    Pesan Sekarang
-                </a>
-
-                <a href="#paket"
-                    class="group relative inline-flex items-center justify-center font-medium text-md text-[#e2a542] py-2 transition">
-                    <span>Lihat Menu</span>
-                    <span
-                        class="absolute -bottom-1 left-0 w-full h-[1px] bg-[#e2a542]/60 group-hover:bg-[#e2a542] transition-all"></span>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<script>
-    // Header tetap transparan selama masih di section #beranda (hero).
-    // Begitu discroll melewati hero (masuk section lain yang terang), header
-    // dapat background gelap + blur + garis tipis di bawahnya biar tetap kebaca.
-    document.addEventListener('DOMContentLoaded', function () {
-        const header = document.getElementById('site-header');
-        const hero = document.getElementById('beranda');
-        if (!header || !hero) return;
-
-        function toggleHeader() {
-            const heroBottom = hero.offsetTop + hero.offsetHeight;
-            const scrolledPastHero = window.scrollY + header.offsetHeight >= heroBottom;
-
-            if (scrolledPastHero) {
-                // coklat tua solid (samain warna hero) + garis tipis, biar teks putih tetap kebaca di atas section putih
-                header.classList.add('bg-[#2e1b0c]', 'border-white/10');
-                header.classList.remove('border-transparent');
-            } else {
-                header.classList.remove('bg-[#2e1b0c]', 'border-white/10');
-                header.classList.add('border-transparent');
+                if (scrolledPastHero) {
+                    // coklat tua solid (samain warna hero) + garis tipis, biar teks putih tetap kebaca di atas section putih
+                    header.classList.add('bg-[#2e1b0c]', 'border-white/10');
+                    header.classList.remove('border-transparent');
+                } else {
+                    header.classList.remove('bg-[#2e1b0c]', 'border-white/10');
+                    header.classList.add('border-transparent');
+                }
             }
-        }
 
-        toggleHeader();
-        window.addEventListener('scroll', toggleHeader);
-        window.addEventListener('resize', toggleHeader);
-    });
-</script>
+            toggleHeader();
+            window.addEventListener('scroll', toggleHeader);
+            window.addEventListener('resize', toggleHeader);
+        });
+    </script>
 
- {{-- ✨ PEMISAH TRANSISI: Wave halus agar batas hero gelap → section putih tidak patah --}}
+    {{-- ✨ PEMISAH TRANSISI: Wave halus agar batas hero gelap → section putih tidak patah --}}
     <div class="absolute bottom-0 left-0 w-full leading-[0] z-10 pointer-events-none" aria-hidden="true">
-        <svg class="w-full h-[60px] sm:h-[90px]" viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="w-full h-[60px] sm:h-[90px]" viewBox="0 0 1440 100" preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg">
             <path d="M0,40 C240,90 480,0 720,20 C960,40 1200,100 1440,50 L1440,100 L0,100 Z" fill="#ffffff"></path>
         </svg>
     </div>
@@ -451,15 +454,15 @@
                                     </div>
 
                                     {{-- BUTTON ICON KERANJANG KECIL DENGAN ANGKA TOTAL PER PRODUK --}}
-                                    <button type="button"
-                                        @click.stop="$store.cart.addItem({{ json_encode($product) }})"
+                                    <button type="button" @click.stop="$store.cart.addItem({{ json_encode($product) }})"
                                         title="Tambah ke Keranjang"
                                         class="relative w-10 h-10 rounded-full bg-orange-50 hover:bg-[#f6a11a] text-[#f6a11a] hover:text-white border border-orange-200/80 flex items-center justify-center transition-all duration-300 transform active:scale-90 hover:scale-110 shadow-sm shrink-0 cursor-pointer group/btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                         </svg>
-                                        <template x-if="$store.cart && $store.cart.items && $store.cart.items.find(i => i.id === {{ $product->id }})">
+                                        <template
+                                            x-if="$store.cart && $store.cart.items && $store.cart.items.find(i => i.id === {{ $product->id }})">
                                             <span x-text="$store.cart.items.find(i => i.id === {{ $product->id }}).qty"
                                                 class="absolute -top-1.5 -right-1.5 bg-[#f6a11a] group-hover/btn:bg-gray-900 text-white text-[10px] font-black h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center border border-white shadow">
                                             </span>
@@ -495,7 +498,8 @@
                     </div>
                 </div>
 
-                <a href="https://wa.me/628561155113?text=Halo%20Catering%20Nusantara,%20saya%20ingin%20berkonsultasi%20tentang%20Paket%20Custom." target="_blank"
+                <a href="https://wa.me/628561155113?text=Halo%20Catering%20Nusantara,%20saya%20ingin%20berkonsultasi%20tentang%20Paket%20Custom."
+                    target="_blank"
                     class="inline-flex items-center gap-2 border border-[#f6a11a] text-[#f6a11a] hover:bg-[#f6a11a] hover:text-white font-bold text-xs px-6 py-3 rounded-full transition-all duration-300 shrink-0">
                     <span>Hubungi Kami</span>
                     <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -579,7 +583,7 @@
                                     @click="$store.cart.addItem(selectedProduct); closeModal(); $store.cart.open();"
                                     class="flex-1 border-2 border-[#f6a11a] text-[#f6a11a] hover:bg-orange-50 font-bold text-xs sm:text-sm py-3 px-4 rounded-full transition flex items-center justify-center gap-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                     </svg>
                                     <span>+ Keranjang</span>
@@ -754,7 +758,8 @@
                     </div>
                 </div>
 
-                <a href="https://wa.me/628561155113?text=Halo%20Catering%20Nusantara,%20saya%20ingin%20bertanya%20seputar%20layanan%20catering%20untuk%20acara%20saya." target="_blank"
+                <a href="https://wa.me/628561155113?text=Halo%20Catering%20Nusantara,%20saya%20ingin%20bertanya%20seputar%20layanan%20catering%20untuk%20acara%20saya."
+                    target="_blank"
                     class="inline-flex items-center gap-2 border border-[#f6a11a] text-[#f6a11a] hover:bg-[#f6a11a] hover:text-white font-bold text-xs px-6 py-3 rounded-full transition-all duration-300 shrink-0">
                     <span>Hubungi Kami</span>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -791,7 +796,8 @@
     <!-- ========================================== -->
     <!-- 🌟 SECTION TESTIMONI DINAMIS & FORM KOMEN  -->
     <!-- ========================================== -->
-    <section id="testimoni" class="pt-24 pb-32 sm:pb-40 bg-gradient-to-b from-white via-orange-50/20 to-orange-50/40 relative overflow-hidden"
+    <section id="testimoni"
+        class="pt-24 pb-32 sm:pb-40 bg-gradient-to-b from-white via-orange-50/20 to-orange-50/40 relative overflow-hidden"
         x-data="{
             testimonials: [
                 {
@@ -917,8 +923,10 @@
         }">
 
         {{-- Background Ornament Blur --}}
-        <div class="absolute -top-24 -left-24 w-96 h-96 bg-orange-100/50 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-amber-100/40 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-orange-100/50 rounded-full blur-3xl pointer-events-none">
+        </div>
+        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-amber-100/40 rounded-full blur-3xl pointer-events-none">
+        </div>
 
         <div class="max-w-[1280px] mx-auto px-6 md:px-12 w-full space-y-10 relative z-10">
 
@@ -933,7 +941,8 @@
                     Kebanggaan Kami
                 </h2>
                 <p class="text-gray-500 text-sm sm:text-base max-w-2xl">
-                    Kepuasan pelanggan adalah prioritas utama kami. Simak ulasan asli mereka atau bagikan pengalaman Anda menikmati sajian Catering Nusantara.
+                    Kepuasan pelanggan adalah prioritas utama kami. Simak ulasan asli mereka atau bagikan pengalaman
+                    Anda menikmati sajian Catering Nusantara.
                 </p>
             </div>
 
@@ -943,28 +952,30 @@
                 <!-- ========================================================= -->
                 <!-- KOLOM KIRI: SHOWCASE 1 TESTIMONI (FADE IN/OUT + AUTOSCROLL) -->
                 <!-- ========================================================= -->
-                <div class="lg:col-span-7 flex flex-col"
-                    @mouseenter="isPaused = true" 
-                    @mouseleave="isPaused = false">
+                <div class="lg:col-span-7 flex flex-col" @mouseenter="isPaused = true" @mouseleave="isPaused = false">
 
-                    <div class="relative flex-1 bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 border border-orange-100/80 shadow-xl shadow-orange-950/5 overflow-hidden flex flex-col justify-between min-h-[420px] sm:min-h-[440px]">
-                        
+                    <div
+                        class="relative flex-1 bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 border border-orange-100/80 shadow-xl shadow-orange-950/5 overflow-hidden flex flex-col justify-between min-h-[420px] sm:min-h-[440px]">
+
                         <!-- Watermark Quote Icon -->
                         <div class="absolute top-6 right-8 text-orange-100 pointer-events-none select-none">
                             <svg class="w-20 h-20 fill-current opacity-40" viewBox="0 0 32 32">
-                                <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-2.2 1.8-4 4-4V8h-2zm14 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-2.2 1.8-4 4-4V8h-2z"/>
+                                <path
+                                    d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-2.2 1.8-4 4-4V8h-2zm14 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-2.2 1.8-4 4-4V8h-2z" />
                             </svg>
                         </div>
 
                         <!-- Top Status / Label -->
                         <div class="flex items-center justify-between z-10 mb-4">
-                            <span class="inline-flex items-center gap-1.5 bg-orange-50 text-[#f6a11a] border border-orange-200/60 text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+                            <span
+                                class="inline-flex items-center gap-1.5 bg-orange-50 text-[#f6a11a] border border-orange-200/60 text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
                                 <span class="w-1.5 h-1.5 rounded-full bg-[#f6a11a] animate-ping"></span>
                                 Ulasan Terverifikasi
                             </span>
 
                             <span class="text-xs font-bold text-gray-400">
-                                <span x-text="currentIndex + 1" class="text-gray-900 font-extrabold text-sm"></span> / <span x-text="testimonials.length"></span> Ulasan
+                                <span x-text="currentIndex + 1" class="text-gray-900 font-extrabold text-sm"></span> /
+                                <span x-text="testimonials.length"></span> Ulasan
                             </span>
                         </div>
 
@@ -983,15 +994,20 @@
                                     <!-- Rating Bintang Emas -->
                                     <div class="flex items-center gap-1">
                                         <template x-for="star in 5" :key="star">
-                                            <svg class="w-5 h-5" :class="star <= testi.rating ? 'fill-[#f6a11a] text-[#f6a11a]' : 'fill-gray-200 text-gray-200'" viewBox="0 0 20 20">
-                                                <path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/>
+                                            <svg class="w-5 h-5"
+                                                :class="star <= testi.rating ? 'fill-[#f6a11a] text-[#f6a11a]' : 'fill-gray-200 text-gray-200'"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z" />
                                             </svg>
                                         </template>
-                                        <span class="text-xs font-bold text-gray-400 ml-2" x-text="testi.rating + '.0 Rating'"></span>
+                                        <span class="text-xs font-bold text-gray-400 ml-2"
+                                            x-text="testi.rating + '.0 Rating'"></span>
                                     </div>
 
                                     <!-- Isi Komentar -->
-                                    <blockquote class="text-gray-800 text-base sm:text-xl font-medium leading-relaxed italic">
+                                    <blockquote
+                                        class="text-gray-800 text-base sm:text-xl font-medium leading-relaxed italic">
                                         &ldquo;<span x-text="testi.comment"></span>&rdquo;
                                     </blockquote>
 
@@ -1000,13 +1016,16 @@
                                         <img :src="testi.avatar" :alt="testi.name"
                                             class="w-13 h-13 sm:w-14 sm:h-14 rounded-full object-cover ring-3 ring-orange-200 shrink-0 shadow-sm"
                                             onerror="this.src='https://ui-avatars.com/api/?background=f6a11a&color=fff&name=Pelanggan'" />
-                                        
+
                                         <div class="min-w-0 flex-1">
-                                            <h4 class="font-extrabold text-gray-900 text-base sm:text-lg leading-tight truncate" x-text="testi.name"></h4>
+                                            <h4 class="font-extrabold text-gray-900 text-base sm:text-lg leading-tight truncate"
+                                                x-text="testi.name"></h4>
                                             <p class="text-[#f6a11a] text-xs font-bold mt-0.5" x-text="testi.event"></p>
                                         </div>
 
-                                        <span class="text-[11px] text-gray-400 font-medium shrink-0 bg-gray-50 px-2.5 py-1 rounded-full border border-gray-100" x-text="testi.date"></span>
+                                        <span
+                                            class="text-[11px] text-gray-400 font-medium shrink-0 bg-gray-50 px-2.5 py-1 rounded-full border border-gray-100"
+                                            x-text="testi.date"></span>
                                     </div>
 
                                 </div>
@@ -1018,8 +1037,7 @@
                             <!-- DOT PAGINATION -->
                             <div class="flex items-center gap-1.5">
                                 <template x-for="(testi, index) in testimonials" :key="'dot-' + testi.id">
-                                    <button type="button" @click="goTo(index)"
-                                        :title="'Testimoni ' + (index + 1)"
+                                    <button type="button" @click="goTo(index)" :title="'Testimoni ' + (index + 1)"
                                         class="h-2.5 rounded-full transition-all duration-300 cursor-pointer"
                                         :class="currentIndex === index ? 'w-8 bg-[#f6a11a]' : 'w-2.5 bg-gray-200 hover:bg-orange-300'"></button>
                                 </template>
@@ -1027,18 +1045,18 @@
 
                             <!-- TOMBOL PREV & NEXT MANUAL -->
                             <div class="flex items-center gap-2">
-                                <button type="button" @click="prevTestimonial()"
-                                    title="Ulasan Sebelumnya"
+                                <button type="button" @click="prevTestimonial()" title="Ulasan Sebelumnya"
                                     class="w-10 h-10 rounded-full bg-gray-50 hover:bg-[#f6a11a] text-gray-600 hover:text-white border border-gray-200/80 flex items-center justify-center transition-all cursor-pointer shadow-sm active:scale-90">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                            d="M15 19l-7-7 7-7" />
                                     </svg>
                                 </button>
-                                <button type="button" @click="nextTestimonial()"
-                                    title="Ulasan Berikutnya"
+                                <button type="button" @click="nextTestimonial()" title="Ulasan Berikutnya"
                                     class="w-10 h-10 rounded-full bg-orange-50 hover:bg-[#f6a11a] text-[#f6a11a] hover:text-white border border-orange-200 flex items-center justify-center transition-all cursor-pointer shadow-sm active:scale-90">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                            d="M9 5l7 7-7 7" />
                                     </svg>
                                 </button>
                             </div>
@@ -1051,37 +1069,42 @@
                 <!-- KOLOM KANAN: BOX FORMULIR TAMBAH TESTIMONI PELANGGAN      -->
                 <!-- ========================================================= -->
                 <div class="lg:col-span-5 flex flex-col">
-                    <div class="h-full bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-8 border border-gray-100 shadow-xl shadow-orange-950/5 flex flex-col justify-between relative">
-                        
+                    <div
+                        class="h-full bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-8 border border-gray-100 shadow-xl shadow-orange-950/5 flex flex-col justify-between relative">
+
                         <!-- Form Header -->
                         <div class="space-y-1.5 mb-4">
-                            <div class="w-11 h-11 rounded-2xl bg-orange-100 text-[#f6a11a] flex items-center justify-center mb-3">
+                            <div
+                                class="w-11 h-11 rounded-2xl bg-orange-100 text-[#f6a11a] flex items-center justify-center mb-3">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                 </svg>
                             </div>
-                            <h3 class="font-extrabold text-gray-900 text-lg sm:text-xl leading-tight">Tulis Pengalaman Anda</h3>
+                            <h3 class="font-extrabold text-gray-900 text-lg sm:text-xl leading-tight">Tulis Pengalaman
+                                Anda</h3>
                             <p class="text-xs text-gray-500">
                                 Bagikan ulasan Anda setelah menikmati layanan Catering Nusantara.
                             </p>
                         </div>
 
                         <!-- SUCCESS NOTIFICATION BANNER -->
-                        <div x-show="successAlert"
-                            x-transition:enter="transition ease-out duration-300 transform"
+                        <div x-show="successAlert" x-transition:enter="transition ease-out duration-300 transform"
                             x-transition:enter-start="-translate-y-2 opacity-0"
                             x-transition:enter-end="translate-y-0 opacity-100"
                             class="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl text-xs font-bold flex items-center gap-2.5 mb-3"
                             style="display: none;">
                             <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                <path fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clip-rule="evenodd" />
                             </svg>
                             <span>Terima kasih! Testimoni Anda berhasil ditambahkan.</span>
                         </div>
 
                         <!-- FORM FIELDS -->
-                        <form @submit.prevent="submitTestimonial()" class="space-y-3.5 flex-1 flex flex-col justify-between">
+                        <form @submit.prevent="submitTestimonial()"
+                            class="space-y-3.5 flex-1 flex flex-col justify-between">
                             <!-- Field: Nama Pelanggan -->
                             <div>
                                 <label class="block text-xs font-bold text-gray-700 mb-1">Nama Lengkap Anda</label>
@@ -1108,22 +1131,22 @@
                             <!-- Field: Rating Bintang Interaktif -->
                             <div>
                                 <label class="block text-xs font-bold text-gray-700 mb-1">Tingkat Kepuasan</label>
-                                <div class="flex items-center gap-1.5 bg-gray-50/70 p-2 rounded-xl border border-gray-200/80">
+                                <div
+                                    class="flex items-center gap-1.5 bg-gray-50/70 p-2 rounded-xl border border-gray-200/80">
                                     <template x-for="star in 5" :key="'form-star-' + star">
-                                        <button type="button"
-                                            @click="newRating = star"
-                                            @mouseenter="ratingHover = star"
-                                            @mouseleave="ratingHover = newRating"
-                                            :title="star + ' Bintang'"
+                                        <button type="button" @click="newRating = star" @mouseenter="ratingHover = star"
+                                            @mouseleave="ratingHover = newRating" :title="star + ' Bintang'"
                                             class="p-1 hover:scale-125 transition-transform cursor-pointer">
                                             <svg class="w-6 h-6 transition-colors duration-200"
                                                 :class="star <= (ratingHover || newRating) ? 'text-[#f6a11a] fill-[#f6a11a]' : 'text-gray-300 fill-gray-200'"
                                                 viewBox="0 0 20 20">
-                                                <path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/>
+                                                <path
+                                                    d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z" />
                                             </svg>
                                         </button>
                                     </template>
-                                    <span class="text-xs font-black text-[#f6a11a] ml-auto pr-1" x-text="newRating + ' / 5 Bintang'"></span>
+                                    <span class="text-xs font-black text-[#f6a11a] ml-auto pr-1"
+                                        x-text="newRating + ' / 5 Bintang'"></span>
                                 </div>
                             </div>
 
@@ -1136,11 +1159,11 @@
                             </div>
 
                             <!-- Button Submit -->
-                            <button type="submit"
-                                :disabled="!newName.trim() || !newComment.trim() || isSubmitting"
+                            <button type="submit" :disabled="!newName.trim() || !newComment.trim() || isSubmitting"
                                 class="w-full bg-[#f6a11a] hover:bg-[#e09015] disabled:opacity-50 text-white font-extrabold text-xs sm:text-sm py-3.5 px-6 rounded-full shadow-lg shadow-orange-500/20 transition-all duration-300 flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:scale-95 cursor-pointer mt-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                 </svg>
                                 <span>Kirim Testimoni</span>
                             </button>
@@ -1154,257 +1177,380 @@
         </div>
     </section>
 
+
+    <section id="cara_pemesanan" class="py-24 bg-white relative">
+        <div class="max-w-[1280px] mx-auto px-6 md:px-12 w-full space-y-12">
+
+            {{-- HEADLINE SECTION CARA PEMESANAN --}}
+            <div class="text-left space-y-3">
+                <div class="inline-flex items-center gap-2">
+                    <span class="text-xs uppercase tracking-widest font-bold text-[#f6a11a]">CARA PEMESANAN</span>
+                    <span class="w-8 h-[2px] bg-[#f6a11a] rounded-full"></span>
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
+                    Langkah Mudah Memesan
+                </h2>
+                <p class="text-gray-500 text-sm sm:text-base max-w-xl">
+                    Ikuti 3 langkah praktis berikut untuk memesan menu catering favorit Anda.
+                </p>
+            </div>
+
+            {{-- 3 CARDS STEP CONTAINER --}}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Card 1 -->
+                <div
+                    class="bg-white rounded-3xl p-8 border border-gray-100 shadow-[0_10px_30px_rgba(0,0,0,0.04)] relative flex flex-col items-center text-center group hover:shadow-[0_15px_35px_rgba(246,161,26,0.1)] transition-all duration-300">
+                    <!-- Badge Number -->
+                    <div
+                        class="absolute top-6 left-6 w-9 h-9 rounded-full bg-[#f6a11a] text-white font-bold text-sm flex items-center justify-center shadow-md">
+                        01
+                    </div>
+
+                    <!-- Image Illustration Placeholder -->
+                    <div
+                        class="w-48 h-48 rounded-full bg-orange-50/60 flex items-center justify-center my-4 overflow-hidden p-4">
+                        <img src="/image/step1.png" alt="Explore Our Menu"
+                            class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                    </div>
+
+                    <!-- Card Content -->
+                    <h3 class="text-lg font-bold text-[#f6a11a] mb-2">
+                        Explore Our Menu
+                    </h3>
+                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed max-w-xs">
+                        Pilih makanan yang kamu inginkan dari katalog kami.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div
+                    class="bg-white rounded-3xl p-8 border border-gray-100 shadow-[0_10px_30px_rgba(0,0,0,0.04)] relative flex flex-col items-center text-center group hover:shadow-[0_15px_35px_rgba(246,161,26,0.1)] transition-all duration-300">
+                    <!-- Badge Number -->
+                    <div
+                        class="absolute top-6 left-6 w-9 h-9 rounded-full bg-[#f6a11a] text-white font-bold text-sm flex items-center justify-center shadow-md">
+                        02
+                    </div>
+
+                    <!-- Image Illustration Placeholder -->
+                    <div
+                        class="w-48 h-48 rounded-full bg-orange-50/60 flex items-center justify-center my-4 overflow-hidden p-4">
+                        <img src="/image/step2.png" alt="Order via WhatsApp"
+                            class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                    </div>
+
+                    <!-- Card Content -->
+                    <h3 class="text-lg font-bold text-[#f6a11a] mb-2">
+                        Order via WhatsApp
+                    </h3>
+                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed max-w-xs">
+                        Klik tombol WhatsApp untuk menghubungi admin dan mulai pesan.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div
+                    class="bg-white rounded-3xl p-8 border border-gray-100 shadow-[0_10px_30px_rgba(0,0,0,0.04)] relative flex flex-col items-center text-center group hover:shadow-[0_15px_35px_rgba(246,161,26,0.1)] transition-all duration-300">
+                    <!-- Badge Number -->
+                    <div
+                        class="absolute top-6 left-6 w-9 h-9 rounded-full bg-[#f6a11a] text-white font-bold text-sm flex items-center justify-center shadow-md">
+                        03
+                    </div>
+
+                    <!-- Image Illustration Placeholder -->
+                    <div
+                        class="w-48 h-48 rounded-full bg-orange-50/60 flex items-center justify-center my-4 overflow-hidden p-4">
+                        <img src="/image/step3.png" alt="Confirm Your Order"
+                            class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                    </div>
+
+                    <!-- Card Content -->
+                    <h3 class="text-lg font-bold text-[#f6a11a] mb-2">
+                        Confirm Your Order
+                    </h3>
+                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed max-w-xs">
+                        Diskusikan detail pesanan, pembayaran, dan pengiriman bersama admin.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
     <!-- ========================================== -->
     <!-- 🏢 SECTION FOOTER & KONTAK RESMI           -->
     <!-- ========================================== -->
-<footer class="bg-[#120c08] text-white relative overflow-hidden pt-20 pb-10 border-t border-white/10">
-        
-    {{-- Background Gradient Accent Ornaments --}}
-    <div class="absolute top-0 left-1/4 w-96 h-96 bg-[#f6a11a]/10 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute bottom-0 right-10 w-96 h-96 bg-orange-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <footer class="bg-[#120c08] text-white relative overflow-hidden pt-20 pb-10 border-t border-white/10">
 
-    <div class="max-w-[1280px] mx-auto px-6 md:px-12 w-full relative z-10">
-
-        {{-- 1. PRE-FOOTER CTA CARD --}}
-        <div class="bg-gradient-to-r from-[#1c130c] via-[#24190f] to-[#1c130c] rounded-[32px] p-8 sm:p-12 border border-white/10 shadow-2xl mb-16 flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div class="space-y-3 text-center lg:text-left max-w-2xl">
-                <div class="inline-flex items-center gap-2 bg-[#f6a11a]/15 text-[#f6a11a] px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-                    <span>✨</span>
-                    <span>Momen Spesial Dimulai Dari Sini</span>
-                </div>
-                <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-snug">
-                    Siap Mewujudkan Acara Impian Anda Bersama Kami?
-                </h3>
-                <p class="text-white/70 text-sm sm:text-base leading-relaxed">
-                    Konsultasikan menu catering pernikahan, kantor, syukuran, atau tumpeng Anda secara gratis. Kami siap memberikan penawaran dan pelayanan terbaik!
-                </p>
-            </div>
-
-            <div class="flex flex-wrap items-center justify-center gap-4 shrink-0">
-                {{-- Tombol Tanpa Efek Neon/Glow (Flat/Solid Warna Datar) --}}
-                <a href="https://wa.me/628561155113?text=Halo%20Catering%20Nusantara,%20saya%20ingin%20berkonsultasi%20mengenai%20pemesanan%20catering." 
-                    target="_blank"
-                    class="bg-[#f6a11a] hover:bg-[#e09015] text-white font-extrabold text-sm sm:text-base px-8 py-4 rounded-full transition-all duration-300 flex items-center gap-2.5">
-                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
-                    </svg>
-                    <span>Konsultasi via WhatsApp</span>
-                </a>
-                <a href="#paket" 
-                    class="bg-white/10 hover:bg-white/20 text-white font-bold text-sm sm:text-base px-7 py-4 rounded-full border border-white/15 transition-all">
-                    Lihat Katalog Menu
-                </a>
-            </div>
+        {{-- Background Gradient Accent Ornaments --}}
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-[#f6a11a]/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 right-10 w-96 h-96 bg-orange-600/10 rounded-full blur-3xl pointer-events-none">
         </div>
 
-        {{-- 2. MAIN FOOTER CONTENT (4 KOLOM) --}}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-16 border-b border-white/10">
+        <div class="max-w-[1280px] mx-auto px-6 md:px-12 w-full relative z-10">
 
-            {{-- KOLOM 1: IDENTITAS BRAND & OWNER (lg:col-span-4) --}}
-            <div class="lg:col-span-4 space-y-6">
-                <div class="flex items-center gap-3">
-                    <img src="{{ asset('images/logo.png') }}" alt="Catering Nusantara Logo" 
-                        class="h-16 w-auto object-contain"
-                        onerror="this.onerror=null; this.src='/image/logo.png';" />
+            {{-- 1. PRE-FOOTER CTA CARD --}}
+            <div
+                class="bg-gradient-to-r from-[#1c130c] via-[#24190f] to-[#1c130c] rounded-[32px] p-8 sm:p-12 border border-white/10 shadow-2xl mb-16 flex flex-col lg:flex-row items-center justify-between gap-8">
+                <div class="space-y-3 text-center lg:text-left max-w-2xl">
+                    <div
+                        class="inline-flex items-center gap-2 bg-[#f6a11a]/15 text-[#f6a11a] px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                        <span>✨</span>
+                        <span>Momen Spesial Dimulai Dari Sini</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-snug">
+                        Siap Mewujudkan Acara Impian Anda Bersama Kami?
+                    </h3>
+                    <p class="text-white/70 text-sm sm:text-base leading-relaxed">
+                        Konsultasikan menu catering pernikahan, kantor, syukuran, atau tumpeng Anda secara gratis. Kami
+                        siap memberikan penawaran dan pelayanan terbaik!
+                    </p>
                 </div>
 
-                <p class="text-white/70 text-sm leading-relaxed">
-                    Catering Nusantara menyajikan hidangan bercita rasa autentik khas Nusantara dengan bahan segar pilihan. Melayani berbagai kebutuhan acara pernikahan, instansi, hingga syukuran keluarga di wilayah Bogor dan sekitarnya.
-                </p>
-
-                <div class="space-y-2 pt-2 text-xs text-white/60">
-                    <div class="flex items-center gap-2">
-                        <span class="text-[#f6a11a] font-bold">Pemilik / PIC:</span>
-                        <span class="text-white font-semibold">Eva Rudianti</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-[#f6a11a] font-bold">Tahun Berdiri:</span>
-                        <span class="text-white font-semibold">Est. 2024</span>
-                    </div>
-                </div>
-
-                {{-- Social Media Icons --}}
-                <div class="flex items-center gap-3 pt-2">
-                    <a href="https://instagram.com/cateringnusantara_bogor" target="_blank"
-                        title="Instagram @cateringnusantara_bogor"
-                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-[#f6a11a] text-white/80 hover:text-white border border-white/10 flex items-center justify-center transition-all duration-300 hover:scale-110">
+                <div class="flex flex-wrap items-center justify-center gap-4 shrink-0">
+                    {{-- Tombol Tanpa Efek Neon/Glow (Flat/Solid Warna Datar) --}}
+                    <a href="https://wa.me/628561155113?text=Halo%20Catering%20Nusantara,%20saya%20ingin%20berkonsultasi%20mengenai%20pemesanan%20catering."
+                        target="_blank"
+                        class="bg-[#f6a11a] hover:bg-[#e09015] text-white font-extrabold text-sm sm:text-base px-8 py-4 rounded-full transition-all duration-300 flex items-center gap-2.5">
                         <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            <path
+                                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
                         </svg>
+                        <span>Konsultasi via WhatsApp</span>
                     </a>
-
-                    <a href="https://wa.me/628561155113" target="_blank"
-                        title="WhatsApp 08561155113"
-                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-[#25D366] text-white/80 hover:text-white border border-white/10 flex items-center justify-center transition-all duration-300 hover:scale-110">
-                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
-                        </svg>
-                    </a>
-
-                    {{-- Icon Email Diperbaiki --}}
-                    <a href="mailto:Waroengpecelayam99@gmail.com"
-                        title="Email Waroengpecelayam99@gmail.com"
-                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-[#f6a11a] text-white/80 hover:text-white border border-white/10 flex items-center justify-center transition-all duration-300 hover:scale-110">
-                        <svg class="w-5 h-5 stroke-current fill-none" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
+                    <a href="#paket"
+                        class="bg-white/10 hover:bg-white/20 text-white font-bold text-sm sm:text-base px-7 py-4 rounded-full border border-white/15 transition-all">
+                        Lihat Katalog Menu
                     </a>
                 </div>
             </div>
 
-            {{-- KOLOM 2: JELAJAHI / MENU NAVIGASI (lg:col-span-2) --}}
-            <div class="lg:col-span-2 space-y-4">
-                <h4 class="text-white font-extrabold tracking-wide uppercase text-sm border-b border-white/10 pb-2">
-                    Navigasi
-                </h4>
-                <ul class="space-y-2.5 text-sm text-white/70">
-                    <li>
-                        <a href="#beranda" class="hover:text-[#f6a11a] transition-colors flex items-center gap-2">
-                            <span class="text-[#f6a11a]">›</span> Beranda
+            {{-- 2. MAIN FOOTER CONTENT (4 KOLOM) --}}
+            <div
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-16 border-b border-white/10">
+
+                {{-- KOLOM 1: IDENTITAS BRAND & OWNER (lg:col-span-4) --}}
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="flex items-center gap-3">
+                        <img src="{{ asset('images/logo.png') }}" alt="Catering Nusantara Logo"
+                            class="h-16 w-auto object-contain"
+                            onerror="this.onerror=null; this.src='/image/logo.png';" />
+                    </div>
+
+                    <p class="text-white/70 text-sm leading-relaxed">
+                        Catering Nusantara menyajikan hidangan bercita rasa autentik khas Nusantara dengan bahan segar
+                        pilihan. Melayani berbagai kebutuhan acara pernikahan, instansi, hingga syukuran keluarga di
+                        wilayah Bogor dan sekitarnya.
+                    </p>
+
+                    <div class="space-y-2 pt-2 text-xs text-white/60">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[#f6a11a] font-bold">Pemilik / PIC:</span>
+                            <span class="text-white font-semibold">Eva Rudianti</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[#f6a11a] font-bold">Tahun Berdiri:</span>
+                            <span class="text-white font-semibold">Est. 2024</span>
+                        </div>
+                    </div>
+
+                    {{-- Social Media Icons --}}
+                    <div class="flex items-center gap-3 pt-2">
+                        <a href="https://instagram.com/cateringnusantara_bogor" target="_blank"
+                            title="Instagram @cateringnusantara_bogor"
+                            class="w-10 h-10 rounded-full bg-white/5 hover:bg-[#f6a11a] text-white/80 hover:text-white border border-white/10 flex items-center justify-center transition-all duration-300 hover:scale-110">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
                         </a>
-                    </li>
-                    <li>
-                        <a href="#tentang-kami" class="hover:text-[#f6a11a] transition-colors flex items-center gap-2">
-                            <span class="text-[#f6a11a]">›</span> Tentang Kami
+
+                        <a href="https://wa.me/628561155113" target="_blank" title="WhatsApp 08561155113"
+                            class="w-10 h-10 rounded-full bg-white/5 hover:bg-[#25D366] text-white/80 hover:text-white border border-white/10 flex items-center justify-center transition-all duration-300 hover:scale-110">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                <path
+                                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
+                            </svg>
                         </a>
-                    </li>
-                    <li>
-                        <a href="#paket" class="hover:text-[#f6a11a] transition-colors flex items-center gap-2">
-                            <span class="text-[#f6a11a]">›</span> Katalog Paket
+
+                        {{-- Icon Email Diperbaiki --}}
+                        <a href="mailto:Waroengpecelayam99@gmail.com" title="Email Waroengpecelayam99@gmail.com"
+                            class="w-10 h-10 rounded-full bg-white/5 hover:bg-[#f6a11a] text-white/80 hover:text-white border border-white/10 flex items-center justify-center transition-all duration-300 hover:scale-110">
+                            <svg class="w-5 h-5 stroke-current fill-none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
                         </a>
-                    </li>
-                    <li>
-                        <a href="#galeri" class="hover:text-[#f6a11a] transition-colors flex items-center gap-2">
-                            <span class="text-[#f6a11a]">›</span> Galeri
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#testimoni" class="hover:text-[#f6a11a] transition-colors flex items-center gap-2">
-                            <span class="text-[#f6a11a]">›</span> Testimoni
-                        </a>
-                    </li>
-                </ul>
+                    </div>
+                </div>
+
+                {{-- KOLOM 2: JELAJAHI / MENU NAVIGASI (lg:col-span-2) --}}
+                <div class="lg:col-span-2 space-y-4">
+                    <h4 class="text-white font-extrabold tracking-wide uppercase text-sm border-b border-white/10 pb-2">
+                        Navigasi
+                    </h4>
+                    <ul class="space-y-2.5 text-sm text-white/70">
+                        <li>
+                            <a href="#beranda" class="hover:text-[#f6a11a] transition-colors flex items-center gap-2">
+                                <span class="text-[#f6a11a]">›</span> Beranda
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tentang-kami"
+                                class="hover:text-[#f6a11a] transition-colors flex items-center gap-2">
+                                <span class="text-[#f6a11a]">›</span> Tentang Kami
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#paket" class="hover:text-[#f6a11a] transition-colors flex items-center gap-2">
+                                <span class="text-[#f6a11a]">›</span> Katalog Paket
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#galeri" class="hover:text-[#f6a11a] transition-colors flex items-center gap-2">
+                                <span class="text-[#f6a11a]">›</span> Galeri
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#testimoni" class="hover:text-[#f6a11a] transition-colors flex items-center gap-2">
+                                <span class="text-[#f6a11a]">›</span> Testimoni
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                {{-- KOLOM 3: LAYANAN SPESIAL (lg:col-span-2) --}}
+                <div class="lg:col-span-2 space-y-4">
+                    <h4 class="text-white font-extrabold tracking-wide uppercase text-sm border-b border-white/10 pb-2">
+                        Layanan Kami
+                    </h4>
+                    <ul class="space-y-2.5 text-sm text-white/70">
+                        <li class="hover:text-white transition">Catering Pernikahan</li>
+                        <li class="hover:text-white transition">Prasmanan Kantor</li>
+                        <li class="hover:text-white transition">Nasi Box Eksklusif</li>
+                        <li class="hover:text-white transition">Tumpeng Nusantara</li>
+                        <li class="hover:text-white transition">Syukuran & Aqiqah</li>
+                        <li class="hover:text-white transition">Custom Menu Prasmanan</li>
+                    </ul>
+                </div>
+
+                {{-- KOLOM 4: KONTAK & ALAMAT USAHA (lg:col-span-4) --}}
+                <div class="lg:col-span-4 space-y-4">
+                    <h4 class="text-white font-extrabold tracking-wide uppercase text-sm border-b border-white/10 pb-2">
+                        Hubungi & Lokasi
+                    </h4>
+
+                    <div class="space-y-4 text-sm text-white/80">
+                        {{-- Alamat --}}
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-orange-500/10 text-[#f6a11a] flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-4 h-4 stroke-current fill-none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="text-xs text-white/50 block font-semibold">Alamat Usaha:</span>
+                                <span class="leading-relaxed">Jln. Kapten Yusuf Gang Purnama, Tamansari, Bogor, Jawa
+                                    Barat</span>
+                            </div>
+                        </div>
+
+                        {{-- WhatsApp / Telepon --}}
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                    <path
+                                        d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="text-xs text-white/50 block font-semibold">WhatsApp / Telepon:</span>
+                                <a href="https://wa.me/628561155113" target="_blank"
+                                    class="font-bold text-[#f6a11a] hover:underline">
+                                    08561155113
+                                </a>
+                            </div>
+                        </div>
+
+                        {{-- Email Diperbaiki --}}
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-orange-500/10 text-[#f6a11a] flex items-center justify-center shrink-0">
+                                <svg class="w-4 h-4 stroke-current fill-none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="text-xs text-white/50 block font-semibold">Email:</span>
+                                <a href="mailto:Waroengpecelayam99@gmail.com"
+                                    class="hover:text-[#f6a11a] transition-colors break-all">
+                                    Waroengpecelayam99@gmail.com
+                                </a>
+                            </div>
+                        </div>
+
+                        {{-- Instagram --}}
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-pink-500/10 text-pink-400 flex items-center justify-center shrink-0">
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="text-xs text-white/50 block font-semibold">Instagram:</span>
+                                <a href="https://instagram.com/cateringnusantara_bogor" target="_blank"
+                                    class="hover:text-[#f6a11a] transition-colors font-medium">
+                                    @cateringnusantara_bogor
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            {{-- KOLOM 3: LAYANAN SPESIAL (lg:col-span-2) --}}
-            <div class="lg:col-span-2 space-y-4">
-                <h4 class="text-white font-extrabold tracking-wide uppercase text-sm border-b border-white/10 pb-2">
-                    Layanan Kami
-                </h4>
-                <ul class="space-y-2.5 text-sm text-white/70">
-                    <li class="hover:text-white transition">Catering Pernikahan</li>
-                    <li class="hover:text-white transition">Prasmanan Kantor</li>
-                    <li class="hover:text-white transition">Nasi Box Eksklusif</li>
-                    <li class="hover:text-white transition">Tumpeng Nusantara</li>
-                    <li class="hover:text-white transition">Syukuran & Aqiqah</li>
-                    <li class="hover:text-white transition">Custom Menu Prasmanan</li>
-                </ul>
-            </div>
-
-            {{-- KOLOM 4: KONTAK & ALAMAT USAHA (lg:col-span-4) --}}
-            <div class="lg:col-span-4 space-y-4">
-                <h4 class="text-white font-extrabold tracking-wide uppercase text-sm border-b border-white/10 pb-2">
-                    Hubungi & Lokasi
-                </h4>
-
-                <div class="space-y-4 text-sm text-white/80">
-                    {{-- Alamat --}}
-                    <div class="flex items-start gap-3">
-                        <div class="w-8 h-8 rounded-lg bg-orange-500/10 text-[#f6a11a] flex items-center justify-center shrink-0 mt-0.5">
-                            <svg class="w-4 h-4 stroke-current fill-none" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <span class="text-xs text-white/50 block font-semibold">Alamat Usaha:</span>
-                            <span class="leading-relaxed">Jln. Kapten Yusuf Gang Purnama, Tamansari, Bogor, Jawa Barat</span>
-                        </div>
-                    </div>
-
-                    {{-- WhatsApp / Telepon --}}
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <span class="text-xs text-white/50 block font-semibold">WhatsApp / Telepon:</span>
-                            <a href="https://wa.me/628561155113" target="_blank" class="font-bold text-[#f6a11a] hover:underline">
-                                08561155113
-                            </a>
-                        </div>
-                    </div>
-
-                    {{-- Email Diperbaiki --}}
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-lg bg-orange-500/10 text-[#f6a11a] flex items-center justify-center shrink-0">
-                            <svg class="w-4 h-4 stroke-current fill-none" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <span class="text-xs text-white/50 block font-semibold">Email:</span>
-                            <a href="mailto:Waroengpecelayam99@gmail.com" class="hover:text-[#f6a11a] transition-colors break-all">
-                                Waroengpecelayam99@gmail.com
-                            </a>
-                        </div>
-                    </div>
-
-                    {{-- Instagram --}}
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-lg bg-pink-500/10 text-pink-400 flex items-center justify-center shrink-0">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <span class="text-xs text-white/50 block font-semibold">Instagram:</span>
-                            <a href="https://instagram.com/cateringnusantara_bogor" target="_blank" class="hover:text-[#f6a11a] transition-colors font-medium">
-                                @cateringnusantara_bogor
-                            </a>
-                        </div>
-                    </div>
+            {{-- 3. BOTTOM COPYRIGHT BAR --}}
+            <div
+                class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50 text-center sm:text-left">
+                <p>
+                    &copy; 2024 - {{ date('Y') }} <span class="text-white font-bold">Catering Nusantara</span>. All
+                    rights reserved.
+                    <span class="block sm:inline sm:ml-1">Owner: Eva Rudianti.</span>
+                </p>
+                <div class="flex items-center gap-6">
+                    <a href="#beranda" class="hover:text-[#f6a11a] transition">Kembali ke Atas ↑</a>
                 </div>
             </div>
 
         </div>
-
-        {{-- 3. BOTTOM COPYRIGHT BAR --}}
-        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50 text-center sm:text-left">
-            <p>
-                &copy; 2024 - {{ date('Y') }} <span class="text-white font-bold">Catering Nusantara</span>. All rights reserved. 
-                <span class="block sm:inline sm:ml-1">Owner: Eva Rudianti.</span>
-            </p>
-            <div class="flex items-center gap-6">
-                <a href="#beranda" class="hover:text-[#f6a11a] transition">Kembali ke Atas ↑</a>
-            </div>
-        </div>
-
-    </div>
-</footer>
+    </footer>
 
     <!-- ========================================== -->
     <!-- 🛒 SLIDE-OVER CART DRAWER & FLOATING CART -->
     <!-- ========================================== -->
 
     <!-- FLOATING CART BUTTON (BOTTOM RIGHT) -->
-    <div x-show="$store.cart && $store.cart.totalCount > 0"
-        x-cloak
+    <div x-show="$store.cart && $store.cart.totalCount > 0" x-cloak
         x-transition:enter="transition ease-out duration-300 transform"
         x-transition:enter-start="translate-y-10 opacity-0 scale-90"
         x-transition:enter-end="translate-y-0 opacity-100 scale-100"
         x-transition:leave="transition ease-in duration-200 transform"
         x-transition:leave-start="translate-y-0 opacity-100 scale-100"
-        x-transition:leave-end="translate-y-10 opacity-0 scale-90"
-        class="fixed bottom-6 right-6 z-40">
+        x-transition:leave-end="translate-y-10 opacity-0 scale-90" class="fixed bottom-6 right-6 z-40">
         <button @click="$store.cart.toggle()"
             class="bg-[#f6a11a] hover:bg-[#e09015] text-white font-bold px-5 py-3.5 rounded-full shadow-2xl flex items-center gap-3 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 border-2 border-white cursor-pointer group">
             <div class="relative">
-                <svg class="w-6 h-6 transform group-hover:rotate-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 transform group-hover:rotate-6 transition-transform" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
@@ -1414,20 +1560,18 @@
             </div>
             <div class="text-left leading-tight hidden sm:block">
                 <span class="text-[10px] text-white/90 uppercase font-semibold block">Keranjang</span>
-                <span class="text-xs font-black">Rp <span x-text="$store.cart ? $store.cart.formatPrice($store.cart.totalPrice) : 0"></span></span>
+                <span class="text-xs font-black">Rp <span
+                        x-text="$store.cart ? $store.cart.formatPrice($store.cart.totalPrice) : 0"></span></span>
             </div>
         </button>
     </div>
 
     <!-- TOAST NOTIFICATION -->
-    <div x-show="$store.cart && $store.cart.showToastNotification"
-        x-cloak
+    <div x-show="$store.cart && $store.cart.showToastNotification" x-cloak
         x-transition:enter="transition ease-out duration-300 transform"
-        x-transition:enter-start="-translate-y-5 opacity-0"
-        x-transition:enter-end="translate-y-0 opacity-100"
+        x-transition:enter-start="-translate-y-5 opacity-0" x-transition:enter-end="translate-y-0 opacity-100"
         x-transition:leave="transition ease-in duration-200 transform"
-        x-transition:leave-start="translate-y-0 opacity-100"
-        x-transition:leave-end="-translate-y-5 opacity-0"
+        x-transition:leave-start="translate-y-0 opacity-100" x-transition:leave-end="-translate-y-5 opacity-0"
         class="fixed top-24 right-6 z-50 max-w-sm bg-gray-900/95 backdrop-blur-md text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-white/10">
         <div class="w-7 h-7 rounded-full bg-[#f6a11a] text-white flex items-center justify-center shrink-0">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1438,23 +1582,17 @@
     </div>
 
     <!-- MODAL CARD BESAR KERANJANG (CENTERED POP-UP WITH BLUR BACKDROP) -->
-    <div x-show="$store.cart && $store.cart.isOpen"
-        x-cloak
-        x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100"
+    <div x-show="$store.cart && $store.cart.isOpen" x-cloak x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
         class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 lg:p-10 overflow-y-auto">
 
         <!-- Backdrop overlay with blur -->
-        <div class="fixed inset-0 bg-black/65 backdrop-blur-md transition-opacity"
-            @click="$store.cart.close()"></div>
+        <div class="fixed inset-0 bg-black/65 backdrop-blur-md transition-opacity" @click="$store.cart.close()"></div>
 
         <!-- CARD BESAR PUTIH -->
-        <div x-show="$store.cart && $store.cart.isOpen"
-            x-transition:enter="transition ease-out duration-300 transform"
+        <div x-show="$store.cart && $store.cart.isOpen" x-transition:enter="transition ease-out duration-300 transform"
             x-transition:enter-start="opacity-0 scale-95 translate-y-4"
             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
             x-transition:leave="transition ease-in duration-200 transform"
@@ -1464,19 +1602,24 @@
             @click.stop>
 
             <!-- CARD HEADER -->
-            <div class="p-6 sm:p-7 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-orange-50/70 via-white to-amber-50/40">
+            <div
+                class="p-6 sm:p-7 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-orange-50/70 via-white to-amber-50/40">
                 <div class="flex items-center gap-3.5 sm:gap-4">
-                    <div class="w-12 h-12 rounded-2xl bg-[#f6a11a]/15 text-[#f6a11a] flex items-center justify-center shrink-0 shadow-sm">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-[#f6a11a]/15 text-[#f6a11a] flex items-center justify-center shrink-0 shadow-sm">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
                     </div>
                     <div>
-                        <h3 class="font-extrabold text-gray-900 text-xl sm:text-2xl leading-tight">Keranjang Pesanan Anda</h3>
+                        <h3 class="font-extrabold text-gray-900 text-xl sm:text-2xl leading-tight">Keranjang Pesanan
+                            Anda</h3>
                         <p class="text-xs sm:text-sm text-gray-500 mt-0.5">
-                            <span class="font-bold text-[#f6a11a]" x-text="$store.cart ? $store.cart.totalItems : 0"></span> menu terpilih • 
-                            <span class="font-bold text-gray-800" x-text="$store.cart ? $store.cart.totalCount : 0"></span> porsi total
+                            <span class="font-bold text-[#f6a11a]"
+                                x-text="$store.cart ? $store.cart.totalItems : 0"></span> menu terpilih •
+                            <span class="font-bold text-gray-800"
+                                x-text="$store.cart ? $store.cart.totalCount : 0"></span> porsi total
                         </p>
                     </div>
                 </div>
@@ -1492,7 +1635,8 @@
                 <!-- EMPTY STATE -->
                 <template x-if="!$store.cart || $store.cart.items.length === 0">
                     <div class="h-full flex flex-col items-center justify-center text-center py-16 space-y-4">
-                        <div class="w-24 h-24 rounded-3xl bg-orange-50 text-[#f6a11a] flex items-center justify-center shadow-inner">
+                        <div
+                            class="w-24 h-24 rounded-3xl bg-orange-50 text-[#f6a11a] flex items-center justify-center shadow-inner">
                             <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                     d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -1501,14 +1645,16 @@
                         <div>
                             <h4 class="font-extrabold text-gray-900 text-lg">Keranjang Belanja Masih Kosong</h4>
                             <p class="text-xs sm:text-sm text-gray-500 max-w-sm mt-1.5 leading-relaxed">
-                                Anda belum memilih paket menu. Silakan jelajahi katalog kami dan klik ikon keranjang pada menu favorit Anda.
+                                Anda belum memilih paket menu. Silakan jelajahi katalog kami dan klik ikon keranjang
+                                pada menu favorit Anda.
                             </p>
                         </div>
                         <a href="#paket" @click="$store.cart.close()"
                             class="bg-[#f6a11a] hover:bg-[#e09015] text-white text-xs sm:text-sm font-bold px-7 py-3 rounded-full shadow-lg shadow-orange-500/20 transition inline-flex items-center gap-2 cursor-pointer">
                             <span>Jelajahi Paket Menu</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
                             </svg>
                         </a>
                     </div>
@@ -1520,24 +1666,29 @@
                         <!-- DAFTAR ITEM DI KERANJANG -->
                         <div class="space-y-3.5">
                             <template x-for="item in $store.cart.items" :key="item.id">
-                                <div class="bg-gray-50/70 hover:bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-gray-100 hover:border-[#f6a11a]/30 hover:shadow-md transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                                    
+                                <div
+                                    class="bg-gray-50/70 hover:bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-gray-100 hover:border-[#f6a11a]/30 hover:shadow-md transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+
                                     <!-- Info Produk (Foto + Nama) -->
                                     <div class="flex items-center gap-4 min-w-0 flex-1">
-                                        <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-gray-200 shrink-0 shadow-sm">
+                                        <div
+                                            class="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-gray-200 shrink-0 shadow-sm">
                                             <img :src="item.image ? '/storage/' + item.image : '/image/tempeng-removebg-preview.png'"
                                                 :alt="item.name" class="w-full h-full object-cover">
                                         </div>
                                         <div class="min-w-0">
                                             <div class="flex items-center gap-2 mb-1">
-                                                <span class="text-[9px] uppercase font-extrabold bg-orange-100 text-[#f6a11a] px-2 py-0.5 rounded-md"
+                                                <span
+                                                    class="text-[9px] uppercase font-extrabold bg-orange-100 text-[#f6a11a] px-2 py-0.5 rounded-md"
                                                     x-text="item.package_category"></span>
                                                 <template x-if="item.tier">
-                                                    <span class="text-[9px] uppercase font-bold bg-amber-800 text-white px-2 py-0.5 rounded-md"
+                                                    <span
+                                                        class="text-[9px] uppercase font-bold bg-amber-800 text-white px-2 py-0.5 rounded-md"
                                                         x-text="item.tier"></span>
                                                 </template>
                                             </div>
-                                            <h5 class="font-extrabold text-gray-900 text-base sm:text-lg leading-snug truncate" x-text="item.name"></h5>
+                                            <h5 class="font-extrabold text-gray-900 text-base sm:text-lg leading-snug truncate"
+                                                x-text="item.name"></h5>
                                             <p class="text-xs text-gray-500 mt-0.5">
                                                 Rp <span x-text="$store.cart.formatPrice(item.price)"></span>
                                                 <span class="text-[10px] text-gray-400">/ pax</span>
@@ -1546,43 +1697,48 @@
                                     </div>
 
                                     <!-- Stepper Plus Minus & Total Item -->
-                                    <div class="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-200/60">
-                                        
+                                    <div
+                                        class="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-200/60">
+
                                         <!-- TOMBOL PLUS & MINUS -->
-                                        <div class="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">
-                                            <button @click="$store.cart.updateQty(item.id, -1)"
-                                                title="Kurangi 1 Porsi"
+                                        <div
+                                            class="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">
+                                            <button @click="$store.cart.updateQty(item.id, -1)" title="Kurangi 1 Porsi"
                                                 class="w-7 h-7 rounded-full bg-gray-100 hover:bg-red-50 text-gray-700 hover:text-red-500 flex items-center justify-center font-black text-base transition cursor-pointer active:scale-90">
-                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M20 12H4" />
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="3" d="M20 12H4" />
                                                 </svg>
                                             </button>
 
                                             <div class="px-2 min-w-[48px] text-center leading-tight">
-                                                <span class="font-black text-gray-900 text-sm sm:text-base" x-text="item.qty"></span>
+                                                <span class="font-black text-gray-900 text-sm sm:text-base"
+                                                    x-text="item.qty"></span>
                                                 <span class="text-[10px] text-gray-400 font-semibold block">porsi</span>
                                             </div>
 
-                                            <button @click="$store.cart.updateQty(item.id, 1)"
-                                                title="Tambah 1 Porsi"
+                                            <button @click="$store.cart.updateQty(item.id, 1)" title="Tambah 1 Porsi"
                                                 class="w-7 h-7 rounded-full bg-orange-100 hover:bg-[#f6a11a] text-[#f6a11a] hover:text-white flex items-center justify-center font-black text-base transition cursor-pointer active:scale-90 shadow-sm">
-                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" />
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="3" d="M12 4v16m8-8H4" />
                                                 </svg>
                                             </button>
                                         </div>
 
                                         <!-- SUB TOTAL -->
                                         <div class="text-right min-w-[110px] sm:min-w-[130px]">
-                                            <span class="text-[10px] text-gray-400 font-bold block uppercase">Subtotal</span>
+                                            <span
+                                                class="text-[10px] text-gray-400 font-bold block uppercase">Subtotal</span>
                                             <span class="font-black text-[#f6a11a] text-base sm:text-lg leading-tight">
                                                 Rp <span x-text="$store.cart.formatPrice(item.price * item.qty)"></span>
                                             </span>
                                         </div>
 
                                         <!-- TOMBOL HAPUS -->
-                                        <button @click="$store.cart.removeItem(item.id)"
-                                            title="Hapus Menu Ini"
+                                        <button @click="$store.cart.removeItem(item.id)" title="Hapus Menu Ini"
                                             class="w-9 h-9 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 flex items-center justify-center transition shrink-0 cursor-pointer">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1596,13 +1752,17 @@
                         </div>
 
                         <!-- KOLOM CATATAN KHUSUS -->
-                        <div class="bg-gray-50/80 rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-gray-100 space-y-2">
+                        <div
+                            class="bg-gray-50/80 rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-gray-100 space-y-2">
                             <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-[#f6a11a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                <svg class="w-4 h-4 text-[#f6a11a]" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                 </svg>
                                 <label class="text-xs font-extrabold text-gray-800 uppercase tracking-wider">
-                                    Catatan Tambahan Pesanan <span class="text-gray-400 font-normal lowercase">(opsional)</span>
+                                    Catatan Tambahan Pesanan <span
+                                        class="text-gray-400 font-normal lowercase">(opsional)</span>
                                 </label>
                             </div>
                             <textarea x-model="$store.cart.customerNote"
@@ -1616,13 +1776,16 @@
 
             <!-- CARD FOOTER: TOTAL & CHECKOUT BUTTON -->
             <template x-if="$store.cart && $store.cart.items.length > 0">
-                <div class="p-5 sm:p-7 border-t border-gray-100 bg-gray-50/90 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div
+                    class="p-5 sm:p-7 border-t border-gray-100 bg-gray-50/90 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div class="text-center sm:text-left">
                         <span class="text-xs text-gray-500 font-medium block">
-                            Total Pembayaran (<span x-text="$store.cart.totalItems"></span> menu • <span x-text="$store.cart.totalCount"></span> porsi)
+                            Total Pembayaran (<span x-text="$store.cart.totalItems"></span> menu • <span
+                                x-text="$store.cart.totalCount"></span> porsi)
                         </span>
                         <div class="text-2xl sm:text-3xl font-black text-gray-900 leading-tight mt-0.5">
-                            Rp <span x-text="$store.cart.formatPrice($store.cart.totalPrice)" class="text-[#f6a11a]"></span>
+                            Rp <span x-text="$store.cart.formatPrice($store.cart.totalPrice)"
+                                class="text-[#f6a11a]"></span>
                         </div>
                     </div>
 
@@ -1633,8 +1796,7 @@
                         </button>
 
                         <!-- TOMBOL CHECKOUT VIA WHATSAPP -->
-                        <a :href="$store.cart.checkoutWhatsAppUrl"
-                            target="_blank"
+                        <a :href="$store.cart.checkoutWhatsAppUrl" target="_blank"
                             class="flex-1 sm:flex-initial bg-[#25D366] hover:bg-[#20ba59] text-white font-extrabold text-sm sm:text-base py-4 px-8 rounded-full shadow-xl shadow-emerald-500/25 transition-all duration-300 flex items-center justify-center gap-2.5 transform hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
                                 <path
