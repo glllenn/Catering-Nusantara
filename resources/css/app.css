@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom CSS untuk Animasi Infinite Loop Dua Arah */
+/* Custom CSS untuk Galeri Two-Way Infinite Loop */
+@layer utilities {
+    /* Animasi Baris Foto Atas: Geser Kanan */
+    @keyframes translate-r {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); } /* Geser sejauh separuh container duplikasi */
+    }
+
+    /* Animasi Baris Foto Bawah: Geser Kiri */
+    @keyframes translate-l {
+        0% { transform: translateX(-50%); } /* Mulai dari separuh container duplikasi */
+        100% { transform: translateX(0); }
+    }
+
+    /* Kelas Animasi untuk Kanan */
+    .animation-scroll-r {
+        animation: translate-r 40s linear infinite; /* Kecepatan bisa disesuaikan (40 detik) */
+    }
+
+    /* Kelas Animasi untuk Kiri */
+    .animation-scroll-l {
+        animation: translate-l 40s linear infinite; /* Kecepatan bisa disesuaikan (40 detik) */
+    }
+
+    /* Kelas Khusus untuk Menghentikan Animasi HANYA saat Hover Foto */
+    /* Berkat Tailwind utilities, hover:paused di HTML akan menggunakan CSS ini */
+    .hover\:paused:hover {
+        animation-play-state: paused !important;
+    }
+}
