@@ -5,14 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ config('app.name', 'Catering Nusantara') }} - Cita Rasa Autentik Indonesia</title>
+    <title>{{ config('app.name', 'Catering Nusantara') }} — Cita Rasa Autentik untuk Setiap Momen Istimewa</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-        <link href="https://api.fontshare.com/v2/css?f[]=perandory@400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=perandory@400,500,600,700&display=swap" rel="stylesheet">
 
     <!-- Styles & Scripts via Vite (Tailwind CSS) -->
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
@@ -20,816 +19,452 @@
     @endif
 
     <style>
-        /* Custom Hex Accent Color sesuai Canva */
-        .bg-canva-orange {
-            background-color: #f6a11a;
-        }
-
-        .text-canva-orange {
-            color: #f6a11a;
-        }
-
-        .border-canva-orange {
-            border-color: #f6a11a;
-        }
-
-        .shadow-canva-orange {
-            box-shadow: 0 10px 25px -5px rgba(246, 161, 26, 0.35);
+        :root {
+            --brand-gold: #a4864b;
+            --brand-gold-hover: #8f723c;
+            --brand-dark: #0d0805;
+            --brand-espresso: #1a120b;
+            --brand-cream: #faf7f2;
+            --brand-warm-bg: #fdfbf7;
         }
 
         [x-cloak] {
             display: none !important;
         }
+
+        /* Scroll reveal animation styles */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+
+        /* Filmstrip animations */
+        @keyframes filmstrip-up { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+        @keyframes filmstrip-down { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
+        .animate-filmstrip-up-1 { animation: filmstrip-up 35s linear infinite; }
+        .animate-filmstrip-up-2 { animation: filmstrip-up 45s linear infinite; }
+        .animate-filmstrip-down-1 { animation: filmstrip-down 40s linear infinite; }
+        .animate-filmstrip-down-2 { animation: filmstrip-down 50s linear infinite; }
     </style>
 </head>
 
 <body x-data
-    class="font-['Plus_Jakarta_Sans',sans-serif] bg-white text-gray-900 antialiased selection:bg-[#f6a11a] selection:text-white">
+    class="font-['Plus_Jakarta_Sans',sans-serif] bg-[#fdfbf7] text-neutral-800 antialiased selection:bg-[#a4864b] selection:text-white overflow-x-hidden">
 
-   <section id="beranda" class="relative min-h-screen flex flex-col justify-between overflow-hidden bg-[#140d07]">
-
-    {{-- FOTO BACKGROUND HERO DENGAN KECERAHAN PAS (TIDAK TERLALU GELAP) --}}
-    <div class="absolute inset-0 w-full h-full">
-        <img src="{{ asset('images/herobaru.jpg') }}" alt="Catering Tumpeng Nusantara"
-            class="w-full h-full object-fill filter brightness-65 contrast-105" 
-            onerror="this.onerror=null; this.src='/image/herobaru.jpg';" />
-        
-        {{-- Overlay Gelap Tipis (Transparan Halus) --}}
-        <div class="absolute inset-0 bg-black/30 pointer-events-none"></div>
-    </div>
-
-    {{-- NAVBAR — Fixed, Full-Width --}}
-    <header id="site-header"
-    class="fixed top-0 left-0 w-full z-20 border-b border-transparent transition-all duration-300">
-    <div class="w-full px-6 sm:px-10 lg:px-16 h-28 flex items-center justify-between">
-
-        {{-- Logo Diperbesar Lagi --}}
-        <a href="#beranda" class="flex items-center gap-3 shrink-0">
-            <img src="{{ asset('images/logo.png') }}" alt="Logo"
-                class="h-20 md:h-24 w-auto object-contain transition-transform duration-300 hover:scale-105"
-                onerror="this.onerror=null; this.src='/image/logo.png';" />
-        </a>
-
-        {{-- Menu Navigasi Utama (Jarak Antar Teks Diperlebar: gap-12 lg:gap-16) --}}
-        <nav class="hidden md:flex items-center gap-12 lg:gap-16 text-lg font-bold tracking-wider" id="nav-menu">
-            <a href="#beranda" data-section="beranda" 
-                class="nav-item text-white/70 hover:text-white transition-all duration-300">
-                Beranda
-            </a>
-            <a href="#tentang-kami" data-section="tentang-kami" 
-                class="nav-item text-white/70 hover:text-white transition-all duration-300">
-                Tentang Kami
-            </a>
-            <a href="#paket" data-section="paket" 
-                class="nav-item text-white/70 hover:text-white transition-all duration-300">
-                Paket
-            </a>
-            <a href="#galeri" data-section="galeri" 
-                class="nav-item text-white/70 hover:text-white transition-all duration-300">
-                Galeri
-            </a>
-            <a href="#testimoni" data-section="testimoni" 
-                class="nav-item text-white/70 hover:text-white transition-all duration-300">
-                Testimoni
-            </a>
-            <a href="#cara_pemesanan" data-section="cara_pemesanan" 
-                class="nav-item text-white/70 hover:text-white transition-all duration-300">
-                Order
-            </a>
-        </nav>
-
-        {{-- Tombol Keranjang Belanja (Berjarak/Memiliki Ruang Khusus di Kanan: ml-4 sm:ml-8) --}}
-        <div class="flex items-center ml-4 sm:ml-8">
-            <button type="button" @click="$store.cart.toggle()"
-                class="relative p-3.5 rounded-full text-white/90 hover:text-white hover:bg-white/10 transition-all flex items-center justify-center cursor-pointer group"
-                title="Buka Keranjang Belanja">
-                <svg class="w-8 h-8 transform group-hover:scale-110 transition-transform" fill="none"
-                    stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                <span x-show="$store.cart && $store.cart.totalCount > 0"
-                    x-text="$store.cart ? $store.cart.totalCount : 0"
-                    x-transition:enter="transition ease-out duration-200 transform"
-                    x-transition:enter-start="scale-0" x-transition:enter-end="scale-100"
-                    class="absolute -top-1 -right-1 bg-[#f6a11a] text-white text-[11px] font-black h-5 min-w-[20px] px-1.5 rounded-full flex items-center justify-center border-2 border-[#140d07] shadow-lg animate-pulse"
-                    style="display: none;">
+    <!-- ========================================== -->
+    <!-- 🌟 1. LUXURY INTRO SCREEN (PRELOADER)      -->
+    <!-- ========================================== -->
+    <div id="site-preloader"
+        class="fixed inset-0 z-[100] bg-[#0d0805] text-white flex flex-col items-center justify-center transition-all duration-700 ease-out">
+        <div class="text-center space-y-4 px-6">
+            <div class="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-2">
+                <img src="{{ asset('images/logo.png') }}" alt="Catering Nusantara"
+                    class="w-full h-full object-contain filter drop-shadow-md animate-pulse"
+                    onerror="this.onerror=null; this.src='/image/logo.png';" />
+            </div>
+            <div class="space-y-1.5">
+                <span class="text-xs sm:text-sm font-semibold tracking-[0.35em] text-[#a4864b] uppercase block">
+                    Catering &amp; Kuliner Nusantara
                 </span>
-            </button>
-        </div>
-    </div>
-</header>
-
-    {{-- KONTEN HERO — Menggunakan Font Perandory Semicondensed (Ukuran Ekstra Besar) --}}
-    <div class="relative z-10 w-full px-6 md:px-16 lg:px-20 pt-32 pb-10 my-auto">
-        <div class="max-w-5xl">
-
-            <h1 class="font-['Perandory','Playfair_Display',serif] text-6xl sm:text-8xl lg:text-[160px] tracking-normal leading-[0.98] uppercase">
-                <span class="block text-white">WELCOME TO</span>
-                <span class="block text-white">CATERING</span>
-                <span class="block text-[#a4864b]">NUSANTARA</span>
-            </h1>
-
+                <h1 class="font-['Perandory','Playfair_Display',serif] text-2xl sm:text-3xl lg:text-4xl font-normal tracking-wider text-white">
+                    CATERING NUSANTARA
+                </h1>
+            </div>
+            <div class="w-24 h-[1.5px] bg-[#a4864b]/60 mx-auto rounded-full mt-4"></div>
         </div>
     </div>
 
-    {{-- Garis Putih Tipis Horizontal Pembatas di Bagian Bawah Hero --}}
-    <div class="relative z-10 w-full px-6 md:px-16 lg:px-20 pb-8">
-        <div class="w-full h-[1.5px] bg-white/40"></div>
-    </div>
-
-</section>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const header = document.getElementById('site-header');
-            const hero = document.getElementById('beranda');
-            if (!header || !hero) return;
-
-            function toggleHeader() {
-                const heroBottom = hero.offsetTop + hero.offsetHeight;
-                const scrolledPastHero = window.scrollY + header.offsetHeight >= heroBottom;
-
-                if (scrolledPastHero) {
-                    header.classList.add('bg-[#140d07]/95', 'backdrop-blur-md', 'border-white/10');
-                    header.classList.remove('border-transparent');
-                } else {
-                    header.classList.remove('bg-[#140d07]/95', 'backdrop-blur-md', 'border-white/10');
-                    header.classList.add('border-transparent');
-                }
-            }
-
-            toggleHeader();
-            window.addEventListener('scroll', toggleHeader);
-            window.addEventListener('resize', toggleHeader);
-        });
-    </script>
-
-    {{-- ✨ PEMISAH TRANSISI: Wave halus agar batas hero gelap → section putih tidak patah
-    <div class="absolute bottom-0 left-0 w-full leading-[0] z-10 pointer-events-none" aria-hidden="true">
-        <svg class="w-full h-[60px] sm:h-[90px]" viewBox="0 0 1440 100" preserveAspectRatio="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,40 C240,90 480,0 720,20 C960,40 1200,100 1440,50 L1440,100 L0,100 Z" fill="#ffffff"></path>
-        </svg>
-    </div> --}}
-
-<!-- ========================================== -->
-<!-- 2. SECTION TENTANG KAMI                    -->
-<!-- ========================================== -->
-<section id="tentang-kami" class="scroll-mt-50 min-h-screen flex flex-col justify-center py-28 lg:py-36 bg-white relative overflow-hidden">
-    
-    <div class="max-w-[1340px] mx-auto px-6 sm:px-10 lg:px-16 w-full space-y-20 lg:space-y-32">
+    <!-- ========================================== -->
+    <!-- 🧭 2. NAVBAR (ORIGINAL HEADER & ISLAND)    -->
+    <!-- ========================================== -->
+    <header id="site-header"
+        class="fixed top-0 left-0 w-full z-40 transition-all duration-500 py-5 sm:py-6 px-6 sm:px-10 lg:px-16">
         
-        {{-- BARIS ATAS: JUDUL UTAMA (KIRI) & DESKRIPSI LENGKAP (KANAN) --}}
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <div id="header-inner"
+            class="w-full max-w-7xl mx-auto flex items-center justify-between transition-all duration-500">
             
-            <!-- KOLOM KIRI: HEADING JUDUL (TENTANG KAMI + GARIS DI SAMPING) -->
-            <div class="lg:col-span-4 flex flex-col items-start pt-2">
-                
-                {{-- Text TENTANG Jumbo --}}
-                <h2 class="font-['Perandory','Playfair_Display',serif] text-6xl sm:text-7xl lg:text-[84px] tracking-wider text-[#a4864b] uppercase leading-none">
-                    TENTANG
-                </h2>
-                
-                {{-- Container KAMI + Garis Hitam Horizontal di SAMPING --}}
-                <div class="flex items-center gap-4 mt-2 w-full max-w-[280px]">
-                    <span class="text-base sm:text-lg font-medium tracking-[0.3em] text-gray-600 uppercase shrink-0">
-                        KAMI
+            {{-- Logo & Nama Usaha (Kiri) --}}
+            <a href="#beranda" class="flex items-center gap-3.5 shrink-0 group">
+                <img src="{{ asset('images/logo.png') }}" alt="Catering Nusantara Logo"
+                    class="h-11 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                    onerror="this.onerror=null; this.src='/image/logo.png';" />
+                <div class="flex flex-col text-left">
+                    <span class="font-['Perandory','Playfair_Display',serif] text-lg sm:text-xl lg:text-2xl font-bold tracking-wider text-white transition-colors duration-300" id="nav-brand-title">
+                        CATERING NUSANTARA
                     </span>
-                    {{-- Garis Hitam di Samping Kata KAMI --}}
-                    <div class="flex-1 h-[2.5px] bg-black"></div>
-                </div>
-
-            </div>
-
-         <!-- KOLOM KANAN: DESKRIPSI UTAMA (DIBUAT LEBIH TURUN & LEBIH KE KANAN) -->
-<div class="lg:col-span-7 lg:col-start-6 space-y-8 text-left pt-16 lg:pt-52 lg:pl-8">
-
-    {{-- Headline Utama Bold --}}
-    <h3 class="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-black leading-[1.18] tracking-tight">
-        Cita Rasa Nusantara,<br class="hidden sm:inline" />
-        Disajikan dengan Sepenuh Hati
-    </h3>
-
-    {{-- Paragraf Konten --}}
-    <div class="space-y-5 text-gray-700 text-base sm:text-lg lg:text-[19px] leading-relaxed font-normal">
-        <p>
-            Catering Nusantara menghadirkan aneka hidangan khas Indonesia dengan cita rasa autentik, menggunakan bahan berkualitas dan olahan yang higienis. Kami melayani berbagai kebutuhan acara, mulai dari syukuran, pernikahan, rapat, hingga acara keluarga dengan pilihan menu yang beragam dan pelayanan terbaik.
-        </p>
-        <p>
-            Menghadirkan pengalaman kuliner Indonesia yang autentik dengan cita rasa khas Nusantara, bahan berkualitas, dan pelayanan terpercaya. Catering Nusantara menjadi solusi hidangan praktis untuk berbagai acara dengan pilihan menu beragam, penyajian higienis, serta rasa lezat yang menghadirkan kepuasan bagi setiap pelanggan.
-        </p>
-    </div>
-
-</div>
-
-        </div>
-{{-- BARIS BAWAH: VISI MISI (DIATASIN SEDIKIT / JARAK LEBIH PAS) --}}
-<div class="pt-2 lg:pt-4 flex flex-col sm:flex-row items-start sm:items-center gap-6 lg:gap-8">
-    
-    {{-- Pill Button Visi Misi --}}
-    <span class="inline-flex items-center justify-center bg-[#a4864b] text-white font-medium text-base sm:text-lg px-9 py-3 rounded-full shrink-0 shadow-sm">
-        Visi Misi
-    </span>
-
-    {{-- Teks Deskripsi Visi Misi --}}
-    <p class="text-sm sm:text-base text-gray-700 leading-relaxed max-w-3xl">
-        Menjadi penyedia jasa catering Nusantara terpercaya yang menyajikan hidangan autentik berkualitas tinggi melalui pelayanan profesional, higienis, dan inovatif demi kepuasan pelanggan di setiap acara.
-    </p>
-</div>
-
-    </div>
-</section>
-     
-<!-- ========================================== -->
-<!-- 4. SECTION PAKET KAMI (Full Dynamic & Interaktif) -->
-<!-- ========================================== -->
-<section id="paket" class="scroll-mt-24 py-24 bg-white relative" 
-    x-data="{ 
-        activeCategory: 'semua',
-        selectedProduct: null,
-        isModalOpen: false,
-        portion: 1,
-        address: '',
-        
-        openModal(product) {
-            this.selectedProduct = product;
-            this.portion = product.min_order ? parseInt(product.min_order) : 1;
-            this.address = '';
-            this.isModalOpen = true;
-            document.body.classList.add('overflow-hidden');
-        },
-        closeModal() {
-            this.isModalOpen = false;
-            document.body.classList.remove('overflow-hidden');
-        },
-        incrementPortion() {
-            this.portion++;
-        },
-        decrementPortion() {
-            let min = this.selectedProduct && this.selectedProduct.min_order ? parseInt(this.selectedProduct.min_order) : 1;
-            if (this.portion > min) {
-                this.portion--;
-            }
-        },
-        addToCart() {
-            if (this.selectedProduct) {
-                let itemPayload = {
-                    ...this.selectedProduct,
-                    qty: this.portion,
-                    address_note: this.address
-                };
-                if (window.Alpine && Alpine.store('cart')) {
-                    Alpine.store('cart').addItem(itemPayload);
-                }
-                this.closeModal();
-            }
-        }
-    }">
-
-    <div class="max-w-[1340px] mx-auto px-6 sm:px-10 lg:px-16 w-full space-y-12">
-
-        {{-- HEADLINE SECTION PAKET --}}
-        <div class="text-left">
-            <div class="flex flex-col items-start pt-2">
-                <h2 class="font-['Perandory','Playfair_Display',serif] text-6xl sm:text-7xl lg:text-[84px] tracking-wider text-[#a4864b] uppercase leading-none">
-                    PAKET
-                </h2>
-                <div class="flex items-center gap-4 mt-2 w-full max-w-[280px]">
-                    <span class="text-base sm:text-lg font-medium tracking-[0.3em] text-gray-600 uppercase shrink-0">
-                        KAMI
+                    <span class="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#e4c990] font-medium transition-colors duration-300" id="nav-brand-sub">
+                        Cita Rasa Autentik
                     </span>
-                    <div class="flex-1 h-[2.5px] bg-black"></div>
                 </div>
-            </div>
-        </div>
+            </a>
 
-        {{-- FILTER PIL CAPSULE INTERAKTIF (4 KATEGORI UTAMA + SEMUA) --}}
-        <div class="flex flex-wrap items-center gap-3 sm:gap-4 pt-2">
-            @php
-                $filters = [
-                    'semua' => 'Semua',
-                    'gold' => 'Gold',
-                    'silver' => 'Silver',
-                    'premium' => 'Premium',
-                    'tumpeng' => 'Tumpeng'
-                ];
-            @endphp
+            {{-- Link Navigasi Bahasa Indonesia (Font Size Diperbesar & Jelas) --}}
+            <nav id="nav-menu" class="hidden md:flex items-center gap-7 lg:gap-9 text-sm lg:text-[15px] font-semibold tracking-wide">
+                <a href="#beranda" class="nav-item text-white/90 hover:text-white transition-colors duration-200">
+                    Beranda
+                </a>
+                <a href="#tentang-kami" class="nav-item text-white/90 hover:text-white transition-colors duration-200">
+                    Tentang Kami
+                </a>
+                <a href="#paket" class="nav-item text-white/90 hover:text-white transition-colors duration-200">
+                    Paket Menu
+                </a>
+                <a href="#galeri" class="nav-item text-white/90 hover:text-white transition-colors duration-200">
+                    Galeri
+                </a>
+                <a href="#testimoni" class="nav-item text-white/90 hover:text-white transition-colors duration-200">
+                    Testimoni
+                </a>
+                <a href="#cara_pemesanan" class="nav-item text-white/90 hover:text-white transition-colors duration-200">
+                    Cara Order
+                </a>
+            </nav>
 
-            @foreach($filters as $key => $label)
-                <button type="button" 
-                    @click="activeCategory = '{{ $key }}'"
-                    :class="activeCategory === '{{ $key }}' 
-                        ? 'bg-[#a4864b] text-white shadow-sm' 
-                        : 'bg-white text-[#a4864b] border-[1.5px] border-[#a4864b]/70 hover:bg-orange-50/40'"
-                    class="inline-flex items-center justify-center font-medium text-base sm:text-lg px-8 py-2.5 rounded-full shrink-0 transition-all duration-200 cursor-pointer">
-                    {{ $label }}
-                </button>
-            @endforeach
-        </div>
-
-        {{-- GRID KATALOG PRODUK --}}
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
-            @forelse($products ?? [] as $product)
-                @php
-                    // Helper slug dari category & tier backend
-                    $catSlug = Str::slug($product->package_category ?? '');
-                    $tierSlug = Str::slug($product->tier ?? '');
-                    $nameSlug = Str::slug($product->name ?? '');
-                @endphp
-
-                {{-- CARD UTAMA --}}
-                <div 
-                    x-show="activeCategory === 'semua' || '{{ $catSlug }}'.includes(activeCategory) || '{{ $tierSlug }}'.includes(activeCategory) || '{{ $nameSlug }}'.includes(activeCategory)"
-                    x-transition:enter="transition ease-out duration-300 transform"
-                    x-transition:enter-start="opacity-0 scale-95"
-                    x-transition:enter-end="opacity-100 scale-100"
-                    @click="openModal({{ json_encode($product) }})"
-                    class="bg-white rounded-3xl overflow-hidden border border-gray-100/80 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer group flex flex-col p-4">
-                    
-                    {{-- Container Foto Menjorok (Inset) --}}
-                    <div class="relative aspect-[1/1] w-full rounded-[2.2rem] overflow-hidden bg-gray-100">
-                        @if($product->image)
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        @else
-                            <div class="w-full h-full flex items-center justify-center text-gray-400 text-xs font-medium bg-gray-50">
-                                Tidak Ada Foto
-                            </div>
-                        @endif
-                    </div>
-
-                    {{-- INFORMASI PRODUK --}}
-                    <div class="pt-5 px-1 flex flex-col space-y-3">
-                        <div class="space-y-1">
-                            <h3 class="font-bold text-gray-900 text-[17px] leading-tight line-clamp-1 group-hover:text-[#a4864b] transition">
-                                {{ $product->name }}
-                            </h3>
-                            <p class="text-xl font-extrabold text-[#a4864b] leading-none">
-                                Rp {{ number_format($product->price, 0, ',', '.') }}<span class="text-[11px] text-gray-400 font-normal pl-1">/ pax</span>
-                            </p>
-                        </div>
-
-                        <div class="w-full h-px bg-gray-100"></div>
-
-                        {{-- Minimal Order & Menu Utama --}}
-                        <div class="flex items-start justify-between gap-3 text-gray-700 pt-1">
-                            <div class="flex items-start gap-1.5 min-w-[75px]">
-                                <svg class="w-4 h-4 text-[#a4864b] mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13h2l3 9l9-18l3 9h2" />
-                                </svg>
-                                <div class="text-[10px] leading-tight">
-                                    <span class="font-normal text-gray-400 block">Min Order</span>
-                                    <p class="font-bold text-gray-800">{{ $product->min_order ?? '1' }} porsi</p>
-                                </div>
-                            </div>
-                            
-                            <div class="w-px h-6 bg-gray-100 shrink-0 mt-1"></div>
-
-                            <div class="flex-1 flex items-start gap-1.5 overflow-hidden">
-                                <svg class="w-4 h-4 text-[#a4864b] mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                                </svg>
-                                <div class="text-[10px] leading-tight flex-1">
-                                    <span class="font-normal text-gray-400 block">Menu Utama</span>
-                                    <p class="font-bold text-gray-800 line-clamp-1">{{ $product->main_menu ?? '-' }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            @empty
-                <div class="col-span-full py-20 text-center text-gray-400 bg-white rounded-3xl border border-dashed border-gray-200">
-                    Belum ada paket menu yang tersedia.
-                </div>
-            @endforelse
-        </div>
-
-    </div>
-
-    <!-- ========================================== -->
-    <!-- POP-UP MODAL DETAIL PAKET (GLASSMORPHISM)  -->
-    <!-- ========================================== -->
-    <div x-show="isModalOpen" 
-        x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0" 
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-200" 
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/40 backdrop-blur-md"
-        style="display: none;">
-
-        {{-- Background Overlay Click to Close --}}
-        <div class="absolute inset-0" @click="closeModal()"></div>
-
-        {{-- Kartu Modal Glassmorphism --}}
-        <div class="relative w-full max-w-3xl bg-white/90 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl z-10 my-auto border border-white/40 transform transition-all"
-            @click.stop>
-
-            {{-- Button X Close --}}
-            <button @click="closeModal()"
-                class="absolute top-4 right-4 z-20 bg-gray-100 hover:bg-gray-200 text-gray-600 w-9 h-9 rounded-full flex items-center justify-center transition cursor-pointer">
-                ✕
-            </button>
-
-            <template x-if="selectedProduct">
-                <div class="grid grid-cols-1 md:grid-cols-12 items-stretch">
-                    
-                    {{-- FOTO PRODUK (SEBELAH KIRI - DIPERBESAR) --}}
-                    <div class="md:col-span-5 relative min-h-[260px] md:min-h-full bg-gray-100">
-                        <img :src="selectedProduct.image ? '/storage/' + selectedProduct.image : '/images/herobaru.jpg'"
-                            :alt="selectedProduct.name" 
-                            class="w-full h-full object-cover">
-                    </div>
-
-                    {{-- DESKRIPSI & FORM KALKULATOR (SEBELAH KANAN) --}}
-                    <div class="md:col-span-7 p-6 sm:p-8 space-y-5 text-left flex flex-col justify-between">
-                        
-                        <div class="space-y-3">
-                            {{-- Header Detail --}}
-                            <div>
-                                <span class="text-[11px] uppercase font-bold tracking-wider text-[#a4864b] block mb-1"
-                                    x-text="selectedProduct.package_category || 'Katalog Catering'"></span>
-                                <h3 class="text-2xl font-extrabold text-gray-900 leading-snug"
-                                    x-text="selectedProduct.name"></h3>
-                                <p class="text-xl font-bold text-[#a4864b] mt-1">
-                                    Rp <span x-text="new Intl.NumberFormat('id-ID').format(selectedProduct.price)"></span>
-                                    <span class="text-xs font-normal text-gray-400">/ pax</span>
-                                </p>
-                            </div>
-
-                            {{-- Deskripsi Ringkas / Menu Utama --}}
-                            <div class="text-xs text-gray-600 space-y-1 pt-2 border-t border-gray-200/60">
-                                <span class="font-bold text-gray-800 block">Daftar Menu Utama:</span>
-                                <p class="bg-gray-50/80 p-3 rounded-xl border border-gray-100 leading-relaxed"
-                                    x-text="selectedProduct.main_menu || 'Menu lezat pilihan khas Nusantara.'"></p>
-                            </div>
-
-                            {{-- Pilihan Porsi (Tambah / Kurang) --}}
-                            <div class="pt-2">
-                                <label class="text-xs font-bold text-gray-800 block mb-1.5">Jumlah Porsi:</label>
-                                <div class="flex items-center gap-3">
-                                    <div class="inline-flex items-center border border-gray-200 rounded-full bg-white p-1">
-                                        <button type="button" @click="decrementPortion()"
-                                            class="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold flex items-center justify-center transition">
-                                            -
-                                        </button>
-                                        <span class="px-4 font-bold text-sm text-gray-900" x-text="portion"></span>
-                                        <button type="button" @click="incrementPortion()"
-                                            class="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold flex items-center justify-center transition">
-                                            +
-                                        </button>
-                                    </div>
-                                    <span class="text-xs text-gray-400" x-text="'Min. ' + (selectedProduct.min_order || 1) + ' porsi'"></span>
-                                </div>
-                            </div>
-
-                            {{-- Form Alamat Pengiriman (Opsional) --}}
-                            <div class="pt-1">
-                                <label class="text-xs font-bold text-gray-800 block mb-1">Catatan / Alamat Pengiriman (Opsional):</label>
-                                <input type="text" x-model="address" placeholder="Masukkan alamat lokasi acara Anda..."
-                                    class="w-full px-3.5 py-2 text-xs rounded-xl border border-gray-200 focus:outline-none focus:border-[#a4864b] bg-white/70">
-                            </div>
-                        </div>
-
-                        {{-- TOTAL ESTIMASI & BUTTON KERANJANG --}}
-                        <div class="pt-4 border-t border-gray-200/60 space-y-3">
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="font-medium text-gray-500">Total Estimasi:</span>
-                                <span class="text-lg font-extrabold text-[#a4864b]">
-                                    Rp <span x-text="new Intl.NumberFormat('id-ID').format(selectedProduct.price * portion)"></span>
-                                </span>
-                            </div>
-
-                            <button type="button" @click="addToCart()"
-                                class="w-full bg-[#a4864b] hover:bg-[#8e733f] text-white font-bold text-sm py-3 px-6 rounded-full transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                                <span>+ Masukkan Keranjang</span>
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-            </template>
-
-        </div>
-    </div>
-
-</section>
-
-<!-- ========================================== -->
-<!-- 5. SECTION GALERI KAMI (Premium Nusantara Look) -->
-<!-- ========================================== -->
-<!-- Background solid #a4864b -->
-<section id="galeri" class="py-24 bg-[] relative overflow-hidden group">
-    
-    {{-- EFEK LATAR BELAKANG: OVERLAY POLA BATIK TRANSPARAN HALUS --}}
-    <!-- Memberikan tekstur elegan agar background tidak polos, namun tetap clean -->
-    <div class="absolute inset-0 opacity-[0.04] pointer-events-none z-0" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIj48ZyBmaWxsPSIjMDAwMDAwIiBmaWxsLW9wYWNpdHk9IjEuMCI+PHBhdGggZD0iTTAgMGg4MHY4MEgwVjB6bTQwIDQwSDB2NDBoNDBWNDB6bTAgMEg4MFYwaDQwVjQwSDB6bTQwIDQwSDB2NDBoNDBWNzB6bTAgMEg4MFY4MEg0MFY0MHoiLz48L2c+PC9zdmc+');"></div>
-
-    <!-- Container untuk Header Teks (Rata Tengah Atas) -->
-    <div class="max-w-[1340px] mx-auto px-6 sm:px-10 lg:px-16 w-full relative z-10 mb-20 text-center flex flex-col items-center">
-        {{-- Gaya Judul Baru: Minimalis, Hitam, Rata Tengah --}}
-        <span class="text-sm sm:text-base font-semibold tracking-[0.4em] text-gray-950 uppercase block mb-3">
-            - GALERI KAMI -
-        </span>
-        <h2 class="font-['Perandory','Playfair_Display',serif] text-4xl sm:text-5xl lg:text-6xl text-gray-950 leading-tight max-w-2xl">
-            Momen Kehangatan dalam Setiap Hidangan
-        </h2>
-        {{-- Garis dekoratif kecil --}}
-        <div class="w-20 h-1 bg-gray-950 rounded-full mt-6 opacity-80"></div>
-    </div>
-
-    <!-- CONTAINER GALERI FOTO (Layout Clean & Premium) -->
-    <div class="relative w-full z-10 space-y-8">
-
-        {{-- BARIS FOTO ATAS: GESER KE KANAN --}}
-        <!-- hover:paused dihilangkan dari sini, agar section tidak menghentikan scroll -->
-        <div class="relative w-full overflow-hidden flex items-center">
-            <!-- Container Animasi -->
-            <div class="flex items-center space-x-6 shrink-0 animation-scroll-r w-[200%] sm:w-[150%]">
-                @for ($i = 0; $i < 2; $i++) {{-- Loop 2x untuk tak terputus --}}
-                    {{-- Setiap item card foto --}}
-                    <!-- Tambahkan kelas hover:paused secara spesifik di card foto -->
-                    <div class="shrink-0 aspect-[4/3] w-[280px] sm:w-[320px] rounded-3xl overflow-hidden shadow-2xl shadow-black/20 hover:scale-105 hover:paused transition-all duration-500 cursor-pointer border-4 border-white/90">
-                        <img src="{{ asset('images/PaketPremiumChickenSalted.png') }}" alt="Galeri Baris Atas {{ $i * 4 + 1 }}"
-                            class="w-full h-full object-cover">
-                    </div>
-                    <div class="shrink-0 aspect-[4/3] w-[280px] sm:w-[320px] rounded-3xl overflow-hidden shadow-2xl shadow-black/20 hover:scale-105 hover:paused transition-all duration-500 cursor-pointer border-4 border-white/90">
-                        <img src="{{ asset('images/PaketGoldAyamBakar.png') }}" alt="Galeri Baris Atas {{ $i * 4 + 2 }}"
-                            class="w-full h-full object-cover">
-                    </div>
-                    <div class="shrink-0 aspect-[4/3] w-[280px] sm:w-[320px] rounded-3xl overflow-hidden shadow-2xl shadow-black/20 hover:scale-105 hover:paused transition-all duration-500 cursor-pointer border-4 border-white/90">
-                        <img src="{{ asset('images/PaketGoldAyamSerundeng.png') }}" alt="Galeri Baris Atas {{ $i * 4 + 3 }}"
-                            class="w-full h-full object-cover">
-                    </div>
-                    <div class="shrink-0 aspect-[4/3] w-[280px] sm:w-[320px] rounded-3xl overflow-hidden shadow-2xl shadow-black/20 hover:scale-105 hover:paused transition-all duration-500 cursor-pointer border-4 border-white/90">
-                        <img src="{{ asset('images/PaketSilverAyamBakar.png') }}" alt="Galeri Baris Atas {{ $i * 4 + 4 }}"
-                            class="w-full h-full object-cover">
-                    </div>
-                @endfor
-            </div>
-        </div>
-
-        {{-- BARIS FOTO BAWAH: GESER KE KIRI --}}
-        <!-- hover:paused dihilangkan dari sini -->
-        <div class="relative w-full overflow-hidden flex items-center">
-            <!-- Container Animasi -->
-            <div class="flex items-center space-x-6 shrink-0 animation-scroll-l w-[200%] sm:w-[150%]">
-                @for ($i = 0; $i < 2; $i++) {{-- Loop 2x untuk tak terputus --}}
-                    {{-- Setiap item card foto --}}
-                    <!-- Tambahkan kelas hover:paused secara spesifik di card foto -->
-                    <div class="shrink-0 aspect-[4/3] w-[280px] sm:w-[320px] rounded-3xl overflow-hidden shadow-2xl shadow-black/20 hover:scale-105 hover:paused transition-all duration-500 cursor-pointer border-4 border-white/90">
-                        <img src="{{ asset('images/PaketGoldAyamTeriyaki.png') }}" alt="Galeri Baris Bawah {{ $i * 4 + 1 }}"
-                            class="w-full h-full object-cover">
-                    </div>
-                    <div class="shrink-0 aspect-[4/3] w-[280px] sm:w-[320px] rounded-3xl overflow-hidden shadow-2xl shadow-black/20 hover:scale-105 hover:paused transition-all duration-500 cursor-pointer border-4 border-white/90">
-                        <img src="{{ asset('images/PaketGoldChickenPop.png') }}" alt="Galeri Baris Bawah {{ $i * 4 + 2 }}"
-                            class="w-full h-full object-cover">
-                    </div>
-                    <div class="shrink-0 aspect-[4/3] w-[280px] sm:w-[320px] rounded-3xl overflow-hidden shadow-2xl shadow-black/20 hover:scale-105 hover:paused transition-all duration-500 cursor-pointer border-4 border-white/90">
-                        <img src="{{ asset('images/NasiPasundaanAyamSuir.png') }}" alt="Galeri Baris Bawah {{ $i * 4 + 3 }}"
-                            class="w-full h-full object-cover">
-                    </div>
-                    <div class="shrink-0 aspect-[4/3] w-[280px] sm:w-[320px] rounded-3xl overflow-hidden shadow-2xl shadow-black/20 hover:scale-105 hover:paused transition-all duration-500 cursor-pointer border-4 border-white/90">
-                        <img src="{{ asset('images/PaketSilverAyamLadaHitam.png') }}" alt="Galeri Baris Bawah {{ $i * 4 + 4 }}"
-                            class="w-full h-full object-cover">
-                    </div>
-                @endfor
-            </div>
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ========================================== -->
-<!-- 🌟 SECTION TESTIMONI (Clean & Minimalis)   -->
-<!-- ========================================== -->
-<section id="testimoni"
-    class="scroll-mt-24 pt-24 pb-32 sm:pb-40 bg-gradient-to-b from-white via-orange-50/10 to-orange-50/30 relative overflow-hidden group"
-    x-data="{
-        testimonials: [
-            { id: 1, name: 'Bpk. Hendra Kurnia', event: 'Gathering Kantor', comment: 'Nasi box-nya sangat komplit, rasa rempah Nusantara autentik dan ayam bakarnya empuk meresap. Pengantaran tepat waktu sebelum acara.' },
-            { id: 2, name: 'Ibu Dewi Lestari', event: 'Acara Lamaran', comment: 'Pelayanan sangat profesional dari konsultasi sampai selesai. Tumpeng mini dan prasmanan dipuji oleh semua tamu keluarga.' },
-            { id: 3, name: 'Rizky & Dinda', event: 'Resepsi Pernikahan', comment: 'Paket prasmanan pernikahan sangat memuaskan. Makanan selalu hangat, tertata mewah, dan porsi aman sampai akhir acara.' },
-            { id: 4, name: 'Siti Aminah', event: 'Syukuran Rumah', comment: 'Tumpeng Komplit Nusantara hiasannya cantik sekali, rasanya gurih pulen, dan sambal goreng hatinya benar-benar juara!' }
-        ],
-        currentIndex: 0,
-        intervalTimer: null,
-        isPaused: false,
-
-        init() { this.startAutoScroll(); },
-        startAutoScroll() {
-            this.stopAutoScroll();
-            this.intervalTimer = setInterval(() => { 
-                if (!this.isPaused) this.nextTestimonial(); 
-            }, 5000);
-        },
-        stopAutoScroll() { if (this.intervalTimer) clearInterval(this.intervalTimer); },
-        nextTestimonial() { this.currentIndex = (this.currentIndex + 1) % this.testimonials.length; },
-        prevTestimonial() { this.currentIndex = (this.currentIndex - 1 + this.testimonials.length) % this.testimonials.length; },
-        goTo(index) { this.currentIndex = index; }
-    }">
-
-    {{-- Background Ornament Blur --}}
-    <div class="absolute -top-32 -left-24 w-[500px] h-[500px] bg-orange-100/40 rounded-full blur-3xl pointer-events-none z-0"></div>
-    <div class="absolute -bottom-32 -right-24 w-[500px] h-[500px] bg-amber-100/30 rounded-full blur-3xl pointer-events-none z-0"></div>
-
-    <div class="max-w-[1000px] mx-auto px-6 sm:px-10 lg:px-16 w-full space-y-12 relative z-10">
-
-        {{-- HEADLINE SECTION: RATA TENGAH MINIMALIS --}}
-        <div class="text-center flex flex-col items-center">
-            <span class="text-sm sm:text-base font-semibold tracking-[0.4em] text-gray-950 uppercase block mb-3">
-                - APA KATA MEREKA -
-            </span>
-            <h2 class="font-['Perandory','Playfair_Display',serif] text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-950 leading-tight max-w-2xl">
-                Kepuasan Anda, Kebanggaan Bagi Kami
-            </h2>
-            <div class="w-20 h-1 bg-gray-950 rounded-full mt-6 opacity-80"></div>
-        </div>
-
-        {{-- SHOWCASE TESTIMONI BERGANTIAN (CARD UTAMA RATA TENGAH) --}}
-        <div class="w-full flex flex-col" @mouseenter="isPaused = true" @mouseleave="isPaused = false">
-            <div class="relative w-full bg-white rounded-[32px] sm:rounded-[40px] p-8 sm:p-14 border border-orange-100/70 shadow-xl shadow-orange-950/5 overflow-hidden flex flex-col justify-between min-h-[320px] sm:min-h-[360px]">
-
-                {{-- Watermark Quote Icon --}}
-                <div class="absolute top-8 right-10 text-[#a4864b] pointer-events-none select-none opacity-10">
-                    <svg class="w-24 h-24 fill-current" viewBox="0 0 32 32">
-                        <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-2.2 1.8-4 4-4V8h-2zm14 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-2.2 1.8-4 4-4V8h-2z" />
+            {{-- Tombol Keranjang Belanja (Kanan) --}}
+            <div class="flex items-center gap-3">
+                <button type="button" @click="$store.cart.toggle()" id="nav-cart-btn"
+                    class="relative p-2.5 sm:p-3 rounded-full text-white hover:bg-white/15 transition-all flex items-center justify-center cursor-pointer border border-white/20"
+                    title="Buka Keranjang">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
-                </div>
-
-                {{-- Indikator Urutan Ulasan --}}
-                <div class="flex items-center justify-between z-10 mb-4">
-                    <span class="inline-flex items-center gap-2 text-xs font-bold text-[#a4864b] uppercase tracking-widest bg-orange-50/80 px-4 py-1.5 rounded-full border border-orange-200/50">
-                        <span class="w-2 h-2 rounded-full bg-[#a4864b] animate-ping"></span>
-                        Ulasan Pelanggan
+                    <span x-show="$store.cart && $store.cart.totalCount > 0"
+                        x-text="$store.cart ? $store.cart.totalCount : 0"
+                        class="absolute -top-1 -right-1 bg-[#a4864b] text-white text-[10px] font-bold h-4 min-w-[18px] px-1 rounded-full flex items-center justify-center"
+                        style="display: none;">
                     </span>
-                    <span class="text-xs font-bold text-gray-400">
-                        <span x-text="currentIndex + 1" class="text-gray-900 font-extrabold text-sm"></span> /
-                        <span x-text="testimonials.length"></span>
-                    </span>
-                </div>
-
-                {{-- KONTEN TESTIMONI (TEKS & NAMA SAJA) --}}
-                <div class="relative flex-1 flex flex-col justify-center my-4 z-10">
-                    <template x-for="(testi, index) in testimonials" :key="testi.id">
-                        <div x-show="currentIndex === index"
-                            x-transition:enter="transition ease-out duration-500 transform"
-                            x-transition:enter-start="opacity-0 translate-y-4 scale-98"
-                            x-transition:enter-end="opacity-100 translate-y-0 scale-100"
-                            x-transition:leave="transition ease-in duration-300 transform absolute inset-0"
-                            x-transition:leave-start="opacity-100 translate-y-0 scale-100"
-                            x-transition:leave-end="opacity-0 -translate-y-4 scale-98"
-                            class="w-full space-y-6">
-
-                            {{-- Isi Komentar/Pesan --}}
-                            <blockquote class="text-gray-800 text-lg sm:text-2xl font-medium leading-relaxed italic pr-4">
-                                &ldquo;<span x-text="testi.comment"></span>&rdquo;
-                            </blockquote>
-
-                            {{-- Nama Pengirim & Info Acara (Tanpa Foto) --}}
-                            <div class="pt-4 border-t border-gray-100/80 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                                <div>
-                                    <h4 class="font-extrabold text-gray-900 text-lg sm:text-xl leading-tight" x-text="testi.name"></h4>
-                                    <p class="text-[#a4864b] text-xs sm:text-sm font-semibold mt-0.5" x-text="testi.event"></p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </template>
-                </div>
-
-                {{-- KONTROL NAVIGASI (DOTS & BUTTON PREV/NEXT) --}}
-                <div class="flex items-center justify-between pt-6 border-t border-gray-100/80 z-10">
-                    {{-- Dots Pagination --}}
-                    <div class="flex items-center gap-2">
-                        <template x-for="(testi, index) in testimonials" :key="'dot-' + testi.id">
-                            <button type="button" @click="goTo(index)" :title="'Testimoni ' + (index + 1)"
-                                class="h-2.5 rounded-full transition-all duration-300 cursor-pointer"
-                                :class="currentIndex === index ? 'w-8 bg-[#a4864b]' : 'w-2.5 bg-gray-200 hover:bg-[#a4864b]/40'"></button>
-                        </template>
-                    </div>
-
-                    {{-- Tombol Prev & Next --}}
-                    <div class="flex items-center gap-2.5">
-                        <button type="button" @click="prevTestimonial()" title="Sebelumnya"
-                            class="w-10 h-10 rounded-full bg-gray-50 hover:bg-[#a4864b] text-gray-600 hover:text-white border border-gray-200/80 flex items-center justify-center transition-all cursor-pointer shadow-sm active:scale-95">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
-                        </button>
-                        <button type="button" @click="nextTestimonial()" title="Berikutnya"
-                            class="w-10 h-10 rounded-full bg-orange-50 hover:bg-[#a4864b] text-[#a4864b] hover:text-white border border-orange-200 flex items-center justify-center transition-all cursor-pointer shadow-sm active:scale-95">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
-                        </button>
-                    </div>
-                </div>
-
+                </button>
             </div>
+
+        </div>
+    </header>
+
+    <!-- ========================================================= -->
+    <!-- 👑 3. SECTION BERANDA DENGAN FILMSTRIP BERGERAK (HERO)    -->
+    <!-- ========================================================= -->
+    @php
+        // =========================================================
+        // 🎞️ SLOT INPUT FOTO FILMSTRIP BERANDA (Bisa Diganti/Tambah)
+        // =========================================================
+        $filmstripCol1 = [
+            'images/PaketGoldAyamBakar.png',
+            'images/PaketPremiumChickenSalted.png',
+            'images/Tumpeng.png',
+            'images/Kebuli.png',
+            'images/NasiPasundaanAyamSuir.png',
+            'images/PaketGoldAyamSerundeng.png',
+        ];
+
+        $filmstripCol2 = [
+            'images/PaketSilverAyamBakar.png',
+            'images/PaketGoldAyamTeriyaki.png',
+            'images/TumpengMini.png',
+            'images/PaketGoldChickenPop.png',
+            'images/Box.png',
+            'images/PaketSilverAyamLadaHitam.png',
+        ];
+
+        $filmstripCol3 = [
+            'images/PaketPremiumChickenSalted.png',
+            'images/NasiPasundaanAyamSuir.png',
+            'images/PaketGoldAyamBakar.png',
+            'images/Tumpeng.png',
+            'images/tentangNusantara.png',
+            'images/Kebuli.png',
+        ];
+
+        $filmstripCol4 = [
+            'images/PaketGoldAyamTeriyaki.png',
+            'images/PaketSilverAyamBakar.png',
+            'images/TumpengMini.png',
+            'images/PaketGoldChickenPop.png',
+            'images/PaketGoldAyamSerundeng.png',
+            'images/Box.png',
+        ];
+    @endphp
+
+    <section id="beranda"
+        class="relative min-h-[92vh] lg:min-h-screen flex flex-col justify-between overflow-hidden bg-[#0d0805] rounded-b-2xl sm:rounded-b-3xl lg:rounded-b-[36px] shadow-2xl z-20">
+
+        <!-- 🎞️ BACKGROUND: MULTI-COLUMN FILMSTRIP GRID (Border Radius Kecil & Rapi) -->
+        <div class="absolute -inset-x-24 -inset-y-36 flex justify-center gap-4 sm:gap-6 transform -rotate-6 sm:-rotate-12 pointer-events-none opacity-40 sm:opacity-45 scale-110">
+            
+            {{-- Kolom 1 (Bergerak ke Atas) --}}
+            <div class="flex flex-col gap-4 sm:gap-6 animate-filmstrip-up-1 shrink-0">
+                @for ($loop1 = 0; $loop1 < 2; $loop1++)
+                    @foreach ($filmstripCol1 as $img)
+                        <div class="aspect-[4/5] w-[180px] sm:w-[240px] lg:w-[270px] rounded-lg sm:rounded-xl overflow-hidden bg-neutral-900 border-2 border-black/80 shadow-2xl shrink-0">
+                            <img src="{{ asset($img) }}" alt="Menu" class="w-full h-full object-cover filter brightness-90 contrast-105"
+                                onerror="this.src='/image/herobaru.jpg';">
+                        </div>
+                    @endforeach
+                @endfor
+            </div>
+
+            {{-- Kolom 2 (Bergerak ke Bawah) --}}
+            <div class="flex flex-col gap-4 sm:gap-6 animate-filmstrip-down-1 shrink-0">
+                @for ($loop2 = 0; $loop2 < 2; $loop2++)
+                    @foreach ($filmstripCol2 as $img)
+                        <div class="aspect-[4/5] w-[180px] sm:w-[240px] lg:w-[270px] rounded-lg sm:rounded-xl overflow-hidden bg-neutral-900 border-2 border-black/80 shadow-2xl shrink-0">
+                            <img src="{{ asset($img) }}" alt="Menu" class="w-full h-full object-cover filter brightness-90 contrast-105"
+                                onerror="this.src='/image/herobaru.jpg';">
+                        </div>
+                    @endforeach
+                @endfor
+            </div>
+
+            {{-- Kolom 3 (Bergerak ke Atas) --}}
+            <div class="flex flex-col gap-4 sm:gap-6 animate-filmstrip-up-2 shrink-0 hidden sm:flex">
+                @for ($loop3 = 0; $loop3 < 2; $loop3++)
+                    @foreach ($filmstripCol3 as $img)
+                        <div class="aspect-[4/5] w-[180px] sm:w-[240px] lg:w-[270px] rounded-lg sm:rounded-xl overflow-hidden bg-neutral-900 border-2 border-black/80 shadow-2xl shrink-0">
+                            <img src="{{ asset($img) }}" alt="Menu" class="w-full h-full object-cover filter brightness-90 contrast-105"
+                                onerror="this.src='/image/herobaru.jpg';">
+                        </div>
+                    @endforeach
+                @endfor
+            </div>
+
+            {{-- Kolom 4 (Bergerak ke Bawah) --}}
+            <div class="flex flex-col gap-4 sm:gap-6 animate-filmstrip-down-2 shrink-0 hidden md:flex">
+                @for ($loop4 = 0; $loop4 < 2; $loop4++)
+                    @foreach ($filmstripCol4 as $img)
+                        <div class="aspect-[4/5] w-[180px] sm:w-[240px] lg:w-[270px] rounded-lg sm:rounded-xl overflow-hidden bg-neutral-900 border-2 border-black/80 shadow-2xl shrink-0">
+                            <img src="{{ asset($img) }}" alt="Menu" class="w-full h-full object-cover filter brightness-90 contrast-105"
+                                onerror="this.src='/image/herobaru.jpg';">
+                        </div>
+                    @endforeach
+                @endfor
+            </div>
+
         </div>
 
-    </div>
-</section>
+        <!-- 🖤 MULTI-LAYER DARK GRADIENT OVERLAY (Mencegah Teks Tertutup Foto) -->
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0d0805]/90 via-[#0d0805]/70 to-[#0d0805]/95 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_15%,_#0d0805_90%)] pointer-events-none"></div>
 
+        <!-- ✍️ FOREGROUND HERO TYPOGRAPHY (Bahasa Indonesia & Font Size Diperbesar) -->
+        <div class="relative z-30 max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 w-full text-center my-auto pt-36 sm:pt-44 pb-16 space-y-6 sm:space-y-8">
+            
+            {{-- Top Subhead --}}
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15">
+                <span class="text-xs sm:text-sm font-semibold tracking-[0.25em] text-[#e4c990] uppercase">
+                    ✦ Sajian Autentik untuk Setiap Momen Istimewa ✦
+                </span>
+            </div>
 
-    <section id="cara_pemesanan" class="py-24 bg-white relative">
-        <div class="max-w-[1280px] mx-auto px-6 md:px-12 w-full space-y-12">
-
-            {{-- HEADLINE SECTION CARA PEMESANAN --}}
-            <div class="text-left space-y-3">
-                <div class="inline-flex items-center gap-2">
-                    <span class="text-xs uppercase tracking-widest font-bold text-[#f6a11a]">CARA PEMESANAN</span>
-                    <span class="w-8 h-[2px] bg-[#f6a11a] rounded-full"></span>
-                </div>
-                <h2 class="text-2xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
-                    Langkah Mudah Memesan
-                </h2>
-                <p class="text-gray-500 text-sm sm:text-base max-w-xl">
-                    Ikuti 3 langkah praktis berikut untuk memesan menu catering favorit Anda.
+            {{-- Giant Script / Serif Hero Title (Diperbesar & Disesuaikan) --}}
+            <div class="space-y-3">
+                <h1 class="font-['Playfair_Display',serif] italic font-normal text-8xl sm:text-[120px] lg:text-[150px] xl:text-[170px] text-white leading-[0.88] tracking-tight drop-shadow-2xl">
+                    Catering
+                </h1>
+                <p class="text-xs sm:text-base lg:text-lg font-extrabold tracking-[0.35em] sm:tracking-[0.45em] text-[#e4c990] uppercase pt-2">
+                    &amp; Kuliner Pernikahan Nusantara
                 </p>
             </div>
 
-            {{-- 3 CARDS STEP CONTAINER --}}
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {{-- Hero Description in Indonesian (Enlarged) --}}
+            <p class="text-white/95 text-base sm:text-xl lg:text-2xl font-light leading-relaxed max-w-3xl mx-auto">
+                Menghadirkan kelezatan warisan kuliner Indonesia dengan bahan segar berkualitas, penyajian higienis, dan pelayanan terpercaya untuk pesta pernikahan, jamuan kantor, dan syukuran keluarga.
+            </p>
 
-                <!-- Card 1 -->
-                <div
-                    class="bg-white rounded-3xl p-8 border border-gray-100 shadow-[0_10px_30px_rgba(0,0,0,0.04)] relative flex flex-col items-center text-center group hover:shadow-[0_15px_35px_rgba(246,161,26,0.1)] transition-all duration-300">
-                    <!-- Badge Number -->
-                    <div
-                        class="absolute top-6 left-6 w-9 h-9 rounded-full bg-[#f6a11a] text-white font-bold text-sm flex items-center justify-center shadow-md">
-                        01
+            {{-- Dual Action Buttons --}}
+            <div class="pt-4 flex flex-wrap items-center justify-center gap-4">
+                <a href="#paket"
+                    class="bg-[#f6a11a] hover:bg-[#e09015] text-[#0d0805] font-extrabold text-sm sm:text-base px-9 py-4 rounded-full transition-all duration-200 shadow-lg">
+                    Jelajahi Paket Menu
+                </a>
+                <a href="https://wa.me/628561155113?text=Halo%20Catering%20Nusantara,%20saya%20ingin%20berkonsultasi%20mengenai%20layanan%20catering."
+                    target="_blank"
+                    class="bg-transparent hover:bg-white/10 text-white font-semibold text-sm sm:text-base px-8 py-4 rounded-full border border-white/40 transition-all duration-200">
+                    Konsultasi via WhatsApp
+                </a>
+            </div>
+
+        </div>
+
+        <!-- ⬇️ BOTTOM HERO BAR -->
+        <div class="relative z-30 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pb-8">
+            <div class="w-full flex items-center justify-between border-t border-white/20 pt-5 text-xs sm:text-sm text-white/70 tracking-wider">
+                <div class="flex items-center gap-4 sm:gap-8 uppercase font-medium text-xs sm:text-sm">
+                    <span>Est. 2024</span>
+                    <span>•</span>
+                    <span>Tamansari, Bogor</span>
+                    <span>•</span>
+                    <span>100% Halal &amp; Higienis</span>
+                </div>
+                <a href="#tentang-kami" class="hidden sm:inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors text-xs sm:text-sm">
+                    <span>Scroll ke bawah</span>
+                    <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 📖 4. SECTION TENTANG KAMI (EXPANDED 2-PART EDITORIAL EXPERIENCE) -->
+    <!-- ================================================================= -->
+    <section id="tentang-kami" class="scroll-mt-24 py-28 lg:py-36 bg-[#fdfbf7] relative overflow-hidden">
+        
+        <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full space-y-32">
+            
+            <!-- ========================================== -->
+            <!-- BAGIAN 1: FILOSOFI KAMI (Our Philosophy)   -->
+            <!-- ========================================== -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                
+                {{-- Kolom Kiri: Heading & Cerita --}}
+                <div class="lg:col-span-6 space-y-6 reveal-on-scroll">
+                    
+                    <div class="inline-flex items-center gap-2.5 px-3.5 py-1 rounded-full bg-[#faf4ea] text-[#a4864b] text-xs font-bold uppercase tracking-wider">
+                        <span>01 / FILOSOFI &amp; CERITA KAMI</span>
                     </div>
 
-                    <!-- Image Illustration Placeholder -->
-                    <div
-                        class="w-48 h-48 rounded-full bg-orange-50/60 flex items-center justify-center my-4 overflow-hidden p-4">
-                        <img src="/image/step1.png" alt="Explore Our Menu"
-                            class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                    <h2 class="font-['Playfair_Display',serif] italic font-normal text-5xl sm:text-6xl lg:text-7xl text-neutral-900 leading-[1.08] tracking-tight">
+                        Filosofi Rasa Kami
+                    </h2>
+
+                    <div class="space-y-4 text-neutral-700 text-base sm:text-lg leading-relaxed font-light">
+                        <p>
+                            Bagi kami di <strong>Catering Nusantara</strong>, setiap masakan adalah jembatan yang menghubungkan tradisi, rasa cinta, dan kehangatan keluarga. Didirikan pada tahun 2024 oleh <strong>Eva Rudianti</strong> di Tamansari, Bogor, kami mendedikasikan diri untuk menyajikan hidangan autentik Indonesia dengan standar mutu terbaik.
+                        </p>
+                        <p>
+                            Kami memilih rempah-rempah lokal segar langsung dari petani Nusantara dan mengolahnya dengan teknik memasak perlahan (*slow-cooked tradition*) agar kelezatan bumbu meresap sempurna hingga ke serat terdalam.
+                        </p>
                     </div>
 
-                    <!-- Card Content -->
-                    <h3 class="text-lg font-bold text-[#f6a11a] mb-2">
-                        Explore Our Menu
-                    </h3>
-                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed max-w-xs">
-                        Pilih makanan yang kamu inginkan dari katalog kami.
+                    {{-- Quote Founder Box --}}
+                    <div class="pt-4 border-l-2 border-[#a4864b] pl-5 py-1">
+                        <blockquote class="font-['Playfair_Display',serif] italic text-base sm:text-lg text-neutral-800 leading-snug">
+                            &ldquo;Bagi kami, kesuksesan sebuah perayaan diukur dari senyuman puas para tamu setelah menyantap setiap suapan hidangan.&rdquo;
+                        </blockquote>
+                        <span class="text-xs font-bold text-[#a4864b] block uppercase tracking-wider mt-2">
+                            — Eva Rudianti, Founder &amp; Pemilik
+                        </span>
+                    </div>
+
+                </div>
+
+                {{-- Kolom Kanan: Multi-Photo Showcase Cards --}}
+                <div class="lg:col-span-6 grid grid-cols-2 gap-4 sm:gap-6 reveal-on-scroll delay-100">
+                    <div class="space-y-4 sm:space-y-6">
+                        <div class="aspect-[3/4] rounded-3xl overflow-hidden bg-neutral-200 border border-neutral-200/80 shadow-lg">
+                            <img src="{{ asset('images/makanan.png') }}" alt="Catering Setup"
+                                class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                                onerror="this.src='/image/herobaru.jpg';">
+                        </div>
+                        <div class="p-5 rounded-2xl bg-white border border-neutral-200/80 shadow-sm">
+                            <span class="text-2xl sm:text-3xl font-bold text-[#a4864b]">100%</span>
+                            <p class="text-xs sm:text-sm text-neutral-600 font-medium mt-1">Bahan Segar &amp; Halal Pilihan</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 sm:space-y-6 pt-8 sm:pt-12">
+                        <div class="p-5 rounded-2xl bg-[#1a120b] text-white shadow-sm">
+                            <span class="text-2xl sm:text-3xl font-bold text-[#f6a11a]">500+</span>
+                            <p class="text-xs sm:text-sm text-white/70 font-medium mt-1">Momen Acara Terselenggara</p>
+                        </div>
+                        <div class="aspect-[3/4] rounded-3xl overflow-hidden bg-neutral-200 border border-neutral-200/80 shadow-lg">
+                            <img src="{{ asset('images/makanan2.png') }}" alt="Wedding Banquet"
+                                class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                                onerror="this.src='/image/herobaru.jpg';">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ========================================================= -->
+            <!-- BAGIAN 2: MENGAPA MEMILIH KAMI (4 PILAR KEUNGGULAN KAMI)  -->
+            <!-- ========================================================= -->
+            <div class="space-y-12 pt-8 border-t border-neutral-200/80">
+                
+                {{-- Section Title Bagian 2 --}}
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 reveal-on-scroll">
+                    <div class="space-y-3 max-w-2xl">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#faf4ea] text-[#a4864b] text-xs font-bold uppercase tracking-wider">
+                            <span>02 / STANDAR LAYANAN</span>
+                        </div>
+                        <h3 class="font-['Playfair_Display',serif] italic text-3xl sm:text-4xl lg:text-5xl font-normal text-neutral-900 leading-tight">
+                            Mengapa Mempercayakan Jamuan Anda pada Kami?
+                        </h3>
+                    </div>
+                    <p class="text-neutral-600 text-sm sm:text-base font-light max-w-md">
+                        Komitmen kami untuk memberikan pengalaman kuliner terbaik tanpa kerumitan untuk kelancaran momen bahagia Anda.
                     </p>
                 </div>
 
-                <!-- Card 2 -->
-                <div
-                    class="bg-white rounded-3xl p-8 border border-gray-100 shadow-[0_10px_30px_rgba(0,0,0,0.04)] relative flex flex-col items-center text-center group hover:shadow-[0_15px_35px_rgba(246,161,26,0.1)] transition-all duration-300">
-                    <!-- Badge Number -->
-                    <div
-                        class="absolute top-6 left-6 w-9 h-9 rounded-full bg-[#f6a11a] text-white font-bold text-sm flex items-center justify-center shadow-md">
-                        02
+                {{-- 4 Pilar Cards --}}
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    {{-- Pilar 1 --}}
+                    <div class="bg-white p-7 rounded-3xl border border-neutral-200/80 hover:border-[#a4864b]/50 transition-all duration-300 space-y-4 reveal-on-scroll">
+                        <div class="w-12 h-12 rounded-2xl bg-[#faf4ea] text-[#a4864b] flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                        <h4 class="font-bold text-lg text-neutral-900">Bahan 100% Halal</h4>
+                        <p class="text-xs sm:text-sm text-neutral-600 leading-relaxed font-light">
+                            Seleksi bahan baku bermutu tinggi dengan kepastian halal, kesegaran terjamin, dan proses higienis bersertifikasi.
+                        </p>
                     </div>
 
-                    <!-- Image Illustration Placeholder -->
-                    <div
-                        class="w-48 h-48 rounded-full bg-orange-50/60 flex items-center justify-center my-4 overflow-hidden p-4">
-                        <img src="/image/step2.png" alt="Order via WhatsApp"
-                            class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                    {{-- Pilar 2 --}}
+                    <div class="bg-white p-7 rounded-3xl border border-neutral-200/80 hover:border-[#a4864b]/50 transition-all duration-300 space-y-4 reveal-on-scroll delay-100">
+                        <div class="w-12 h-12 rounded-2xl bg-[#faf4ea] text-[#a4864b] flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        </div>
+                        <h4 class="font-bold text-lg text-neutral-900">Resep Asli Rempah</h4>
+                        <p class="text-xs sm:text-sm text-neutral-600 leading-relaxed font-light">
+                            Racikan bumbu tradisional khas Nusantara yang melimpah, menghasilkan aroma harum dan cita rasa gurih meresap.
+                        </p>
                     </div>
 
-                    <!-- Card Content -->
-                    <h3 class="text-lg font-bold text-[#f6a11a] mb-2">
-                        Order via WhatsApp
-                    </h3>
-                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed max-w-xs">
-                        Klik tombol WhatsApp untuk menghubungi admin dan mulai pesan.
-                    </p>
-                </div>
-
-                <!-- Card 3 -->
-                <div
-                    class="bg-white rounded-3xl p-8 border border-gray-100 shadow-[0_10px_30px_rgba(0,0,0,0.04)] relative flex flex-col items-center text-center group hover:shadow-[0_15px_35px_rgba(246,161,26,0.1)] transition-all duration-300">
-                    <!-- Badge Number -->
-                    <div
-                        class="absolute top-6 left-6 w-9 h-9 rounded-full bg-[#f6a11a] text-white font-bold text-sm flex items-center justify-center shadow-md">
-                        03
+                    {{-- Pilar 3 --}}
+                    <div class="bg-white p-7 rounded-3xl border border-neutral-200/80 hover:border-[#a4864b]/50 transition-all duration-300 space-y-4 reveal-on-scroll delay-200">
+                        <div class="w-12 h-12 rounded-2xl bg-[#faf4ea] text-[#a4864b] flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                            </svg>
+                        </div>
+                        <h4 class="font-bold text-lg text-neutral-900">Penataan Elegan</h4>
+                        <p class="text-xs sm:text-sm text-neutral-600 leading-relaxed font-light">
+                            Penyajian prasmanan dan tumpeng ditata mewah dan estetik layaknya perhelatan pesta pernikahan profesional.
+                        </p>
                     </div>
 
-                    <!-- Image Illustration Placeholder -->
-                    <div
-                        class="w-48 h-48 rounded-full bg-orange-50/60 flex items-center justify-center my-4 overflow-hidden p-4">
-                        <img src="/image/step3.png" alt="Confirm Your Order"
-                            class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                    {{-- Pilar 4 --}}
+                    <div class="bg-white p-7 rounded-3xl border border-neutral-200/80 hover:border-[#a4864b]/50 transition-all duration-300 space-y-4 reveal-on-scroll delay-300">
+                        <div class="w-12 h-12 rounded-2xl bg-[#faf4ea] text-[#a4864b] flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h4 class="font-bold text-lg text-neutral-900">Tepat Waktu Bergaransi</h4>
+                        <p class="text-xs sm:text-sm text-neutral-600 leading-relaxed font-light">
+                            Armada pengantaran sigap memastikan sajian tiba dalam kondisi hangat, rapi, dan tepat waktu di lokasi acara.
+                        </p>
                     </div>
 
-                    <!-- Card Content -->
-                    <h3 class="text-lg font-bold text-[#f6a11a] mb-2">
-                        Confirm Your Order
-                    </h3>
-                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed max-w-xs">
-                        Diskusikan detail pesanan, pembayaran, dan pengiriman bersama admin.
-                    </p>
                 </div>
 
             </div>
@@ -837,290 +472,729 @@
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- 🏢 SECTION FOOTER & KONTAK RESMI           -->
-    <!-- ========================================== -->
-    <footer class="bg-[#120c08] text-white relative overflow-hidden pt-20 pb-10 border-t border-white/10">
+    <!-- ========================================================================= -->
+    <!-- 🍲 5. SECTION PAKET KAMI (CURATED MENU DENGAN SHOW 4 + DROP-IN CASCADE)   -->
+    <!-- ========================================================================= -->
+    <section id="paket" class="scroll-mt-24 py-28 lg:py-36 bg-white relative"
+        x-data="{ 
+            activeCategory: 'semua',
+            selectedProduct: null,
+            isModalOpen: false,
+            portion: 1,
+            address: '',
+            showAll: false,
+            
+            openModal(product) {
+                this.selectedProduct = product;
+                this.portion = product.min_order ? parseInt(product.min_order) : 1;
+                this.address = '';
+                this.isModalOpen = true;
+                document.body.classList.add('overflow-hidden');
+            },
+            closeModal() {
+                this.isModalOpen = false;
+                document.body.classList.remove('overflow-hidden');
+            },
+            incrementPortion() {
+                this.portion++;
+            },
+            decrementPortion() {
+                let min = this.selectedProduct && this.selectedProduct.min_order ? parseInt(this.selectedProduct.min_order) : 1;
+                if (this.portion > min) {
+                    this.portion--;
+                }
+            },
+            addToCart() {
+                if (this.selectedProduct) {
+                    let itemPayload = {
+                        ...this.selectedProduct,
+                        qty: this.portion,
+                        address_note: this.address
+                    };
+                    if (window.Alpine && Alpine.store('cart')) {
+                        Alpine.store('cart').addItem(itemPayload);
+                    }
+                    this.closeModal();
+                }
+            }
+        }">
 
-        {{-- Background Gradient Accent Ornaments --}}
-        <div class="absolute top-0 left-1/4 w-96 h-96 bg-[#f6a11a]/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute bottom-0 right-10 w-96 h-96 bg-orange-600/10 rounded-full blur-3xl pointer-events-none">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full space-y-12">
+
+            {{-- Headline Paket --}}
+            <div class="text-center max-w-3xl mx-auto space-y-3 reveal-on-scroll">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#faf4ea] text-[#a4864b] text-xs font-bold uppercase tracking-wider">
+                    <span>03 / KATALOG PILIHAN</span>
+                </div>
+                <h2 class="font-['Playfair_Display',serif] italic font-normal text-4xl sm:text-5xl lg:text-6xl text-neutral-900 leading-tight">
+                    Pilihan Paket Menu Spesial
+                </h2>
+                <p class="text-neutral-600 text-sm sm:text-base font-light max-w-xl mx-auto">
+                    Kombinasi hidangan lezat dan lengkap yang dikurasi khusus untuk memenuhi standar jamuan terbaik.
+                </p>
+            </div>
+
+            {{-- Filter Tabs --}}
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-2 reveal-on-scroll delay-100">
+                @php
+                    $filters = [
+                        'semua' => 'Semua Paket',
+                        'gold' => 'Paket Gold',
+                        'silver' => 'Paket Silver',
+                        'premium' => 'Paket Premium',
+                        'tumpeng' => 'Tumpeng Spesial'
+                    ];
+                @endphp
+
+                @foreach($filters as $key => $label)
+                    <button type="button" 
+                        @click="activeCategory = '{{ $key }}'"
+                        :class="activeCategory === '{{ $key }}' 
+                            ? 'bg-[#1a120b] text-white' 
+                            : 'bg-transparent text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 border border-neutral-200'"
+                        class="inline-flex items-center justify-center font-medium text-xs sm:text-sm px-6 py-2.5 rounded-full transition-all duration-200 cursor-pointer">
+                        {{ $label }}
+                    </button>
+                @endforeach
+            </div>
+
+            {{-- Grid Katalog Produk (Maks 4 Awal + Animasi Terjun ke Bawah Saat 'Lihat Semua') --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 pt-4">
+                @forelse($products ?? [] as $index => $product)
+                    @php
+                        $catSlug = Str::slug($product->package_category ?? '');
+                        $tierSlug = Str::slug($product->tier ?? '');
+                        $nameSlug = Str::slug($product->name ?? '');
+                    @endphp
+
+                    <div 
+                        x-show="(showAll || {{ $index }} < 4) && (activeCategory === 'semua' || '{{ $catSlug }}'.includes(activeCategory) || '{{ $tierSlug }}'.includes(activeCategory) || '{{ $nameSlug }}'.includes(activeCategory))"
+                        x-transition:enter="transition-all ease-out duration-700 transform"
+                        x-transition:enter-start="opacity-0 -translate-y-8 scale-95"
+                        x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                        @click="openModal({{ json_encode($product) }})"
+                        class="bg-[#fdfbf7] rounded-3xl overflow-hidden border border-neutral-200/80 hover:border-[#a4864b]/60 transition-all duration-300 cursor-pointer group flex flex-col p-4 reveal-on-scroll">
+                        
+                        <div class="relative aspect-square w-full rounded-2xl overflow-hidden bg-neutral-100">
+                            @if($product->image)
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center text-neutral-400 text-xs font-medium bg-neutral-100">
+                                    Foto Menu
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="pt-4 px-1 flex flex-col flex-1 justify-between space-y-3">
+                            <div class="space-y-1">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-[#a4864b]">
+                                    {{ $product->package_category ?? 'Catering' }}
+                                </span>
+                                <h3 class="font-bold text-neutral-900 text-base leading-snug line-clamp-1 group-hover:text-[#a4864b] transition-colors">
+                                    {{ $product->name }}
+                                </h3>
+                                <p class="text-lg font-bold text-neutral-900">
+                                    Rp {{ number_format($product->price, 0, ',', '.') }}<span class="text-xs text-neutral-500 font-normal pl-1">/ pax</span>
+                                </p>
+                            </div>
+
+                            <div class="pt-2 border-t border-neutral-200/70 flex items-center justify-between text-xs text-neutral-600">
+                                <span>Min. {{ $product->min_order ?? '1' }} porsi</span>
+                                <span class="text-[#a4864b] font-semibold group-hover:translate-x-1 transition-transform">
+                                    Lihat Menu ›
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-span-full py-16 text-center text-neutral-400 bg-neutral-50 rounded-3xl border border-dashed border-neutral-200">
+                        Belum ada paket menu yang tersedia.
+                    </div>
+                @endforelse
+            </div>
+
+            {{-- Tombol Toggle "Lihat Semua Paket Menu / Tampilkan Lebih Sedikit" --}}
+            @if(count($products ?? []) > 4)
+                <div class="text-center pt-6 reveal-on-scroll">
+                    <button type="button" @click="showAll = !showAll"
+                        class="inline-flex items-center gap-3 bg-[#1a120b] hover:bg-black text-white font-bold text-sm sm:text-base px-9 py-4 rounded-full shadow-lg transition-all duration-300 group cursor-pointer">
+                        <span x-text="showAll ? 'Tampilkan Lebih Sedikit ↑' : 'Lihat Semua Menu Lengkapnya ({{ count($products) }}+) ↓'"></span>
+                        <svg class="w-4 h-4 text-[#e4c990] transition-transform duration-300"
+                            :class="showAll ? 'rotate-180' : 'group-hover:translate-y-0.5'"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                </div>
+            @endif
+
         </div>
 
-        <div class="max-w-[1280px] mx-auto px-6 md:px-12 w-full relative z-10">
+        <!-- POP-UP MODAL DETAIL PAKET -->
+        <div x-show="isModalOpen" 
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0" 
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-200" 
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm"
+            style="display: none;">
 
-            {{-- 1. PRE-FOOTER CTA CARD --}}
-            <div
-                class="bg-gradient-to-r from-[#1c130c] via-[#24190f] to-[#1c130c] rounded-[32px] p-8 sm:p-12 border border-white/10 shadow-2xl mb-16 flex flex-col lg:flex-row items-center justify-between gap-8">
-                <div class="space-y-3 text-center lg:text-left max-w-2xl">
-                    <div
-                        class="inline-flex items-center gap-2 bg-[#f6a11a]/15 text-[#f6a11a] px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-                        <span>✨</span>
-                        <span>Momen Spesial Dimulai Dari Sini</span>
-                    </div>
-                    <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-snug">
-                        Siap Mewujudkan Acara Impian Anda Bersama Kami?
-                    </h3>
-                    <p class="text-white/70 text-sm sm:text-base leading-relaxed">
-                        Konsultasikan menu catering pernikahan, kantor, syukuran, atau tumpeng Anda secara gratis. Kami
-                        siap memberikan penawaran dan pelayanan terbaik!
-                    </p>
-                </div>
+            <div class="absolute inset-0" @click="closeModal()"></div>
 
-                <div class="flex flex-wrap items-center justify-center gap-4 shrink-0">
-                    {{-- Tombol Tanpa Efek Neon/Glow (Flat/Solid Warna Datar) --}}
-                    <a href="https://wa.me/628561155113?text=Halo%20Catering%20Nusantara,%20saya%20ingin%20berkonsultasi%20mengenai%20pemesanan%20catering."
-                        target="_blank"
-                        class="bg-[#f6a11a] hover:bg-[#e09015] text-white font-extrabold text-sm sm:text-base px-8 py-4 rounded-full transition-all duration-300 flex items-center gap-2.5">
-                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                            <path
-                                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
-                        </svg>
-                        <span>Konsultasi via WhatsApp</span>
-                    </a>
-                    <a href="#paket"
-                        class="bg-white/10 hover:bg-white/20 text-white font-bold text-sm sm:text-base px-7 py-4 rounded-full border border-white/15 transition-all">
-                        Lihat Katalog Menu
-                    </a>
-                </div>
-            </div>
+            <div class="relative w-full max-w-2xl bg-white rounded-3xl overflow-hidden z-10 my-auto border border-neutral-200"
+                @click.stop>
 
-            {{-- 2. MAIN FOOTER CONTENT (4 KOLOM) --}}
-            <div
-                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-16 border-b border-white/10">
+                <button @click="closeModal()"
+                    class="absolute top-4 right-4 z-20 bg-neutral-100 hover:bg-neutral-200 text-neutral-600 w-8 h-8 rounded-full flex items-center justify-center transition cursor-pointer text-sm font-bold">
+                    ✕
+                </button>
 
-                {{-- KOLOM 1: IDENTITAS BRAND & OWNER (lg:col-span-4) --}}
-                <div class="lg:col-span-4 space-y-6">
-                    <div class="flex items-center gap-3">
-                        <img src="{{ asset('images/logo.png') }}" alt="Catering Nusantara Logo"
-                            class="h-16 w-auto object-contain"
-                            onerror="this.onerror=null; this.src='/image/logo.png';" />
-                    </div>
-
-                    <p class="text-white/70 text-sm leading-relaxed">
-                        Catering Nusantara menyajikan hidangan bercita rasa autentik khas Nusantara dengan bahan segar
-                        pilihan. Melayani berbagai kebutuhan acara pernikahan, instansi, hingga syukuran keluarga di
-                        wilayah Bogor dan sekitarnya.
-                    </p>
-
-                    <div class="space-y-2 pt-2 text-xs text-white/60">
-                        <div class="flex items-center gap-2">
-                            <span class="text-[#f6a11a] font-bold">Pemilik / PIC:</span>
-                            <span class="text-white font-semibold">Eva Rudianti</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-[#f6a11a] font-bold">Tahun Berdiri:</span>
-                            <span class="text-white font-semibold">Est. 2024</span>
-                        </div>
-                    </div>
-
-                    {{-- Social Media Icons --}}
-                    <div class="flex items-center gap-3 pt-2">
-                        <a href="https://instagram.com/cateringnusantara_bogor" target="_blank"
-                            title="Instagram @cateringnusantara_bogor"
-                            class="w-10 h-10 rounded-full bg-white/5 hover:bg-[#f6a11a] text-white/80 hover:text-white border border-white/10 flex items-center justify-center transition-all duration-300 hover:scale-110">
-                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                                <path
-                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                            </svg>
-                        </a>
-
-                        <a href="https://wa.me/628561155113" target="_blank" title="WhatsApp 08561155113"
-                            class="w-10 h-10 rounded-full bg-white/5 hover:bg-[#25D366] text-white/80 hover:text-white border border-white/10 flex items-center justify-center transition-all duration-300 hover:scale-110">
-                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                                <path
-                                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
-                            </svg>
-                        </a>
-
-                        {{-- Icon Email Diperbaiki --}}
-                        <a href="mailto:Waroengpecelayam99@gmail.com" title="Email Waroengpecelayam99@gmail.com"
-                            class="w-10 h-10 rounded-full bg-white/5 hover:bg-[#f6a11a] text-white/80 hover:text-white border border-white/10 flex items-center justify-center transition-all duration-300 hover:scale-110">
-                            <svg class="w-5 h-5 stroke-current fill-none" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                {{-- KOLOM 2: JELAJAHI / MENU NAVIGASI (lg:col-span-2) --}}
-                <div class="lg:col-span-2 space-y-4">
-                    <h4 class="text-white font-extrabold tracking-wide uppercase text-sm border-b border-white/10 pb-2">
-                        Navigasi
-                    </h4>
-                    <ul class="space-y-2.5 text-sm text-white/70">
-                        <li>
-                            <a href="#beranda" class="hover:text-[#f6a11a] transition-colors flex items-center gap-2">
-                                <span class="text-[#f6a11a]">›</span> Beranda
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#tentang-kami"
-                                class="hover:text-[#f6a11a] transition-colors flex items-center gap-2">
-                                <span class="text-[#f6a11a]">›</span> Tentang Kami
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#paket" class="hover:text-[#f6a11a] transition-colors flex items-center gap-2">
-                                <span class="text-[#f6a11a]">›</span> Katalog Paket
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#galeri" class="hover:text-[#f6a11a] transition-colors flex items-center gap-2">
-                                <span class="text-[#f6a11a]">›</span> Galeri
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#testimoni" class="hover:text-[#f6a11a] transition-colors flex items-center gap-2">
-                                <span class="text-[#f6a11a]">›</span> Testimoni
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                {{-- KOLOM 3: LAYANAN SPESIAL (lg:col-span-2) --}}
-                <div class="lg:col-span-2 space-y-4">
-                    <h4 class="text-white font-extrabold tracking-wide uppercase text-sm border-b border-white/10 pb-2">
-                        Layanan Kami
-                    </h4>
-                    <ul class="space-y-2.5 text-sm text-white/70">
-                        <li class="hover:text-white transition">Catering Pernikahan</li>
-                        <li class="hover:text-white transition">Prasmanan Kantor</li>
-                        <li class="hover:text-white transition">Nasi Box Eksklusif</li>
-                        <li class="hover:text-white transition">Tumpeng Nusantara</li>
-                        <li class="hover:text-white transition">Syukuran & Aqiqah</li>
-                        <li class="hover:text-white transition">Custom Menu Prasmanan</li>
-                    </ul>
-                </div>
-
-                {{-- KOLOM 4: KONTAK & ALAMAT USAHA (lg:col-span-4) --}}
-                <div class="lg:col-span-4 space-y-4">
-                    <h4 class="text-white font-extrabold tracking-wide uppercase text-sm border-b border-white/10 pb-2">
-                        Hubungi & Lokasi
-                    </h4>
-
-                    <div class="space-y-4 text-sm text-white/80">
-                        {{-- Alamat --}}
-                        <div class="flex items-start gap-3">
-                            <div
-                                class="w-8 h-8 rounded-lg bg-orange-500/10 text-[#f6a11a] flex items-center justify-center shrink-0 mt-0.5">
-                                <svg class="w-4 h-4 stroke-current fill-none" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
+                <template x-if="selectedProduct">
+                    <div class="p-6 sm:p-8 space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-neutral-100 shrink-0">
+                                <img :src="selectedProduct.image ? '/storage/' + selectedProduct.image : '/images/herobaru.jpg'"
+                                    :alt="selectedProduct.name" 
+                                    class="w-full h-full object-cover">
                             </div>
+                            <div class="space-y-1">
+                                <span class="text-xs font-bold uppercase tracking-wider text-[#a4864b]" x-text="selectedProduct.package_category || 'Paket Menu'"></span>
+                                <h3 class="text-xl sm:text-2xl font-bold text-neutral-900" x-text="selectedProduct.name"></h3>
+                                <p class="text-lg font-bold text-neutral-900">
+                                    Rp <span x-text="new Intl.NumberFormat('id-ID').format(selectedProduct.price)"></span>
+                                    <span class="text-xs font-normal text-neutral-500">/ pax</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        {{-- Menu Detail --}}
+                        <div class="space-y-2 text-sm text-neutral-700 bg-neutral-50 p-4 rounded-2xl border border-neutral-200/60">
+                            <span class="font-bold text-neutral-900 block text-xs uppercase tracking-wider">Komposisi Menu:</span>
+                            <p class="leading-relaxed font-light" x-text="selectedProduct.main_menu || 'Sajian lezat autentik khas Nusantara.'"></p>
+                        </div>
+
+                        {{-- Quantity Stepper --}}
+                        <div class="flex items-center justify-between border-t border-neutral-200 pt-4">
                             <div>
-                                <span class="text-xs text-white/50 block font-semibold">Alamat Usaha:</span>
-                                <span class="leading-relaxed">Jln. Kapten Yusuf Gang Purnama, Tamansari, Bogor, Jawa
-                                    Barat</span>
+                                <label class="text-xs font-bold text-neutral-800 block">Jumlah Porsi:</label>
+                                <span class="text-[11px] text-neutral-400" x-text="'Min. ' + (selectedProduct.min_order || 1) + ' porsi'"></span>
+                            </div>
+                            <div class="inline-flex items-center border border-neutral-200 rounded-full bg-white p-1">
+                                <button type="button" @click="decrementPortion()"
+                                    class="w-7 h-7 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-bold flex items-center justify-center transition">
+                                    -
+                                </button>
+                                <span class="px-4 font-bold text-sm text-neutral-900" x-text="portion"></span>
+                                <button type="button" @click="incrementPortion()"
+                                    class="w-7 h-7 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-bold flex items-center justify-center transition">
+                                    +
+                                </button>
                             </div>
                         </div>
 
-                        {{-- WhatsApp / Telepon --}}
-                        <div class="flex items-center gap-3">
-                            <div
-                                class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                                    <path
-                                        d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
-                                </svg>
-                            </div>
+                        {{-- Action Buttons --}}
+                        <div class="flex items-center justify-between border-t border-neutral-200 pt-4">
                             <div>
-                                <span class="text-xs text-white/50 block font-semibold">WhatsApp / Telepon:</span>
-                                <a href="https://wa.me/628561155113" target="_blank"
-                                    class="font-bold text-[#f6a11a] hover:underline">
-                                    08561155113
-                                </a>
+                                <span class="text-xs text-neutral-500 block">Estimasi Total:</span>
+                                <span class="text-xl font-bold text-neutral-900">
+                                    Rp <span x-text="new Intl.NumberFormat('id-ID').format(selectedProduct.price * portion)"></span>
+                                </span>
                             </div>
-                        </div>
-
-                        {{-- Email Diperbaiki --}}
-                        <div class="flex items-center gap-3">
-                            <div
-                                class="w-8 h-8 rounded-lg bg-orange-500/10 text-[#f6a11a] flex items-center justify-center shrink-0">
-                                <svg class="w-4 h-4 stroke-current fill-none" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <span class="text-xs text-white/50 block font-semibold">Email:</span>
-                                <a href="mailto:Waroengpecelayam99@gmail.com"
-                                    class="hover:text-[#f6a11a] transition-colors break-all">
-                                    Waroengpecelayam99@gmail.com
-                                </a>
-                            </div>
-                        </div>
-
-                        {{-- Instagram --}}
-                        <div class="flex items-center gap-3">
-                            <div
-                                class="w-8 h-8 rounded-lg bg-pink-500/10 text-pink-400 flex items-center justify-center shrink-0">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                                    <path
-                                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <span class="text-xs text-white/50 block font-semibold">Instagram:</span>
-                                <a href="https://instagram.com/cateringnusantara_bogor" target="_blank"
-                                    class="hover:text-[#f6a11a] transition-colors font-medium">
-                                    @cateringnusantara_bogor
-                                </a>
-                            </div>
+                            <button type="button" @click="addToCart()"
+                                class="bg-[#1a120b] hover:bg-black text-white font-medium text-sm px-7 py-3.5 rounded-full transition-all cursor-pointer">
+                                + Masukkan Keranjang
+                            </button>
                         </div>
                     </div>
-                </div>
+                </template>
 
             </div>
+        </div>
 
-            {{-- 3. BOTTOM COPYRIGHT BAR --}}
-            <div
-                class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50 text-center sm:text-left">
-                <p>
-                    &copy; 2024 - {{ date('Y') }} <span class="text-white font-bold">Catering Nusantara</span>. All
-                    rights reserved.
-                    <span class="block sm:inline sm:ml-1">Owner: Eva Rudianti.</span>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 🖼️ 6. SECTION GALERI (MASONRY PORTFOLIO DENGAN HOVER BLUR TO CLEAR)      -->
+    <!-- ========================================================================= -->
+    <section id="galeri" class="scroll-mt-24 py-28 lg:py-36 bg-[#fdfbf7] relative"
+        x-data="{
+            activeTab: 'semua'
+        }">
+        
+        <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full space-y-12">
+            
+            {{-- Header Galeri (Matching 'Our Portfolio' layout) --}}
+            <div class="text-center max-w-3xl mx-auto space-y-3 reveal-on-scroll">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#faf4ea] text-[#a4864b] text-xs font-bold uppercase tracking-wider">
+                    <span>04 / DOKUMENTASI &amp; PORTOFOLIO</span>
+                </div>
+                <h2 class="font-['Playfair_Display',serif] italic font-normal text-5xl sm:text-6xl lg:text-7xl text-neutral-900 leading-tight">
+                    Galeri Portofolio Kami
+                </h2>
+                <p class="text-neutral-600 text-sm sm:text-base lg:text-lg font-light max-w-xl mx-auto">
+                    Koleksi dokumentasi penyajian jamuan prasmanan pernikahan, tumpeng megah, dan paket nasi box istimewa kami.
                 </p>
-                <div class="flex items-center gap-6">
-                    <a href="#beranda" class="hover:text-[#f6a11a] transition">Kembali ke Atas ↑</a>
+            </div>
+
+            {{-- Filter Tabs (Matching Reference Pills) --}}
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-2 reveal-on-scroll delay-100">
+                @php
+                    $galleryFilters = [
+                        'semua' => 'Semua Foto',
+                        'wedding' => 'Prasmanan & Wedding',
+                        'nasibox' => 'Paket Nasi Box',
+                        'tumpeng' => 'Tumpeng Nusantara',
+                        'pasundaan' => 'Menu Pasundaan & Kebuli'
+                    ];
+                @endphp
+
+                @foreach($galleryFilters as $gKey => $gLabel)
+                    <button type="button" 
+                        @click="activeTab = '{{ $gKey }}'"
+                        :class="activeTab === '{{ $gKey }}' 
+                            ? 'bg-[#1a120b] text-white' 
+                            : 'bg-white text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100 border border-neutral-200/90'"
+                        class="inline-flex items-center justify-center font-medium text-xs sm:text-sm px-6 py-2.5 rounded-full transition-all duration-200 cursor-pointer shadow-sm">
+                        {{ $gLabel }}
+                    </button>
+                @endforeach
+            </div>
+
+            {{-- 3-Column Asymmetric Grid (Matching Reference Photo Layout with Blur-to-Clear Effect) --}}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 pt-4">
+                
+                {{-- ==================== KOLOM 1 ==================== --}}
+                <div class="flex flex-col gap-6 lg:gap-8">
+                    
+                    {{-- Foto 1: Landscape (Prasmanan) --}}
+                    <div x-show="activeTab === 'semua' || activeTab === 'wedding'"
+                        x-transition:enter="transition ease-out duration-300 transform"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        class="group relative aspect-[4/3] w-full rounded-3xl overflow-hidden bg-neutral-900 border border-neutral-200/80 shadow-md cursor-pointer reveal-on-scroll">
+                        <img src="{{ asset('images/prasmananwedding.png') }}" alt="Prasmanan Wedding"
+                            class="w-full h-full object-cover filter blur-[2.5px] brightness-[0.88] scale-100 group-hover:filter-none group-hover:blur-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-out"
+                            onerror="this.src='/image/herobaru.jpg';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-[#e4c990]">Prasmanan &amp; Wedding</span>
+                            <h4 class="text-white text-base sm:text-lg font-bold">Penataan Meja Prasmanan Elegan</h4>
+                        </div>
+                    </div>
+
+                    {{-- Foto 2: Portrait (Nasi Box) --}}
+                    <div x-show="activeTab === 'semua' || activeTab === 'nasibox'"
+                        x-transition:enter="transition ease-out duration-300 transform"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        class="group relative aspect-[3/4] w-full rounded-3xl overflow-hidden bg-neutral-900 border border-neutral-200/80 shadow-md cursor-pointer reveal-on-scroll delay-100">
+                        <img src="{{ asset('images/Box.png') }}" alt="Persiapan Nasi Box"
+                            class="w-full h-full object-cover filter blur-[2.5px] brightness-[0.88] scale-100 group-hover:filter-none group-hover:blur-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-out"
+                            onerror="this.src='/image/herobaru.jpg';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-[#e4c990]">Nasi Box</span>
+                            <h4 class="text-white text-base sm:text-lg font-bold">Pengemasan Higienis &amp; Tepat Waktu</h4>
+                        </div>
+                    </div>
+
                 </div>
+
+                {{-- ==================== KOLOM 2 ==================== --}}
+                <div class="flex flex-col gap-6 lg:gap-8">
+                    
+                    {{-- Foto 3: Portrait (Tumpeng) --}}
+                    <div x-show="activeTab === 'semua' || activeTab === 'tumpeng'"
+                        x-transition:enter="transition ease-out duration-300 transform"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        class="group relative aspect-[3/4] w-full rounded-3xl overflow-hidden bg-neutral-900 border border-neutral-200/80 shadow-md cursor-pointer reveal-on-scroll">
+                        <img src="{{ asset('images/Tumpeng.png') }}" alt="Tumpeng Nusantara"
+                            class="w-full h-full object-cover filter blur-[2.5px] brightness-[0.88] scale-100 group-hover:filter-none group-hover:blur-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-out"
+                            onerror="this.src='/image/herobaru.jpg';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-[#e4c990]">Tumpeng Spesial</span>
+                            <h4 class="text-white text-base sm:text-lg font-bold">Tumpeng Komplit Syukuran &amp; Peresmian</h4>
+                        </div>
+                    </div>
+
+                    {{-- Foto 4: Landscape (Menu Premium) --}}
+                    <div x-show="activeTab === 'semua' || activeTab === 'nasibox'"
+                        x-transition:enter="transition ease-out duration-300 transform"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        class="group relative aspect-[4/3] w-full rounded-3xl overflow-hidden bg-neutral-900 border border-neutral-200/80 shadow-md cursor-pointer reveal-on-scroll delay-100">
+                        <img src="{{ asset('images/PaketPremiumChickenSalted.png') }}" alt="Salted Egg Chicken"
+                            class="w-full h-full object-cover filter blur-[2.5px] brightness-[0.88] scale-100 group-hover:filter-none group-hover:blur-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-out"
+                            onerror="this.src='/image/herobaru.jpg';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-[#e4c990]">Menu Spesial</span>
+                            <h4 class="text-white text-base sm:text-lg font-bold">Paket Salted Egg Chicken Renyah</h4>
+                        </div>
+                    </div>
+
+                </div>
+
+                {{-- ==================== KOLOM 3 ==================== --}}
+                <div class="flex flex-col gap-6 lg:gap-8">
+                    
+                    {{-- Foto 5: Tall Portrait (Pasundaan) --}}
+                    <div x-show="activeTab === 'semua' || activeTab === 'pasundaan'"
+                        x-transition:enter="transition ease-out duration-300 transform"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        class="group relative aspect-[3/4] sm:aspect-[3/5] w-full rounded-3xl overflow-hidden bg-neutral-900 border border-neutral-200/80 shadow-md cursor-pointer reveal-on-scroll">
+                        <img src="{{ asset('images/NasiPasundaanAyamSuir.png') }}" alt="Nasi Pasundaan"
+                            class="w-full h-full object-cover filter blur-[2.5px] brightness-[0.88] scale-100 group-hover:filter-none group-hover:blur-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-out"
+                            onerror="this.src='/image/herobaru.jpg';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-[#e4c990]">Tradisi Nusantara</span>
+                            <h4 class="text-white text-base sm:text-lg font-bold">Nasi Pasundaan Ayam Suwir Gurih</h4>
+                        </div>
+                    </div>
+
+                    {{-- Foto 6: Landscape (Paket Gold) --}}
+                    <div x-show="activeTab === 'semua' || activeTab === 'nasibox'"
+                        x-transition:enter="transition ease-out duration-300 transform"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        class="group relative aspect-[4/3] w-full rounded-3xl overflow-hidden bg-neutral-900 border border-neutral-200/80 shadow-md cursor-pointer reveal-on-scroll delay-100">
+                        <img src="{{ asset('images/PaketGoldAyamBakar.png') }}" alt="Ayam Bakar Madu"
+                            class="w-full h-full object-cover filter blur-[2.5px] brightness-[0.88] scale-100 group-hover:filter-none group-hover:blur-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-out"
+                            onerror="this.src='/image/herobaru.jpg';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-[#e4c990]">Paket Gold</span>
+                            <h4 class="text-white text-base sm:text-lg font-bold">Paket Gold Ayam Bakar Bumbu Meresap</h4>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 💬 7. SECTION TESTIMONI (10 TESTIMONI DENGAN ROTASI HALUS PER 3.5 DETIK)  -->
+    <!-- ========================================================================= -->
+    <section id="testimoni" class="scroll-mt-24 py-28 lg:py-36 bg-[#faf7f2] relative overflow-hidden"
+        x-data="{
+            testimonials: [
+                { id: 1, name: 'Bpk. Hendra Kurnia', event: 'Gathering Kantor BUMN (120 Pax)', comment: 'Nasi box-nya sangat komplit, rasa rempah Nusantara autentik dan ayam bakarnya empuk meresap. Pengantaran sangat tepat waktu sebelum acara dimulai.' },
+                { id: 2, name: 'Ibu Dewi Lestari', event: 'Acara Lamaran & Keluarga Besar', comment: 'Pelayanan sangat profesional dari tahap konsultasi menu hingga selesai acara. Tumpeng mini dan hidangan prasmanan dipuji oleh seluruh keluarga besar.' },
+                { id: 3, name: 'Rizky & Dinda', event: 'Resepsi Pernikahan Gedung (500 Pax)', comment: 'Paket prasmanan pernikahan sangat memuaskan. Makanan selalu hangat, dekorasi meja prasmanan tertata mewah, dan porsi aman terkendali hingga akhir acara.' },
+                { id: 4, name: 'Siti Aminah', event: 'Syukuran Aqiqah Putra Pertama', comment: 'Tumpeng Komplit Nusantara hiasannya sangat cantik dan rapi. Rasa nasinya pulen gurih, sambal goreng ati dan ayam serundengnya juara!' },
+                { id: 5, name: 'dr. Farhan Maulana', event: 'Seminar Kesehatan & Simposium', comment: 'Penyajian nasi box premium sangat higienis, box rapi eksklusif, dan citarasa bumbu ayam teriyaki serta salted egg-nya disukai para dokter dan peserta.' },
+                { id: 6, name: 'Ibu Ratna Anggraini', event: 'Arisan & Reuni Keluarga', comment: 'Nasi Pasundaan Ayam Suwir-nya benar-benar mengingatkan pada masakan khas Sunda tempo dulu. Sambalnya mantap dan porsi sangat mengenyangkan.' },
+                { id: 7, name: 'Bpk. Agus Prasetyo', event: 'Peresmian Kantor Cabang Bogor', comment: 'Sangat tertolong dengan fleksibilitas tim Catering Nusantara. Pesanan 150 box dalam waktu singkat dikerjakan dengan standar kualitas bintang lima.' },
+                { id: 8, name: 'Maya & Dimas', event: 'Intimate Wedding Garden Party', comment: 'Gubukan prasmanan sangat cantik dan staf cateringnya ramah serta cekatan melayani tamu undangan. Pilihan terbaik untuk catering wedding di Bogor!' },
+                { id: 9, name: 'Ibu Hj. Nurhayati', event: 'Pengajian Rutin & Tahlilan', comment: 'Snack box dan tumpeng mini sangat lezat. Tamu-tamu banyak yang menanyakan kontak catering ini karena rasanya pas di lidah semua kalangan.' },
+                { id: 10, name: 'Kevin Sanjaya', event: 'Community Gathering & Exhibition', comment: 'Kebuli dan nasi bakar nusantaranya gurih aromatik rempah asli. Pengemasan rapi dan pelayanan fast response via WhatsApp. Sangat recommended!' }
+            ],
+            currentIndex: 0,
+            intervalTimer: null,
+            isPaused: false,
+
+            init() { this.startAutoScroll(); },
+            startAutoScroll() {
+                this.stopAutoScroll();
+                this.intervalTimer = setInterval(() => { 
+                    if (!this.isPaused) this.nextTestimonial(); 
+                }, 3500); // ⚡ Kecepatan berganti teks per 3,5 detik
+            },
+            stopAutoScroll() { if (this.intervalTimer) clearInterval(this.intervalTimer); },
+            nextTestimonial() { this.currentIndex = (this.currentIndex + 1) % this.testimonials.length; },
+            prevTestimonial() { this.currentIndex = (this.currentIndex - 1 + this.testimonials.length) % this.testimonials.length; },
+            goTo(index) { this.currentIndex = index; }
+        }">
+
+        <div class="max-w-4xl mx-auto px-6 sm:px-10 lg:px-16 w-full space-y-12 relative z-10">
+
+            {{-- Header Testimoni --}}
+            <div class="text-center space-y-3 reveal-on-scroll">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white text-[#a4864b] text-xs font-bold uppercase tracking-wider border border-neutral-200/80">
+                    <span>05 / KATA MEREKA</span>
+                </div>
+                <h2 class="font-['Playfair_Display',serif] italic font-normal text-4xl sm:text-5xl lg:text-6xl text-neutral-900 leading-tight">
+                    Kepercayaan &amp; Kepuasan Tamu
+                </h2>
+                <p class="text-neutral-600 text-sm sm:text-base font-light max-w-xl mx-auto">
+                    Ulasan tulus dari para pelanggan yang telah mempercayakan momen bahagianya bersama Catering Nusantara.
+                </p>
+            </div>
+
+            {{-- Card Testimoni --}}
+            <div class="w-full flex flex-col reveal-on-scroll delay-100" @mouseenter="isPaused = true" @mouseleave="isPaused = false">
+                <div class="relative w-full bg-white rounded-3xl p-8 sm:p-14 border border-neutral-200/80 overflow-hidden flex flex-col justify-between min-h-[310px] shadow-sm">
+
+                    <div class="absolute top-6 right-8 text-[#a4864b]/10 select-none pointer-events-none">
+                        <svg class="w-20 h-20 fill-current" viewBox="0 0 32 32">
+                            <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-2.2 1.8-4 4-4V8h-2zm14 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-2.2 1.8-4 4-4V8h-2z" />
+                        </svg>
+                    </div>
+
+                    <div class="relative z-10 flex-1 flex flex-col justify-center my-4">
+                        <template x-for="(testi, index) in testimonials" :key="testi.id">
+                            <div x-show="currentIndex === index"
+                                x-transition:enter="transition ease-out duration-500 transform"
+                                x-transition:enter-start="opacity-0 translate-y-3"
+                                x-transition:enter-end="opacity-100 translate-y-0"
+                                x-transition:leave="transition ease-in duration-300 transform absolute inset-0"
+                                x-transition:leave-start="opacity-100 translate-y-0"
+                                x-transition:leave-end="opacity-0 -translate-y-3"
+                                class="space-y-6">
+
+                                <blockquote class="font-['Playfair_Display',serif] italic text-xl sm:text-2xl text-neutral-800 leading-relaxed">
+                                    &ldquo;<span x-text="testi.comment"></span>&rdquo;
+                                </blockquote>
+
+                                <div class="pt-4 border-t border-neutral-100 flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-bold text-neutral-900 text-base sm:text-lg" x-text="testi.name"></h4>
+                                        <p class="text-[#a4864b] text-xs sm:text-sm font-medium mt-0.5" x-text="testi.event"></p>
+                                    </div>
+                                    <span class="text-xs font-semibold text-neutral-400" x-text="(index + 1) + ' / ' + testimonials.length"></span>
+                                </div>
+
+                            </div>
+                        </template>
+                    </div>
+
+                    {{-- Controls --}}
+                    <div class="flex items-center justify-between pt-6 border-t border-neutral-100 z-10">
+                        <div class="flex items-center gap-1.5 flex-wrap">
+                            <template x-for="(testi, index) in testimonials" :key="'dot-' + testi.id">
+                                <button type="button" @click="goTo(index)"
+                                    class="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                                    :class="currentIndex === index ? 'w-6 bg-[#a4864b]' : 'w-2 bg-neutral-200'"></button>
+                            </template>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button type="button" @click="prevTestimonial()"
+                                class="w-9 h-9 rounded-full bg-neutral-50 hover:bg-[#a4864b] text-neutral-600 hover:text-white border border-neutral-200 flex items-center justify-center transition-all cursor-pointer">
+                                ‹
+                            </button>
+                            <button type="button" @click="nextTestimonial()"
+                                class="w-9 h-9 rounded-full bg-neutral-50 hover:bg-[#a4864b] text-neutral-600 hover:text-white border border-neutral-200 flex items-center justify-center transition-all cursor-pointer">
+                                ›
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 📋 8. SECTION CARA PEMESANAN (EXPANDED FULL SCREEN & ROUNDED BOTTOM)      -->
+    <!-- ========================================================================= -->
+    <section id="cara_pemesanan" 
+        class="scroll-mt-24 min-h-[90vh] py-28 lg:py-40 bg-white rounded-b-2xl sm:rounded-b-3xl lg:rounded-b-[44px] shadow-2xl relative z-20 overflow-hidden flex flex-col justify-between">
+        
+        <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full space-y-16 sm:space-y-20 my-auto">
+            
+            {{-- Header Alur Pemesanan --}}
+            <div class="text-center max-w-3xl mx-auto space-y-4 reveal-on-scroll">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#faf4ea] text-[#a4864b] text-xs font-bold uppercase tracking-wider">
+                    <span>06 / ALUR PEMESANAN MUDAH</span>
+                </div>
+                <h2 class="font-['Playfair_Display',serif] italic font-normal text-4xl sm:text-5xl lg:text-6xl text-neutral-900 leading-tight">
+                    Tiga Langkah Praktis Memesan Jamuan Anda
+                </h2>
+                <p class="text-neutral-600 text-base sm:text-lg font-light max-w-2xl mx-auto">
+                    Proses pemesanan yang simpel, cepat, dan transparan untuk memastikan jamuan acara Anda tersaji sempurna tanpa rasa khawatir.
+                </p>
+            </div>
+
+            {{-- 3-Step Cards --}}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                
+                {{-- Step 1 --}}
+                <div class="p-8 sm:p-10 rounded-3xl bg-[#fdfbf7] border border-neutral-200/80 hover:border-[#a4864b]/60 transition-all duration-300 space-y-5 reveal-on-scroll shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <span class="w-12 h-12 rounded-2xl bg-[#1a120b] text-white font-bold text-base flex items-center justify-center shadow-md">
+                            01
+                        </span>
+                        <span class="text-xs font-bold uppercase tracking-widest text-[#a4864b]">Langkah 1</span>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-bold text-2xl text-neutral-900">Pilih Paket Menu</h3>
+                        <p class="text-sm sm:text-base text-neutral-600 leading-relaxed font-light">
+                            Tentukan paket hidangan favorit dari katalog kami (Prasmanan, Nasi Box, atau Tumpeng) dan masukkan ke keranjang belanja.
+                        </p>
+                    </div>
+                </div>
+
+                {{-- Step 2 --}}
+                <div class="p-8 sm:p-10 rounded-3xl bg-[#fdfbf7] border border-neutral-200/80 hover:border-[#a4864b]/60 transition-all duration-300 space-y-5 reveal-on-scroll delay-100 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <span class="w-12 h-12 rounded-2xl bg-[#a4864b] text-white font-bold text-base flex items-center justify-center shadow-md">
+                            02
+                        </span>
+                        <span class="text-xs font-bold uppercase tracking-widest text-[#a4864b]">Langkah 2</span>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-bold text-2xl text-neutral-900">Konsultasi WhatsApp</h3>
+                        <p class="text-sm sm:text-base text-neutral-600 leading-relaxed font-light">
+                            Klik tombol pesan untuk mengirimkan rincian pesanan langsung ke admin via WhatsApp untuk konfirmasi tanggal, porsi, dan alamat.
+                        </p>
+                    </div>
+                </div>
+
+                {{-- Step 3 --}}
+                <div class="p-8 sm:p-10 rounded-3xl bg-[#fdfbf7] border border-neutral-200/80 hover:border-[#a4864b]/60 transition-all duration-300 space-y-5 reveal-on-scroll delay-200 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <span class="w-12 h-12 rounded-2xl bg-[#1a120b] text-white font-bold text-base flex items-center justify-center shadow-md">
+                            03
+                        </span>
+                        <span class="text-xs font-bold uppercase tracking-widest text-[#a4864b]">Langkah 3</span>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-bold text-2xl text-neutral-900">Konfirmasi &amp; Nikmati</h3>
+                        <p class="text-sm sm:text-base text-neutral-600 leading-relaxed font-light">
+                            Lakukan pembayaran DP dan tim koki serta armada kurir kami akan memastikan hidangan tiba hangat &amp; tertata rapi tepat waktu.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            {{-- 🌟 Jaminan & Ajakan Section Tambahan (Membuat Halaman Penuh & Mengesankan) --}}
+            <div class="p-8 sm:p-12 rounded-3xl bg-[#faf7f2] border border-neutral-200/90 flex flex-col lg:flex-row items-center justify-between gap-8 reveal-on-scroll delay-300 shadow-sm">
+                
+                <div class="space-y-3 text-center lg:text-left max-w-2xl">
+                    <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-white text-[#a4864b] text-[11px] font-bold uppercase tracking-wider border border-neutral-200">
+                        ✦ JAMINAN LAYANAN CATERING NUSANTARA ✦
+                    </div>
+                    <h3 class="font-['Playfair_Display',serif] italic text-2xl sm:text-3xl lg:text-4xl font-normal text-neutral-900 leading-snug">
+                        Punya Konsep Acara Khusus atau Butuh Menu Kustom?
+                    </h3>
+                    <p class="text-sm sm:text-base text-neutral-600 font-light leading-relaxed">
+                        Kami menyediakan layanan konsultasi gratis, penyesuaian anggaran (*budget flexibility*), serta sesi tester menu untuk acara pernikahan dan pemesanan skala besar.
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center gap-4 shrink-0 w-full lg:w-auto">
+                    <a href="https://wa.me/628561155113?text=Halo%20Catering%20Nusantara,%20saya%20ingin%20konsultasi%20menu%20dan%20memesan%20catering%20untuk%20acara."
+                        target="_blank"
+                        class="w-full sm:w-auto text-center bg-[#1a120b] hover:bg-black text-white font-bold text-sm sm:text-base px-9 py-4 rounded-full shadow-lg transition-all duration-200">
+                        Konsultasi Acara Sekarang 💬
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 🏢 9. FOOTER (CLEAN & SENADA)              -->
+    <!-- ========================================== -->
+    <footer class="bg-[#0d0805] text-white pt-24 pb-12 border-t border-neutral-800 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full space-y-16">
+
+            {{-- Pre-footer Minimalist CTA Bar (Button Transparan dengan Border Putih) --}}
+            <div class="p-8 sm:p-10 rounded-3xl bg-[#1c140e] border border-white/10 flex flex-col lg:flex-row items-center justify-between gap-6">
+                <div class="space-y-1 text-center lg:text-left">
+                    <h3 class="font-['Playfair_Display',serif] italic text-2xl sm:text-3xl font-normal text-white">
+                        Siap Mewujudkan Acara Impian Anda?
+                    </h3>
+                    <p class="text-sm text-white/70 font-light">
+                        Konsultasikan menu pernikahan, kantor, atau syukuran bersama tim kami sekarang.
+                    </p>
+                </div>
+                <a href="https://wa.me/628561155113?text=Halo%20Catering%20Nusantara,%20saya%20ingin%20berkonsultasi%20mengenai%20pemesanan%20catering."
+                    target="_blank"
+                    class="bg-transparent hover:bg-white/10 text-white font-semibold text-sm px-8 py-3.5 rounded-full border border-white/60 hover:border-white transition-all duration-200 shrink-0">
+                    Hubungi via WhatsApp
+                </a>
+            </div>
+
+            {{-- Main 4-Column Footer Content --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-12 border-b border-white/10">
+
+                {{-- Kolom 1: Brand Info --}}
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-12 w-auto object-contain" />
+                        <span class="font-['Perandory','Playfair_Display',serif] text-lg font-bold tracking-wider text-white">
+                            CATERING NUSANTARA
+                        </span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-white/70 leading-relaxed font-light max-w-md">
+                        Penyedia jasa boga dan catering pernikahan dengan cita rasa autentik khas Nusantara. Melayani area Bogor, Jakarta, dan sekitarnya.
+                    </p>
+                    <div class="pt-2 text-xs text-white/60 space-y-1">
+                        <p><span class="text-[#a4864b] font-medium">Pemilik / PIC:</span> Eva Rudianti</p>
+                        <p><span class="text-[#a4864b] font-medium">Tahun Berdiri:</span> 2024</p>
+                    </div>
+                </div>
+
+                {{-- Kolom 2: Navigasi --}}
+                <div class="lg:col-span-3 space-y-3">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-[#a4864b]">Navigasi</h4>
+                    <ul class="space-y-2 text-xs sm:text-sm text-white/70 font-light">
+                        <li><a href="#beranda" class="hover:text-white transition-colors">Beranda</a></li>
+                        <li><a href="#tentang-kami" class="hover:text-white transition-colors">Tentang Kami</a></li>
+                        <li><a href="#paket" class="hover:text-white transition-colors">Paket Menu</a></li>
+                        <li><a href="#galeri" class="hover:text-white transition-colors">Galeri Portofolio</a></li>
+                        <li><a href="#testimoni" class="hover:text-white transition-colors">Testimoni Pelanggan</a></li>
+                    </ul>
+                </div>
+
+                {{-- Kolom 3: Kontak & Lokasi --}}
+                <div class="lg:col-span-4 space-y-3">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-[#a4864b]">Kontak &amp; Alamat</h4>
+                    <div class="space-y-2 text-xs sm:text-sm text-white/70 font-light">
+                        <p>Jln. Kapten Yusuf Gang Purnama, Tamansari, Bogor</p>
+                        <p>WhatsApp: <a href="https://wa.me/628561155113" class="text-white hover:underline">08561155113</a></p>
+                        <p>Email: <a href="mailto:Waroengpecelayam99@gmail.com" class="text-white hover:underline">Waroengpecelayam99@gmail.com</a></p>
+                        <p>Instagram: <a href="https://instagram.com/cateringnusantara_bogor" target="_blank" class="text-white hover:underline">@cateringnusantara_bogor</a></p>
+                    </div>
+                </div>
+
+            </div>
+
+            {{-- Bottom Bar --}}
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50">
+                <p>&copy; 2024 - {{ date('Y') }} Catering Nusantara. All rights reserved.</p>
+                <a href="#beranda" class="hover:text-white transition-colors">Kembali ke Atas ↑</a>
             </div>
 
         </div>
     </footer>
 
     <!-- ========================================== -->
-    <!-- 🛒 SLIDE-OVER CART DRAWER & FLOATING CART -->
+    <!-- 🛒 10. MODAL BESAR KERANJANG BELANJA       -->
     <!-- ========================================== -->
 
     <!-- FLOATING CART BUTTON (BOTTOM RIGHT) -->
     <div x-show="$store.cart && $store.cart.totalCount > 0" x-cloak
         x-transition:enter="transition ease-out duration-300 transform"
-        x-transition:enter-start="translate-y-10 opacity-0 scale-90"
-        x-transition:enter-end="translate-y-0 opacity-100 scale-100"
-        x-transition:leave="transition ease-in duration-200 transform"
-        x-transition:leave-start="translate-y-0 opacity-100 scale-100"
-        x-transition:leave-end="translate-y-10 opacity-0 scale-90" class="fixed bottom-6 right-6 z-40">
+        x-transition:enter-start="translate-y-10 opacity-0"
+        x-transition:enter-end="translate-y-0 opacity-100"
+        class="fixed bottom-6 right-6 z-40">
         <button @click="$store.cart.toggle()"
-            class="bg-[#f6a11a] hover:bg-[#e09015] text-white font-bold px-5 py-3.5 rounded-full shadow-2xl flex items-center gap-3 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 border-2 border-white cursor-pointer group">
+            class="bg-[#1a120b] hover:bg-black text-white font-medium px-5 py-3 rounded-full flex items-center gap-3 transition-all duration-200 border border-neutral-700 cursor-pointer">
             <div class="relative">
-                <svg class="w-6 h-6 transform group-hover:rotate-6 transition-transform" fill="none"
-                    stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
                         d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
                 <span x-text="$store.cart ? $store.cart.totalCount : 0"
-                    class="absolute -top-2 -right-2 bg-white text-[#f6a11a] text-[10px] font-black h-5 min-w-[20px] px-1 rounded-full flex items-center justify-center shadow">
+                    class="absolute -top-2 -right-2 bg-[#a4864b] text-white text-[9px] font-bold h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center">
                 </span>
             </div>
-            <div class="text-left leading-tight hidden sm:block">
-                <span class="text-[10px] text-white/90 uppercase font-semibold block">Keranjang</span>
-                <span class="text-xs font-black">Rp <span
-                        x-text="$store.cart ? $store.cart.formatPrice($store.cart.totalPrice) : 0"></span></span>
+            <div class="text-left text-xs leading-tight hidden sm:block">
+                <span class="text-white/70 block text-[10px]">Keranjang</span>
+                <span class="font-bold">Rp <span x-text="$store.cart ? $store.cart.formatPrice($store.cart.totalPrice) : 0"></span></span>
             </div>
         </button>
     </div>
@@ -1131,237 +1205,112 @@
         x-transition:enter-start="-translate-y-5 opacity-0" x-transition:enter-end="translate-y-0 opacity-100"
         x-transition:leave="transition ease-in duration-200 transform"
         x-transition:leave-start="translate-y-0 opacity-100" x-transition:leave-end="-translate-y-5 opacity-0"
-        class="fixed top-24 right-6 z-50 max-w-sm bg-gray-900/95 backdrop-blur-md text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-white/10">
-        <div class="w-7 h-7 rounded-full bg-[#f6a11a] text-white flex items-center justify-center shrink-0">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-            </svg>
+        class="fixed top-20 right-6 z-50 max-w-sm bg-neutral-900 text-white px-5 py-3 rounded-2xl flex items-center gap-3 border border-neutral-700">
+        <div class="w-6 h-6 rounded-full bg-[#a4864b] text-white flex items-center justify-center shrink-0 text-xs font-bold">
+            ✓
         </div>
-        <p class="text-xs font-semibold leading-snug" x-text="$store.cart ? $store.cart.toastMessage : ''"></p>
+        <p class="text-xs font-medium" x-text="$store.cart ? $store.cart.toastMessage : ''"></p>
     </div>
 
-    <!-- MODAL CARD BESAR KERANJANG (CENTERED POP-UP WITH BLUR BACKDROP) -->
-    <div x-show="$store.cart && $store.cart.isOpen" x-cloak x-transition:enter="transition ease-out duration-300"
+    <!-- MODAL POPUP KERANJANG -->
+    <div x-show="$store.cart && $store.cart.isOpen" x-cloak
+        x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
         x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
-        class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 lg:p-10 overflow-y-auto">
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
 
-        <!-- Backdrop overlay with blur -->
-        <div class="fixed inset-0 bg-black/65 backdrop-blur-md transition-opacity" @click="$store.cart.close()"></div>
+        <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" @click="$store.cart.close()"></div>
 
-        <!-- CARD BESAR PUTIH -->
-        <div x-show="$store.cart && $store.cart.isOpen" x-transition:enter="transition ease-out duration-300 transform"
-            x-transition:enter-start="opacity-0 scale-95 translate-y-4"
-            x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-            x-transition:leave="transition ease-in duration-200 transform"
-            x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-            x-transition:leave-end="opacity-0 scale-95 translate-y-4"
-            class="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-[28px] sm:rounded-[36px] shadow-2xl overflow-hidden flex flex-col z-10 border border-gray-100 my-auto"
+        <div class="relative w-full max-w-3xl max-h-[85vh] bg-white rounded-3xl overflow-hidden flex flex-col z-10 border border-neutral-200 my-auto"
             @click.stop>
 
-            <!-- CARD HEADER -->
-            <div
-                class="p-6 sm:p-7 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-orange-50/70 via-white to-amber-50/40">
-                <div class="flex items-center gap-3.5 sm:gap-4">
-                    <div
-                        class="w-12 h-12 rounded-2xl bg-[#f6a11a]/15 text-[#f6a11a] flex items-center justify-center shrink-0 shadow-sm">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="font-extrabold text-gray-900 text-xl sm:text-2xl leading-tight">Keranjang Pesanan
-                            Anda</h3>
-                        <p class="text-xs sm:text-sm text-gray-500 mt-0.5">
-                            <span class="font-bold text-[#f6a11a]"
-                                x-text="$store.cart ? $store.cart.totalItems : 0"></span> menu terpilih •
-                            <span class="font-bold text-gray-800"
-                                x-text="$store.cart ? $store.cart.totalCount : 0"></span> porsi total
-                        </p>
-                    </div>
+            {{-- Header Modal --}}
+            <div class="p-6 border-b border-neutral-100 flex items-center justify-between bg-[#fdfbf7]">
+                <div>
+                    <h3 class="font-bold text-neutral-900 text-xl">Keranjang Pesanan</h3>
+                    <p class="text-xs text-neutral-500 mt-0.5">
+                        <span class="font-bold text-[#a4864b]" x-text="$store.cart ? $store.cart.totalItems : 0"></span> menu •
+                        <span class="font-bold text-neutral-800" x-text="$store.cart ? $store.cart.totalCount : 0"></span> porsi total
+                    </p>
                 </div>
-
                 <button @click="$store.cart.close()"
-                    class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-900 flex items-center justify-center font-bold text-lg transition cursor-pointer shadow-sm">
+                    class="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-500 flex items-center justify-center font-bold text-sm transition cursor-pointer">
                     ✕
                 </button>
             </div>
 
-            <!-- CARD BODY: LIST ITEM & INPUT CATATAN -->
-            <div class="p-5 sm:p-7 flex-1 overflow-y-auto space-y-6">
-                <!-- EMPTY STATE -->
+            {{-- Body List Items --}}
+            <div class="p-6 flex-1 overflow-y-auto space-y-4">
                 <template x-if="!$store.cart || $store.cart.items.length === 0">
-                    <div class="h-full flex flex-col items-center justify-center text-center py-16 space-y-4">
-                        <div
-                            class="w-24 h-24 rounded-3xl bg-orange-50 text-[#f6a11a] flex items-center justify-center shadow-inner">
-                            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h4 class="font-extrabold text-gray-900 text-lg">Keranjang Belanja Masih Kosong</h4>
-                            <p class="text-xs sm:text-sm text-gray-500 max-w-sm mt-1.5 leading-relaxed">
-                                Anda belum memilih paket menu. Silakan jelajahi katalog kami dan klik ikon keranjang
-                                pada menu favorit Anda.
-                            </p>
-                        </div>
+                    <div class="text-center py-12 space-y-3">
+                        <p class="text-sm text-neutral-500 font-light">Keranjang belanja Anda masih kosong.</p>
                         <a href="#paket" @click="$store.cart.close()"
-                            class="bg-[#f6a11a] hover:bg-[#e09015] text-white text-xs sm:text-sm font-bold px-7 py-3 rounded-full shadow-lg shadow-orange-500/20 transition inline-flex items-center gap-2 cursor-pointer">
-                            <span>Jelajahi Paket Menu</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
+                            class="inline-block bg-[#1a120b] text-white text-xs font-medium px-6 py-2.5 rounded-full">
+                            Pilih Menu Sekarang
                         </a>
                     </div>
                 </template>
 
-                <!-- FILLED STATE -->
                 <template x-if="$store.cart && $store.cart.items.length > 0">
-                    <div class="space-y-6">
-                        <!-- DAFTAR ITEM DI KERANJANG -->
-                        <div class="space-y-3.5">
-                            <template x-for="item in $store.cart.items" :key="item.id">
-                                <div
-                                    class="bg-gray-50/70 hover:bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-gray-100 hover:border-[#f6a11a]/30 hover:shadow-md transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-
-                                    <!-- Info Produk (Foto + Nama) -->
-                                    <div class="flex items-center gap-4 min-w-0 flex-1">
-                                        <div
-                                            class="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-gray-200 shrink-0 shadow-sm">
-                                            <img :src="item.image ? '/storage/' + item.image : '/image/tempeng-removebg-preview.png'"
-                                                :alt="item.name" class="w-full h-full object-cover">
-                                        </div>
-                                        <div class="min-w-0">
-                                            <div class="flex items-center gap-2 mb-1">
-                                                <span
-                                                    class="text-[9px] uppercase font-extrabold bg-orange-100 text-[#f6a11a] px-2 py-0.5 rounded-md"
-                                                    x-text="item.package_category"></span>
-                                                <template x-if="item.tier">
-                                                    <span
-                                                        class="text-[9px] uppercase font-bold bg-amber-800 text-white px-2 py-0.5 rounded-md"
-                                                        x-text="item.tier"></span>
-                                                </template>
-                                            </div>
-                                            <h5 class="font-extrabold text-gray-900 text-base sm:text-lg leading-snug truncate"
-                                                x-text="item.name"></h5>
-                                            <p class="text-xs text-gray-500 mt-0.5">
-                                                Rp <span x-text="$store.cart.formatPrice(item.price)"></span>
-                                                <span class="text-[10px] text-gray-400">/ pax</span>
-                                            </p>
-                                        </div>
+                    <div class="space-y-4">
+                        <template x-for="item in $store.cart.items" :key="item.id">
+                            <div class="bg-[#fdfbf7] rounded-2xl p-4 border border-neutral-200/80 flex items-center justify-between gap-4">
+                                <div class="flex items-center gap-3.5 min-w-0 flex-1">
+                                    <div class="w-14 h-14 rounded-xl overflow-hidden bg-neutral-200 shrink-0">
+                                        <img :src="item.image ? '/storage/' + item.image : '/images/herobaru.jpg'"
+                                            :alt="item.name" class="w-full h-full object-cover">
                                     </div>
-
-                                    <!-- Stepper Plus Minus & Total Item -->
-                                    <div
-                                        class="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-200/60">
-
-                                        <!-- TOMBOL PLUS & MINUS -->
-                                        <div
-                                            class="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">
-                                            <button @click="$store.cart.updateQty(item.id, -1)" title="Kurangi 1 Porsi"
-                                                class="w-7 h-7 rounded-full bg-gray-100 hover:bg-red-50 text-gray-700 hover:text-red-500 flex items-center justify-center font-black text-base transition cursor-pointer active:scale-90">
-                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="3" d="M20 12H4" />
-                                                </svg>
-                                            </button>
-
-                                            <div class="px-2 min-w-[48px] text-center leading-tight">
-                                                <span class="font-black text-gray-900 text-sm sm:text-base"
-                                                    x-text="item.qty"></span>
-                                                <span class="text-[10px] text-gray-400 font-semibold block">porsi</span>
-                                            </div>
-
-                                            <button @click="$store.cart.updateQty(item.id, 1)" title="Tambah 1 Porsi"
-                                                class="w-7 h-7 rounded-full bg-orange-100 hover:bg-[#f6a11a] text-[#f6a11a] hover:text-white flex items-center justify-center font-black text-base transition cursor-pointer active:scale-90 shadow-sm">
-                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="3" d="M12 4v16m8-8H4" />
-                                                </svg>
-                                            </button>
-                                        </div>
-
-                                        <!-- SUB TOTAL -->
-                                        <div class="text-right min-w-[110px] sm:min-w-[130px]">
-                                            <span
-                                                class="text-[10px] text-gray-400 font-bold block uppercase">Subtotal</span>
-                                            <span class="font-black text-[#f6a11a] text-base sm:text-lg leading-tight">
-                                                Rp <span x-text="$store.cart.formatPrice(item.price * item.qty)"></span>
-                                            </span>
-                                        </div>
-
-                                        <!-- TOMBOL HAPUS -->
-                                        <button @click="$store.cart.removeItem(item.id)" title="Hapus Menu Ini"
-                                            class="w-9 h-9 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 flex items-center justify-center transition shrink-0 cursor-pointer">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                        </button>
+                                    <div class="min-w-0">
+                                        <h5 class="font-bold text-neutral-900 text-sm truncate" x-text="item.name"></h5>
+                                        <p class="text-xs text-neutral-500">
+                                            Rp <span x-text="$store.cart.formatPrice(item.price)"></span> / pax
+                                        </p>
                                     </div>
-
                                 </div>
-                            </template>
-                        </div>
 
-                        <!-- KOLOM CATATAN KHUSUS -->
-                        <div
-                            class="bg-gray-50/80 rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-gray-100 space-y-2">
-                            <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-[#f6a11a]" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                </svg>
-                                <label class="text-xs font-extrabold text-gray-800 uppercase tracking-wider">
-                                    Catatan Tambahan Pesanan <span
-                                        class="text-gray-400 font-normal lowercase">(opsional)</span>
-                                </label>
+                                <div class="flex items-center gap-3">
+                                    <div class="flex items-center gap-1 bg-white px-2.5 py-1 rounded-full border border-neutral-200">
+                                        <button @click="$store.cart.updateQty(item.id, -1)" class="w-6 h-6 rounded-full bg-neutral-100 hover:bg-neutral-200 text-xs font-bold">-</button>
+                                        <span class="px-2 font-bold text-xs" x-text="item.qty"></span>
+                                        <button @click="$store.cart.updateQty(item.id, 1)" class="w-6 h-6 rounded-full bg-neutral-100 hover:bg-neutral-200 text-xs font-bold">+</button>
+                                    </div>
+                                    <div class="text-right min-w-[90px]">
+                                        <span class="font-bold text-neutral-900 text-sm">
+                                            Rp <span x-text="$store.cart.formatPrice(item.price * item.qty)"></span>
+                                        </span>
+                                    </div>
+                                    <button @click="$store.cart.removeItem(item.id)" class="text-neutral-400 hover:text-red-500 text-xs">✕</button>
+                                </div>
                             </div>
+                        </template>
+
+                        {{-- Catatan --}}
+                        <div class="pt-2">
+                            <label class="text-xs font-bold text-neutral-800 block mb-1">Catatan Tambahan (Tanggal/Alamat Acara):</label>
                             <textarea x-model="$store.cart.customerNote"
-                                placeholder="Tuliskan tanggal acara, jam pengantaran, alamat lokasi, atau permintaan khusus (misal: sambal dipisah, tanpa MSG, dsb)..."
+                                placeholder="Contoh: Acara tanggal 15 Oktober, kirim ke Tamansari jam 10.00 WIB..."
                                 rows="2"
-                                class="w-full text-xs sm:text-sm rounded-xl border border-gray-200 focus:border-[#f6a11a] focus:ring-[#f6a11a] p-3 text-gray-800 resize-none bg-white outline-none"></textarea>
+                                class="w-full text-xs rounded-xl border border-neutral-200 p-3 text-neutral-800 bg-[#fdfbf7] outline-none"></textarea>
                         </div>
                     </div>
                 </template>
             </div>
 
-            <!-- CARD FOOTER: TOTAL & CHECKOUT BUTTON -->
+            {{-- Footer Checkout --}}
             <template x-if="$store.cart && $store.cart.items.length > 0">
-                <div
-                    class="p-5 sm:p-7 border-t border-gray-100 bg-gray-50/90 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div class="text-center sm:text-left">
-                        <span class="text-xs text-gray-500 font-medium block">
-                            Total Pembayaran (<span x-text="$store.cart.totalItems"></span> menu • <span
-                                x-text="$store.cart.totalCount"></span> porsi)
-                        </span>
-                        <div class="text-2xl sm:text-3xl font-black text-gray-900 leading-tight mt-0.5">
-                            Rp <span x-text="$store.cart.formatPrice($store.cart.totalPrice)"
-                                class="text-[#f6a11a]"></span>
+                <div class="p-6 border-t border-neutral-100 bg-[#fdfbf7] flex items-center justify-between gap-4">
+                    <div>
+                        <span class="text-[11px] text-neutral-500 block">Total Pembayaran:</span>
+                        <div class="text-xl font-bold text-neutral-900">
+                            Rp <span x-text="$store.cart.formatPrice($store.cart.totalPrice)"></span>
                         </div>
                     </div>
-
-                    <div class="flex items-center gap-3 w-full sm:w-auto">
-                        <button @click="$store.cart.clearCart()"
-                            class="px-4 py-3 text-xs font-bold text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition cursor-pointer">
-                            Kosongkan
-                        </button>
-
-                        <!-- TOMBOL CHECKOUT VIA WHATSAPP -->
+                    <div class="flex items-center gap-3">
+                        <button @click="$store.cart.clearCart()" class="text-xs text-neutral-400 hover:text-red-500">Kosongkan</button>
                         <a :href="$store.cart.checkoutWhatsAppUrl" target="_blank"
-                            class="flex-1 sm:flex-initial bg-[#25D366] hover:bg-[#20ba59] text-white font-extrabold text-sm sm:text-base py-4 px-8 rounded-full shadow-xl shadow-emerald-500/25 transition-all duration-300 flex items-center justify-center gap-2.5 transform hover:-translate-y-0.5 active:scale-95 cursor-pointer">
-                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                                <path
-                                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
-                            </svg>
-                            <span>Pesan via WhatsApp</span>
+                            class="bg-[#a4864b] hover:bg-[#8f723c] text-white font-medium text-sm py-3 px-6 rounded-full transition-all">
+                            Pesan via WhatsApp
                         </a>
                     </div>
                 </div>
@@ -1370,8 +1319,107 @@
         </div>
     </div>
 
-    <!-- SCRIPT ALPINE CART STORE -->
+    <!-- ========================================== -->
+    <!-- 📜 JAVASCRIPT: INTRO, SCROLL, & NAVBAR     -->
+    <!-- ========================================== -->
     <script>
+        // 1. Preloader Intro Animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const preloader = document.getElementById('site-preloader');
+            if (preloader) {
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    preloader.style.transform = 'translateY(-20px)';
+                    preloader.style.pointerEvents = 'none';
+                    setTimeout(() => {
+                        preloader.remove();
+                    }, 700);
+                }, 1000);
+            }
+        });
+
+        // 2. Animate on Scroll (Reveal on Scroll Observer)
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal-on-scroll');
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+                reveals.forEach(el => observer.observe(el));
+            } else {
+                reveals.forEach(el => el.classList.add('is-visible'));
+            }
+        });
+
+        // 3. Compact Island / Pill Navbar on Scroll
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.getElementById('site-header');
+            const inner = document.getElementById('header-inner');
+            const brandTitle = document.getElementById('nav-brand-title');
+            const brandSub = document.getElementById('nav-brand-sub');
+            const navItems = document.querySelectorAll('.nav-item');
+            const cartBtn = document.getElementById('nav-cart-btn');
+            const hero = document.getElementById('beranda');
+
+            function updateNavbar() {
+                if (!header || !inner || !hero) return;
+                const heroThreshold = hero.offsetHeight - 120;
+                const isScrolled = window.scrollY > heroThreshold;
+
+                if (isScrolled) {
+                    header.classList.remove('py-5', 'sm:py-6');
+                    header.classList.add('py-3');
+                    inner.classList.add(
+                        'max-w-4xl', 'bg-white/95', 'backdrop-blur-md', 'rounded-full', 
+                        'px-6', 'py-2.5', 'border', 'border-neutral-200/90', 'shadow-lg'
+                    );
+                    if (brandTitle) {
+                        brandTitle.classList.remove('text-white');
+                        brandTitle.classList.add('text-neutral-900', 'text-base');
+                    }
+                    if (brandSub) brandSub.classList.add('hidden');
+                    navItems.forEach(item => {
+                        item.classList.remove('text-white/90', 'hover:text-white');
+                        item.classList.add('text-neutral-600', 'hover:text-neutral-900');
+                    });
+                    if (cartBtn) {
+                        cartBtn.classList.remove('text-white', 'hover:bg-white/15', 'border-white/20');
+                        cartBtn.classList.add('text-neutral-800', 'hover:bg-neutral-100', 'border-transparent');
+                    }
+                } else {
+                    header.classList.add('py-5', 'sm:py-6');
+                    header.classList.remove('py-3');
+                    inner.classList.remove(
+                        'max-w-4xl', 'bg-white/95', 'backdrop-blur-md', 'rounded-full', 
+                        'px-6', 'py-2.5', 'border', 'border-neutral-200/90', 'shadow-lg'
+                    );
+                    if (brandTitle) {
+                        brandTitle.classList.add('text-white');
+                        brandTitle.classList.remove('text-neutral-900', 'text-base');
+                    }
+                    if (brandSub) brandSub.classList.remove('hidden');
+                    navItems.forEach(item => {
+                        item.classList.add('text-white/90', 'hover:text-white');
+                        item.classList.remove('text-neutral-600', 'hover:text-neutral-900');
+                    });
+                    if (cartBtn) {
+                        cartBtn.classList.add('text-white', 'hover:bg-white/15', 'border-white/20');
+                        cartBtn.classList.remove('text-neutral-800', 'hover:bg-neutral-100', 'border-transparent');
+                    }
+                }
+            }
+
+            window.addEventListener('scroll', updateNavbar, { passive: true });
+            updateNavbar();
+        });
+
+        // 4. Cart Store Setup
         function initCateringCart() {
             if (typeof Alpine === 'undefined') return;
             if (Alpine.store('cart')) return;
@@ -1421,7 +1469,7 @@
                         });
                     }
                     this.save();
-                    this.showToast('"' + product.name + '" berhasil ditambahkan ke keranjang!');
+                    this.showToast('"' + product.name + '" ditambahkan ke keranjang');
                 },
 
                 updateQty(id, delta) {
@@ -1441,7 +1489,7 @@
                 },
 
                 clearCart() {
-                    if (confirm('Apakah Anda yakin ingin mengosongkan keranjang?')) {
+                    if (confirm('Kosongkan keranjang belanja?')) {
                         this.items = [];
                         this.save();
                     }
@@ -1454,11 +1502,6 @@
                     } else {
                         document.body.classList.remove('overflow-hidden');
                     }
-                },
-
-                open() {
-                    this.isOpen = true;
-                    document.body.classList.add('overflow-hidden');
                 },
 
                 close() {
@@ -1474,9 +1517,9 @@
                     const phone = '628561155113';
                     if (this.items.length === 0) return '#';
 
-                    let text = 'Halo *Catering Nusantara*, saya ingin memesan menu catering berikut:\n\n';
-                    text += '🛒 *RINCIAN PESANAN:*\n';
-                    text += '================================\n';
+                    let text = 'Halo *Catering Nusantara*, saya ingin memesan paket menu berikut:\n\n';
+                    text += '📋 *RINCIAN PESANAN:*\n';
+                    text += '--------------------------------\n';
 
                     this.items.forEach((item, index) => {
                         const subtotal = Number(item.price) * Number(item.qty);
@@ -1487,7 +1530,7 @@
                         text += `   • Subtotal: Rp ${this.formatPrice(subtotal)}\n\n`;
                     });
 
-                    text += '================================\n';
+                    text += '--------------------------------\n';
                     text += `📦 *Total Menu:* ${this.totalItems} menu (${this.totalCount} porsi)\n`;
                     text += `💰 *TOTAL ESTIMASI: Rp ${this.formatPrice(this.totalPrice)}*\n`;
 
@@ -1495,7 +1538,7 @@
                         text += `\n📝 *Catatan Khusus:*\n${this.customerNote.trim()}\n`;
                     }
 
-                    text += '\nMohon informasi ketersediaan menu dan tata cara pembayarannya. Terima kasih! 🙏';
+                    text += '\nMohon informasi ketersediaan tanggal dan konfirmasi pesanan. Terima kasih! 🙏';
 
                     return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
                 },
@@ -1506,7 +1549,7 @@
                     if (this.toastTimeout) clearTimeout(this.toastTimeout);
                     this.toastTimeout = setTimeout(() => {
                         this.showToastNotification = false;
-                    }, 3000);
+                    }, 2800);
                 }
             });
         }
@@ -1516,65 +1559,13 @@
             initCateringCart();
         }
     </script>
+</body>
 
-    <!-- SCRIPT ANIMASI SCROLL & UNDERLINE MOVER -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const navItems = document.querySelectorAll('.nav-item');
-            const indicator = document.getElementById('nav-indicator');
-            const sections = document.querySelectorAll('section[id]');
-
-            // Fungsi untuk menggeser garis indicator ke posisi link aktif
-            function moveIndicator(activeLink) {
-                if (!activeLink || !indicator) return;
-
-                const linkRect = activeLink.getBoundingClientRect();
-                const parentRect = activeLink.parentElement.getBoundingClientRect();
-
-                // Hitung posisi horizontal & lebar garis
-                indicator.style.width = `${linkRect.width}px`;
-                indicator.style.left = `${linkRect.left - parentRect.left}px`;
-
-                // Update warna font teks aktif
-                navItems.forEach(item => {
-                    item.classList.remove('text-gray-900', 'font-bold');
-                    item.classList.add('text-gray-600');
-                });
-                activeLink.classList.add('text-gray-900', 'font-bold');
-                activeLink.classList.remove('text-gray-600');
-            }
-
-            // Deteksi scroll layar & pindahkan garis ke section yang sedang dilihat
-            const observerOptions = {
-                root: null,
-                rootMargin: '-30% 0px -50% 0px',
-                threshold: 0
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const activeId = entry.target.getAttribute('id');
-                        const matchingLink = document.querySelector(`.nav-item[data-section="${activeId}"]`);
-                        if (matchingLink) {
-                            moveIndicator(matchingLink);
-                        }
-                    }
-                });
-            }, observerOptions);
-
-            sections.forEach(section => observer.observe(section));
-
-            // Set posisi awal indikator saat pertama load
-            const initialActive = document.querySelector('.nav-item[data-section="beranda"]');
-            if (initialActive) moveIndicator(initialActive);
-
-            // Redraw posisi garis saat window di-resize
-            window.addEventListener('resize', () => {
-                const currentActive = document.querySelector('.nav-item.font-bold');
-                if (currentActive) moveIndicator(currentActive);
-            });
-        });
+</html>
+{{-- Cart);
+        if (window.Alpine) {
+            initCateringCart();
+        } --}}
     </script>
 </body>
 
