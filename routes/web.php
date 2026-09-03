@@ -21,10 +21,6 @@ use Illuminate\Support\Facades\Route;
 
 // Route Utama (Landing Page dengan data produk & kategori)
 Route::get('/', function () {
-    if (Auth::check()) {
-        return redirect()->route('admin.dashboard');
-    }
-    
     // Ambil data produk & kategori untuk katalog filter & modal pop-up
     $products = Product::latest()->get();
     $categories = Category::all();
@@ -39,6 +35,7 @@ Route::get('/customer', function () {
 
     return view('welcome', compact('products', 'categories'));
 })->name('customer.home');
+
 
 
 // ==========================================

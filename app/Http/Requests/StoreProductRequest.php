@@ -6,10 +6,20 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreProductRequest extends FormRequest
 {
-   public function authorize(): bool
-{
-    return true; // Wajib di-set ke TRUE
-}
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('price')) {
+            $rawPrice = preg_replace('/[^0-9]/', '', (string) $this->price);
+            $this->merge([
+                'price' => $rawPrice !== '' ? (int) $rawPrice : 0,
+            ]);
+        }
+    }
 
     public function rules(): array
     {
@@ -27,7 +37,7 @@ class StoreProductRequest extends FormRequest
             'price' => 'required|numeric|min:0',
             'daily_capacity' => 'nullable|numeric',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
             'is_bestseller' => 'nullable|boolean',
         ];
     }

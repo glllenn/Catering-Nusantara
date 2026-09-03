@@ -43,6 +43,6 @@ return redirect()->intended(route('admin.dashboard', absolute: false));
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('login');
     }
 }

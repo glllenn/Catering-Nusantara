@@ -1,24 +1,42 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-bold text-xl text-gray-800 leading-tight">
-                {{ __('Edit Paket Menu: ') . $product->name }}
-            </h2>
-            <a href="{{ route('admin.dashboard') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-xl text-sm transition flex items-center gap-1.5">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                Kembali
-            </a>
-        </div>
-    </x-slot>
+    <x-slot name="header"></x-slot>
 
-    <div class="py-8 bg-gray-50/50 min-h-screen">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8">
+    <div class="py-8 bg-[#faf7f2] min-h-screen">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            
+            {{-- Navigation Bar Header --}}
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <a href="{{ route('admin.dashboard') }}" 
+                        class="p-2.5 rounded-2xl bg-white border border-neutral-200 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-50 transition shadow-2xs group">
+                        <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                    </a>
+                    <div>
+                        <h2 class="font-bold text-xl text-neutral-900 leading-tight">
+                            Edit Paket Menu: {{ $product->name }}
+                        </h2>
+                        <p class="text-xs text-neutral-500">Perbarui rincian lauk, harga, porsi, atau status hidangan.</p>
+                    </div>
+                </div>
+
+                <a href="{{ route('admin.dashboard') }}" 
+                    class="hidden sm:inline-flex items-center gap-2 bg-white hover:bg-neutral-50 border border-neutral-200 text-neutral-700 font-bold py-2.5 px-4 rounded-2xl text-xs transition shadow-2xs">
+                    <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span>Kembali ke Dashboard</span>
+                </a>
+            </div>
+
+            {{-- Form Card --}}
+            <div class="bg-white rounded-3xl border border-neutral-200/80 shadow-xs p-6 md:p-8">
                 
                 {{-- Alert Error Validasi --}}
                 @if ($errors->any())
-                    <div class="mb-6 bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-2xl">
-                        <p class="font-bold text-sm">Terjadi kesalahan input:</p>
+                    <div class="mb-6 bg-red-50 border border-red-200 text-red-800 p-4 rounded-2xl">
+                        <p class="font-bold text-xs uppercase tracking-wider">Periksa kembali data formulir:</p>
                         <ul class="list-disc list-inside text-xs mt-1 space-y-0.5">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -27,34 +45,67 @@
                     </div>
                 @endif
 
-                <form action="{{ route('admin.products.update', $product->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <form action="{{ route('admin.products.update', $product->id) }}" 
+                    method="POST" 
+                    enctype="multipart/form-data" 
+                    class="space-y-6"
+                    x-data="{
+                        formattedPrice: '{{ old('price', $product->price) ? number_format(old('price', $product->price), 0, ',', '.') : '' }}',
+                        rawPrice: '{{ old('price', $product->price) }}',
+                        formatRupiah(e) {
+                            let val = e.target.value.replace(/[^0-9]/g, '');
+                            this.rawPrice = val;
+                            if (val) {
+                                this.formattedPrice = new Intl.NumberFormat('id-ID').format(val);
+                            } else {
+                                this.formattedPrice = '';
+                            }
+                        }
+                    }">
                     @csrf
                     @method('PUT')
 
-                    {{-- Informasi Utama Paket --}}
+                    {{-- 1. INFORMASI UTAMA PAKET --}}
                     <div>
-                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Informasi Utama Paket</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="flex items-center gap-2 pb-3 mb-4 border-b border-neutral-100">
+                            <span class="w-2 h-2 rounded-full bg-[#a4864b]"></span>
+                            <h3 class="text-xs font-bold text-neutral-500 uppercase tracking-wider">Informasi Utama Paket</h3>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             {{-- Nama Paket Menu --}}
-                            <div>
-                                <x-input-label for="name" :value="__('Nama Paket Menu')" />
-                                <x-text-input id="name" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm" type="text" name="name" :value="old('name', $product->name)" required />
+                            <div class="md:col-span-2">
+                                <label for="name" class="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
+                                    Nama Paket Menu <span class="text-red-500">*</span>
+                                </label>
+                                <input id="name" 
+                                    type="text" 
+                                    name="name" 
+                                    value="{{ old('name', $product->name) }}" 
+                                    required 
+                                    class="w-full px-4 py-3 rounded-2xl border border-neutral-200 text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#a4864b] bg-[#fdfbf7]" />
                             </div>
 
-                            {{-- Kasta / Tier Paket (Opsi Ditentukan Admin) --}}
+                            {{-- Kasta / Tier Paket --}}
                             <div>
-                                <x-input-label for="tier" :value="__('Kasta / Tier Paket')" />
-                                <select id="tier" name="tier" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm" required>
-                                    <option value="Silver" {{ old('tier', $product->tier) == 'Silver' ? 'selected' : '' }}>Silver</option>
-                                    <option value="Gold" {{ old('tier', $product->tier) == 'Gold' ? 'selected' : '' }}>Gold</option>
-                                    <option value="Premium" {{ old('tier', $product->tier) == 'Premium' ? 'selected' : '' }}>Premium</option>
+                                <label for="tier" class="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
+                                    Kasta / Tier Paket <span class="text-red-500">*</span>
+                                </label>
+                                <select id="tier" name="tier" required 
+                                    class="w-full px-4 py-3 rounded-2xl border border-neutral-200 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#a4864b] bg-[#fdfbf7]">
+                                    <option value="Silver" {{ old('tier', $product->tier) == 'Silver' ? 'selected' : '' }}>Silver (Hemat &amp; Praktis)</option>
+                                    <option value="Gold" {{ old('tier', $product->tier) == 'Gold' ? 'selected' : '' }}>Gold (Favorit &amp; Komplit)</option>
+                                    <option value="Premium" {{ old('tier', $product->tier) == 'Premium' ? 'selected' : '' }}>Premium (Mewah &amp; Eksklusif)</option>
                                 </select>
                             </div>
 
                             {{-- Kategori Paket Dinamis --}}
                             <div>
-                                <x-input-label for="package_category" :value="__('Kategori Paket')" />
-                                <select id="package_category" name="package_category" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm" required>
+                                <label for="package_category" class="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
+                                    Kategori Paket <span class="text-red-500">*</span>
+                                </label>
+                                <select id="package_category" name="package_category" required 
+                                    class="w-full px-4 py-3 rounded-2xl border border-neutral-200 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#a4864b] bg-[#fdfbf7]">
                                     <option value="">-- Pilih Kategori --</option>
                                     @if(isset($categories) && count($categories) > 0)
                                         @foreach($categories as $cat)
@@ -72,94 +123,165 @@
 
                             {{-- Kategori Acara --}}
                             <div>
-                                <x-input-label for="event_category" :value="__('Kategori Acara')" />
-                                <select id="event_category" name="event_category" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm">
-                                    @foreach(['Kantor', 'Pernikahan', 'Ulang Tahun', 'Arisan', 'Umum'] as $evt)
-                                        <option value="{{ $evt }}" {{ old('event_category', $product->event_category) == $evt ? 'selected' : '' }}>{{ $evt }}</option>
+                                <label for="event_category" class="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
+                                    Kategori Acara <span class="text-red-500">*</span>
+                                </label>
+                                <select id="event_category" name="event_category" 
+                                    class="w-full px-4 py-3 rounded-2xl border border-neutral-200 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#a4864b] bg-[#fdfbf7]">
+                                    @foreach(['Kantor' => 'Kantor / Rapat / Gathering', 'Pernikahan' => 'Pernikahan & Resepsi', 'Ulang Tahun' => 'Ulang Tahun', 'Arisan' => 'Arisan & Syukuran', 'Umum' => 'Umum / Segala Acara'] as $val => $lbl)
+                                        <option value="{{ $val }}" {{ old('event_category', $product->event_category) == $val ? 'selected' : '' }}>{{ $lbl }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
-                            {{-- Harga per Porsi --}}
+                            {{-- Harga per Porsi (DENGAN PEMISAH RIBUAN RUPIAH) --}}
                             <div>
-                                <x-input-label for="price" :value="__('Harga per Porsi / Pax (Rp)')" />
-                                <x-text-input id="price" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm" type="number" name="price" :value="old('price', $product->price)" required />
+                                <label for="price_display" class="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
+                                    Harga per Porsi / Pax (Rp) <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-neutral-400 font-bold text-xs">
+                                        Rp
+                                    </div>
+                                    <input id="price_display" 
+                                        type="text" 
+                                        x-model="formattedPrice"
+                                        @input="formatRupiah($event)"
+                                        required 
+                                        placeholder="25.000" 
+                                        class="w-full pl-12 pr-4 py-3 rounded-2xl border border-neutral-200 text-sm font-semibold text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#a4864b] bg-[#fdfbf7]" />
+                                    {{-- Hidden input for pure numerical value --}}
+                                    <input type="hidden" name="price" :value="rawPrice">
+                                </div>
+                                <p class="text-[11px] text-neutral-400 mt-1">Format otomatis dengan titik ribuan (contoh: 25.000 atau 1.500.000)</p>
                             </div>
 
                             {{-- Minimal Order --}}
                             <div>
-                                <x-input-label for="min_order" :value="__('Minimal Order (Porsi)')" />
-                                <x-text-input id="min_order" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm" type="number" name="min_order" :value="old('min_order', $product->min_order)" required />
+                                <label for="min_order" class="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
+                                    Minimal Order (Porsi) <span class="text-red-500">*</span>
+                                </label>
+                                <input id="min_order" 
+                                    type="number" 
+                                    name="min_order" 
+                                    value="{{ old('min_order', $product->min_order) }}" 
+                                    required 
+                                    min="1"
+                                    class="w-full px-4 py-3 rounded-2xl border border-neutral-200 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#a4864b] bg-[#fdfbf7]" />
                             </div>
 
                             {{-- Jenis Kemasan --}}
-                            <div class="md:col-span-2">
-                                <x-input-label for="packaging_type" :value="__('Jenis Kemasan')" />
-                                <x-text-input id="packaging_type" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm" type="text" name="packaging_type" :value="old('packaging_type', $product->packaging_type)" />
+                            <div>
+                                <label for="packaging_type" class="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
+                                    Jenis Kemasan
+                                </label>
+                                <input id="packaging_type" 
+                                    type="text" 
+                                    name="packaging_type" 
+                                    value="{{ old('packaging_type', $product->packaging_type) }}" 
+                                    placeholder="Contoh: Box Kertas Food Grade / Tampah / Mika" 
+                                    class="w-full px-4 py-3 rounded-2xl border border-neutral-200 text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#a4864b] bg-[#fdfbf7]" />
                             </div>
                         </div>
                     </div>
 
-                    {{-- Detail Rincian Menu --}}
-                    <div class="pt-6 border-t border-gray-100">
-                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Detail Rincian Menu</h3>
+                    {{-- 2. DETAIL RINCIAN MENU --}}
+                    <div class="pt-6 border-t border-neutral-100">
+                        <div class="flex items-center gap-2 pb-3 mb-4 border-b border-neutral-100">
+                            <span class="w-2 h-2 rounded-full bg-[#a4864b]"></span>
+                            <h3 class="text-xs font-bold text-neutral-500 uppercase tracking-wider">Detail Rincian Hidangan</h3>
+                        </div>
+
                         <div class="space-y-4">
                             <div>
-                                <x-input-label for="main_menu" :value="__('Menu Utama (Lauk & Masakan Lengkap)')" />
-                                <textarea id="main_menu" name="main_menu" rows="2" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm" required>{{ old('main_menu', $product->main_menu) }}</textarea>
+                                <label for="main_menu" class="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
+                                    Menu Utama (Lauk &amp; Masakan Lengkap) <span class="text-red-500">*</span>
+                                </label>
+                                <textarea id="main_menu" name="main_menu" rows="2" required 
+                                    class="w-full px-4 py-3 rounded-2xl border border-neutral-200 text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#a4864b] bg-[#fdfbf7]">{{ old('main_menu', $product->main_menu) }}</textarea>
                             </div>
 
                             <div>
-                                <x-input-label for="includes" :value="__('Termasuk (Nasi / Minuman / Buah)')" />
-                                <x-text-input id="includes" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm" type="text" name="includes" :value="old('includes', $product->includes)" />
+                                <label for="includes" class="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
+                                    Termasuk Pelengkap (Nasi / Minuman / Buah)
+                                </label>
+                                <input id="includes" 
+                                    type="text" 
+                                    name="includes" 
+                                    value="{{ old('includes', $product->includes) }}" 
+                                    class="w-full px-4 py-3 rounded-2xl border border-neutral-200 text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#a4864b] bg-[#fdfbf7]" />
                             </div>
 
                             <div>
-                                <x-input-label for="description" :value="__('Deskripsi Singkat')" />
-                                <textarea id="description" name="description" rows="3" class="block mt-1 w-full rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500 text-sm">{{ old('description', $product->description) }}</textarea>
+                                <label for="description" class="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
+                                    Deskripsi Singkat / Catatan Khusus
+                                </label>
+                                <textarea id="description" name="description" rows="3" 
+                                    class="w-full px-4 py-3 rounded-2xl border border-neutral-200 text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#a4864b] bg-[#fdfbf7]">{{ old('description', $product->description) }}</textarea>
                             </div>
                         </div>
                     </div>
 
-                    {{-- Upload Foto & Status Paket --}}
-                    <div class="pt-6 border-t border-gray-100">
-                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Foto & Pengaturan Menu</h3>
+                    {{-- 3. UPLOAD FOTO & STATUS PAKET --}}
+                    <div class="pt-6 border-t border-neutral-100">
+                        <div class="flex items-center gap-2 pb-3 mb-4 border-b border-neutral-100">
+                            <span class="w-2 h-2 rounded-full bg-[#a4864b]"></span>
+                            <h3 class="text-xs font-bold text-neutral-500 uppercase tracking-wider">Foto &amp; Status Paket</h3>
+                        </div>
+
                         <div class="space-y-4">
                             <div>
-                                <x-input-label for="image" :value="__('Ganti Foto Paket Menu (Opsional)')" />
+                                <label for="image" class="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
+                                    Ganti Foto Paket Hidangan (Opsional)
+                                </label>
+                                
                                 @if($product->image)
-                                    <div class="my-3 flex items-center gap-4">
-                                        <img src="{{ asset('storage/' . $product->image) }}" alt="Preview" class="w-24 h-24 object-cover rounded-2xl border border-gray-200 shadow-sm">
-                                        <span class="text-xs text-gray-400">Foto saat ini</span>
+                                    <div class="my-3 flex items-center gap-4 bg-[#fdfbf7] p-3 rounded-2xl border border-neutral-200 max-w-md">
+                                        <img src="{{ asset('storage/' . $product->image) }}" alt="Preview" class="w-20 h-20 object-cover rounded-xl border border-neutral-200 shadow-2xs">
+                                        <div class="text-xs space-y-0.5">
+                                            <p class="font-bold text-neutral-800">Foto Saat Ini</p>
+                                            <p class="text-neutral-400">Pilih file baru di bawah ini hanya jika ingin mengganti foto saat ini.</p>
+                                        </div>
                                     </div>
                                 @endif
-                                <input id="image" type="file" name="image" accept="image/*" class="block mt-2 w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-600 hover:file:bg-orange-100 transition cursor-pointer" />
-                                <p class="text-xs text-gray-400 mt-1">Biarkan kosong jika tidak ingin mengganti foto. Maksimal 10MB.</p>
+
+                                <input id="image" type="file" name="image" accept="image/*" 
+                                    class="block w-full text-xs text-neutral-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-2xl file:border-0 file:text-xs file:font-bold file:bg-[#faf4ea] file:text-[#a4864b] hover:file:bg-[#f0e4d0] file:cursor-pointer transition border border-neutral-200 rounded-2xl p-2 bg-[#fdfbf7]" />
+                                <p class="text-[11px] text-neutral-400 mt-1">Biarkan kosong jika tidak ingin mengubah foto. Maksimal 10MB.</p>
                             </div>
 
-                            <div class="flex flex-col sm:flex-row gap-6 pt-2">
-                                <div class="flex items-center">
-                                    <input id="is_bestseller" type="checkbox" name="is_bestseller" value="1" class="rounded border-gray-300 text-orange-600 shadow-sm focus:ring-orange-500" {{ old('is_bestseller', $product->is_bestseller) ? 'checked' : '' }}>
-                                    <label for="is_bestseller" class="ml-2 text-sm font-semibold text-gray-700 cursor-pointer">
+                            <div class="flex flex-col sm:flex-row gap-6 pt-3">
+                                <label class="flex items-center cursor-pointer">
+                                    <input id="is_bestseller" type="checkbox" name="is_bestseller" value="1" 
+                                        class="w-4 h-4 rounded border-neutral-300 text-[#a4864b] focus:ring-[#a4864b]" {{ old('is_bestseller', $product->is_bestseller) ? 'checked' : '' }}>
+                                    <span class="ml-2.5 text-xs font-semibold text-neutral-700">
                                         Tandai sebagai Paket Favorit / Best Seller
-                                    </label>
-                                </div>
+                                    </span>
+                                </label>
 
-                                <div class="flex items-center">
-                                    <input id="is_active" type="checkbox" name="is_active" value="1" class="rounded border-gray-300 text-orange-600 shadow-sm focus:ring-orange-500" {{ old('is_active', $product->is_active ?? true) ? 'checked' : '' }}>
-                                    <label for="is_active" class="ml-2 text-sm font-semibold text-gray-700 cursor-pointer">
-                                        Status Aktif (Tampilkan di Website Customer)
-                                    </label>
-                                </div>
+                                <label class="flex items-center cursor-pointer">
+                                    <input id="is_active" type="checkbox" name="is_active" value="1" 
+                                        class="w-4 h-4 rounded border-neutral-300 text-[#a4864b] focus:ring-[#a4864b]" {{ old('is_active', $product->is_active ?? true) ? 'checked' : '' }}>
+                                    <span class="ml-2.5 text-xs font-semibold text-neutral-700">
+                                        Status Aktif (Tampilkan di Katalog Customer)
+                                    </span>
+                                </label>
                             </div>
                         </div>
                     </div>
 
-                    {{-- Tombol Submit --}}
-                    <div class="flex justify-end pt-6 border-t border-gray-100">
-                        <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-2xl shadow-sm transition flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                            Perbarui Paket Menu
+                    {{-- SUBMIT & CANCEL BUTTONS --}}
+                    <div class="flex items-center justify-end gap-3 pt-6 border-t border-neutral-100">
+                        <a href="{{ route('admin.dashboard') }}" 
+                            class="px-5 py-3 rounded-2xl border border-neutral-200 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-50 font-bold text-xs transition">
+                            Batal
+                        </a>
+                        <button type="submit" 
+                            class="bg-[#1a120b] hover:bg-black text-white font-bold py-3 px-8 rounded-2xl text-xs transition shadow-md flex items-center gap-2 cursor-pointer">
+                            <svg class="w-4 h-4 text-[#e4c990]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Perbarui Paket Menu</span>
                         </button>
                     </div>
                 </form>
@@ -167,4 +289,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-app-layout>

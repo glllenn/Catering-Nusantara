@@ -132,8 +132,16 @@
                 </a>
             </nav>
 
-            {{-- Tombol Keranjang Belanja (Kanan) --}}
+            {{-- Tombol Keranjang Belanja & Admin Panel (Kanan) --}}
             <div class="flex items-center gap-3">
+                @auth
+                    <a href="{{ route('admin.dashboard') }}" 
+                        class="hidden sm:inline-flex items-center gap-2 bg-[#1a120b]/90 hover:bg-[#1a120b] border border-[#a4864b]/40 text-white font-bold py-2.5 px-4 rounded-full text-xs transition shadow-lg backdrop-blur-sm">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>Dashboard Admin</span>
+                    </a>
+                @endauth
+
                 <button type="button" @click="$store.cart.toggle()" id="nav-cart-btn"
                     class="relative p-2.5 sm:p-3 rounded-full text-white hover:bg-white/15 transition-all flex items-center justify-center cursor-pointer border border-white/20"
                     title="Buka Keranjang">
@@ -1559,14 +1567,18 @@
             initCateringCart();
         }
     </script>
-</body>
 
-</html>
-{{-- Cart);
-        if (window.Alpine) {
-            initCateringCart();
-        } --}}
-    </script>
-</body>
+    @auth
+        {{-- Floating Pill Kembali ke Dashboard Admin --}}
+        <div class="fixed bottom-6 left-6 z-50">
+            <a href="{{ route('admin.dashboard') }}" 
+                class="bg-[#1a120b]/95 hover:bg-black text-white px-4 py-2.5 rounded-full text-xs font-bold shadow-2xl flex items-center gap-2.5 border border-[#a4864b]/60 backdrop-blur-md transition-all hover:scale-105 group">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-neutral-300">Admin Aktif:</span>
+                <span class="text-[#e4c990] font-bold">Kembali ke Dashboard →</span>
+            </a>
+        </div>
+    @endauth
 
+</body>
 </html>

@@ -1,100 +1,157 @@
-<nav x-data="{ open: false }" class="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b border-white/20 shadow-sm transition-all duration-300">
+<nav x-data="{ open: false }" class="sticky top-0 z-50 bg-white border-b border-neutral-200/90 shadow-xs transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2.5 group">
-                        <img src="{{ asset('images/logo.png') }}" alt="Logo Catering Nusantara" class="h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
-                        <span class="font-black text-xl text-orange-600 tracking-wider">
-                            CATERING<span class="text-gray-900">NUSANTARA</span>
+        <div class="flex justify-between h-18">
+            
+            {{-- Brand Logo & Title --}}
+            <div class="flex items-center gap-8">
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 group">
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo Catering Nusantara" 
+                        class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                        onerror="this.src='/image/logo.png';">
+                    <div class="flex flex-col text-left">
+                        <span class="font-['Perandory','Playfair_Display',serif] font-bold text-base sm:text-lg tracking-wider text-neutral-900 leading-none">
+                            CATERING NUSANTARA
                         </span>
+                        <span class="text-[10px] uppercase tracking-[0.2em] text-[#a4864b] font-bold mt-1">
+                            Admin Panel
+                        </span>
+                    </div>
+                </a>
+
+                {{-- Desktop Navigation Links --}}
+                <div class="hidden md:flex items-center gap-1.5 pl-4 border-l border-neutral-200">
+                    {{-- Dashboard --}}
+                    <a href="{{ route('admin.dashboard') }}" 
+                        class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 {{ request()->routeIs('admin.dashboard') ? 'bg-[#1a120b] text-white shadow-xs' : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100' }}">
+                        <svg class="w-4 h-4 {{ request()->routeIs('admin.dashboard') ? 'text-[#e4c990]' : 'text-neutral-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        <span>Dashboard</span>
                     </a>
+
+                    {{-- Tambah Menu --}}
+                    <a href="{{ route('admin.products.create') }}" 
+                        class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 {{ request()->routeIs('admin.products.create') ? 'bg-[#1a120b] text-white shadow-xs' : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100' }}">
+                        <svg class="w-4 h-4 {{ request()->routeIs('admin.products.create') ? 'text-[#e4c990]' : 'text-neutral-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        <span>Tambah Menu</span>
+                    </a>
+
+                    {{-- Kelola Kategori --}}
+                    @if(Route::has('admin.categories.index'))
+                        <a href="{{ route('admin.categories.index') }}" 
+                            class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 {{ request()->routeIs('admin.categories.*') ? 'bg-[#1a120b] text-white shadow-xs' : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100' }}">
+                            <svg class="w-4 h-4 {{ request()->routeIs('admin.categories.*') ? 'text-[#e4c990]' : 'text-neutral-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 7h.01M7 11h.01M7 15h.01M11 7h8M11 11h8M11 15h8M4 5h16a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1z"/>
+                            </svg>
+                            <span>Kelola Kategori</span>
+                        </a>
+                    @endif
                 </div>
-
-               <!-- Navigation Links -->
-
             </div>
 
-            <!-- Profile Dropdown (Glass Style Button) -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            {{-- Right Actions (Preview Web + Profile) --}}
+            <div class="hidden sm:flex sm:items-center sm:gap-3">
+                
+                {{-- Preview Website Button --}}
+                <a href="{{ url('/') }}" target="_blank" 
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-neutral-200 hover:border-neutral-400 text-xs font-semibold text-neutral-600 hover:text-neutral-900 bg-[#fdfbf7] hover:bg-white transition-all shadow-2xs">
+                    <svg class="w-3.5 h-3.5 text-[#a4864b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                    <span>Lihat Website</span>
+                </a>
+
+                {{-- Profile Dropdown --}}
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3.5 py-2 border border-orange-200/50 text-sm leading-4 font-semibold rounded-xl text-gray-700 bg-orange-50/60 hover:bg-orange-100/80 backdrop-blur-sm focus:outline-none transition duration-150 ease-in-out shadow-xs">
-                            <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                                <span>{{ Auth::user()->name }}</span>
+                        <button class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full border border-neutral-200 hover:border-neutral-300 text-xs font-bold text-neutral-800 bg-white hover:bg-neutral-50 transition cursor-pointer shadow-2xs">
+                            <div class="w-7 h-7 rounded-full bg-[#faf4ea] text-[#a4864b] flex items-center justify-center font-bold text-xs">
+                                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                             </div>
-
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4 text-orange-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
+                            <span class="max-w-[120px] truncate">{{ Auth::user()->name }}</span>
+                            <svg class="w-3.5 h-3.5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
                         </button>
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profil Admin') }}
+                        <div class="px-4 py-2 border-b border-neutral-100">
+                            <p class="text-[11px] text-neutral-400">Masuk sebagai</p>
+                            <p class="text-xs font-bold text-neutral-900 truncate">{{ Auth::user()->email }}</p>
+                        </div>
+
+                        <x-dropdown-link :href="route('profile.edit')" class="flex items-center gap-2 text-xs font-medium text-neutral-700 hover:text-neutral-900">
+                            <svg class="w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            <span>Edit Profil Saya</span>
                         </x-dropdown-link>
 
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
                             <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();"
-                                    class="text-red-600 font-semibold">
-                                {{ __('Log Out') }}
+                                onclick="event.preventDefault(); this.closest('form').submit();"
+                                class="flex items-center gap-2 text-xs font-bold text-red-600 hover:text-red-700 hover:bg-red-50">
+                                <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                </svg>
+                                <span>Keluar (Log Out)</span>
                             </x-dropdown-link>
                         </form>
                     </x-slot>
                 </x-dropdown>
             </div>
 
-            <!-- Hamburger Menu (Mobile) -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-xl text-gray-600 hover:text-orange-600 hover:bg-orange-50/50 focus:outline-none transition duration-150 ease-in-out">
+            {{-- Hamburger Button (Mobile) --}}
+            <div class="flex items-center sm:hidden">
+                <button @click="open = ! open" class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
+
         </div>
     </div>
 
-    <!-- Responsive Navigation Menu (Mobile Glass Dropdown) -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-white/90 backdrop-blur-lg border-t border-gray-100/60 shadow-lg">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.*')">
-                {{ __('Katalog Menu') }}
-            </x-responsive-nav-link>
+    {{-- Mobile Dropdown Menu --}}
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-white border-t border-neutral-200/80 px-4 pt-3 pb-5 space-y-3">
+        <div class="space-y-1">
+            <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2 rounded-xl text-sm font-bold {{ request()->routeIs('admin.dashboard') ? 'bg-[#1a120b] text-white' : 'text-neutral-700 hover:bg-neutral-100' }}">
+                Dashboard
+            </a>
+            <a href="{{ route('admin.products.create') }}" class="block px-3 py-2 rounded-xl text-sm font-bold {{ request()->routeIs('admin.products.create') ? 'bg-[#1a120b] text-white' : 'text-neutral-700 hover:bg-neutral-100' }}">
+                Tambah Menu Baru
+            </a>
+            @if(Route::has('admin.categories.index'))
+                <a href="{{ route('admin.categories.index') }}" class="block px-3 py-2 rounded-xl text-sm font-bold {{ request()->routeIs('admin.categories.*') ? 'bg-[#1a120b] text-white' : 'text-neutral-700 hover:bg-neutral-100' }}">
+                    Kelola Kategori
+                </a>
+            @endif
+            <a href="{{ url('/') }}" target="_blank" class="block px-3 py-2 rounded-xl text-sm font-bold text-[#a4864b] hover:bg-neutral-100">
+                Lihat Website Customer ↗
+            </a>
         </div>
 
-        <div class="pt-4 pb-3 border-t border-gray-200/60">
-            <div class="px-4">
-                <div class="font-bold text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+        <div class="pt-3 border-t border-neutral-100">
+            <div class="px-3 py-1">
+                <div class="font-bold text-sm text-neutral-900">{{ Auth::user()->name }}</div>
+                <div class="text-xs text-neutral-500">{{ Auth::user()->email }}</div>
             </div>
-
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profil Admin') }}
-                </x-responsive-nav-link>
-
+            <div class="mt-2 space-y-1">
+                <a href="{{ route('profile.edit') }}" class="block px-3 py-2 rounded-xl text-xs font-semibold text-neutral-700 hover:bg-neutral-100">
+                    Edit Profil Saya
+                </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();"
-                            class="text-red-600 font-semibold">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
+                    <button type="submit" class="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50">
+                        Keluar (Log Out)
+                    </button>
                 </form>
             </div>
         </div>
