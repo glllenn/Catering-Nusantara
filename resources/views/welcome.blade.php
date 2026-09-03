@@ -1092,7 +1092,7 @@
                     <a href="https://wa.me/628561155113?text=Halo%20Catering%20Nusantara,%20saya%20ingin%20konsultasi%20menu%20dan%20memesan%20catering%20untuk%20acara."
                         target="_blank"
                         class="w-full sm:w-auto text-center bg-[#1a120b] hover:bg-black text-white font-bold text-sm sm:text-base px-9 py-4 rounded-full shadow-lg transition-all duration-200">
-                        Konsultasi Acara Sekarang 💬
+                        Konsultasi Acara Sekarang
                     </a>
                 </div>
 
