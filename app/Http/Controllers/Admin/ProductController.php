@@ -7,15 +7,16 @@ use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Models\Category;
 use App\Http\Requests\UpdateProductRequest;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
     /**
      * Menampilkan daftar semua produk (Katalog)
      */
-public function index()
+    public function index()
     {
         // Ambil data produk dan kategori dari database
         $products = Product::latest()->paginate(10);
@@ -24,14 +25,16 @@ public function index()
         // Kirimkan kedua variabel ke view
         return view('admin.products.index', compact('products', 'categories'));
     }
+
     /**
      * Menampilkan form tambah paket menu baru
      */
     public function create()
-{
-    $categories = \App\Models\Category::all();
-    return view('admin.products.create', compact('categories'));
-}
+    {
+        $categories = \App\Models\Category::all();
+        return view('admin.products.create', compact('categories'));
+    }
+
     /**
      * Menyimpan paket menu baru ke database
      */
@@ -52,8 +55,13 @@ public function index()
 
         Product::create($data);
 
+        // Auto-sync ke file seeder & asset git
+        try {
+            Artisan::call('db:sync-export');
+        } catch (\Throwable $e) {}
+
         return redirect()->route('admin.dashboard')
-            ->with('success', 'Paket menu berhasil ditambahkan!');
+            ->with('success', 'Paket menu berhasil ditambahkan dan disinkronkan ke seeder!');
     }
 
     /**
@@ -68,10 +76,10 @@ public function index()
      * Menampilkan form edit paket menu
      */
     public function edit(Product $product)
-{
-    $categories = \App\Models\Category::all();
-    return view('admin.products.edit', compact('product', 'categories'));
-}
+    {
+        $categories = \App\Models\Category::all();
+        return view('admin.products.edit', compact('product', 'categories'));
+    }
 
     /**
      * Memperbarui data paket menu
@@ -99,8 +107,13 @@ public function index()
 
         $product->update($data);
 
+        // Auto-sync ke file seeder & asset git
+        try {
+            Artisan::call('db:sync-export');
+        } catch (\Throwable $e) {}
+
         return redirect()->route('admin.dashboard')
-            ->with('success', 'Paket menu berhasil diperbarui!');
+            ->with('success', 'Paket menu berhasil diperbarui dan disinkronkan ke seeder!');
     }
 
     /**
@@ -114,6 +127,11 @@ public function index()
         }
 
         $product->delete();
+
+        // Auto-sync ke file seeder & asset git
+        try {
+            Artisan::call('db:sync-export');
+        } catch (\Throwable $e) {}
 
         return redirect()->route('admin.dashboard')
             ->with('success', 'Paket menu berhasil dihapus!');

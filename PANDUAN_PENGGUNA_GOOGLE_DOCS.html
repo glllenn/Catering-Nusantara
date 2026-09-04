@@ -1,0 +1,225 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>User Guide Catering Nusantara</title><style>body{font-family:Arial,sans-serif;line-height:1.6;color:#222;max-width:800px;margin:40px auto;padding:0 20px;}h1{color:#1a120b;border-bottom:2px solid #a4864b;padding-bottom:8px;}h2{color:#a4864b;margin-top:28px;}ul,ol{padding-left:24px;}code{background:#f4f4f4;padding:2px 6px;border-radius:4px;}</style></head><body><pre style='font-family:Arial,sans-serif;white-space:pre-wrap;'># 📖 BUKU PANDUAN PENGGUNA (USER GUIDE)
+## SISTEM INFORMASI &amp; KATALOG DIGITAL CATERING NUSANTARA
+
+---
+
+### 👥 IDENTITAS PENGEMBANG
+- **Kelompok**: Kelompok 3
+- **Anggota Tim**:
+  1. **Glenn Marcel**
+  2. **Keyza Maulidya Putri Sandra**
+  3. **Veer Sadzwan Al Amudi**
+- **Nama Aplikasi**: Catering Nusantara Web Application
+- **Versi Rilis**: v1.0.0 (Production Ready)
+- **Teknologi**: Laravel 11/13, PHP 8.3, Tailwind CSS, Alpine.js, MySQL
+
+---
+
+## DAFTAR ISI
+1. [Pendahuluan &amp; Gambaran Umum Sistem](#1-pendahuluan--gambaran-umum-sistem)
+2. [Panduan Pengguna Pelanggan (Customer Frontend)](#2-panduan-pengguna-pelanggan-customer-frontend)
+   - [2.1 Akses &amp; Layar Intro](#21-akses--layar-intro)
+   - [2.2 Navigasi Landing Page](#22-navigasi-landing-page)
+   - [2.3 Eksplorasi Menu &amp; Filter Interaktif](#23-eksplorasi-menu--filter-interaktif)
+   - [2.4 Fitur &quot;Lihat Lebih Banyak&quot; Menu](#24-fitur-lihat-lebih-banyak-menu)
+   - [2.5 Keranjang Belanja &amp; Integrasi Pesan WhatsApp](#25-keranjang-belanja--integrasi-pesan-whatsapp)
+   - [2.6 Galeri Interaktif &amp; Testimoni](#26-galeri-interaktif--testimoni)
+3. [Panduan Administrator (Admin Backend Portal)](#3-panduan-administrator-admin-backend-portal)
+   - [3.1 Akses Masuk &amp; Login Admin](#31-akses-masuk--login-admin)
+   - [3.2 Dashboard Pengelola](#32-dashboard-pengelola)
+   - [3.3 Manajemen Paket Menu (Tambah, Edit, Hapus)](#33-manajemen-paket-menu)
+   - [3.4 Fitur Format Otomatis Ribuan Rupiah](#34-fitur-format-otomatis-ribuan-rupiah)
+   - [3.5 Manajemen Kategori Menu](#35-manajemen-kategori-menu)
+   - [3.6 Pengaturan Profil &amp; Kata Sandi Admin](#36-pengaturan-profil--kata-sandi-admin)
+   - [3.7 Navigasi Bolak-Balik &amp; Keamanan Sesi Logout](#37-navigasi-bolak-balik--keamanan-sesi-logout)
+4. [Panduan Instalasi &amp; Menjalankan Aplikasi](#4-panduan-instalasi--menjalankan-aplikasi)
+5. [Tanya Jawab (FAQ) &amp; Bantuan Teknis](#5-tanya-jawab-faq--bantuan-teknis)
+
+---
+
+## 1. PENDAHULUAN &amp; GAMBARAN UMUM SISTEM
+
+**Catering Nusantara** adalah platform katalog kuliner dan pemesanan katering digital modern yang dirancang untuk memberikan pengalaman visual terbaik bagi pelanggan sekaligus kemudahan manajemen bagi pengelola usaha katering.
+
+### Konsep Desain &amp; Estetika:
+- **Palet Warna Mewah &amp; Senada**: Mengusung nuansa *Warm Cream* (`#faf7f2`), *Dark Espresso* (`#1a120b`), dan aksen *Warm Gold* (`#a4864b`).
+- **Ikonografi &amp; Tipografi**: Menggunakan tipografi serif modern (*Perandory* / *Playfair Display*) dipadukan dengan *Plus Jakarta Sans*, serta 100% menggunakan **ikon vektor SVG bersih** (bebas emoji).
+- **Responsif &amp; Ringan**: Tampilan menyesuaikan secara sempurna di perangkat smartphone, tablet, laptop, maupun monitor desktop.
+
+---
+
+## 2. PANDUAN PENGGUNA PELANGGAN (CUSTOMER FRONTEND)
+
+### 2.1 Akses &amp; Layar Intro
+1. Buka browser dan kunjungi alamat website (misal: `http://127.0.0.1:8000` atau domain resmi).
+2. Anda akan disambut oleh **Luxury Preloader Screen** berlogo Catering Nusantara beranimasi halus sebelum memasuki halaman utama.
+
+### 2.2 Navigasi Landing Page
+Bagian atas website dilengkapi navigasi mengambang (*Header Island*) dengan menu:
+- **Beranda**: Banner utama dengan animasi *Filmstrip* berjalan otomatis menampilkan varian hidangan nusantara.
+- **Tentang Kami**: Cerita filosofi dapur, standar kebersihan higienis, dan sertifikasi halal.
+- **Paket Menu**: Katalog hidangan lengkap dengan harga dan opsi porsi.
+- **Galeri**: Dokumentasi foto kegiatan katering dan estetika masakan.
+- **Testimoni**: Ulasan dari pelanggan dan mitra korporat.
+- **Cara Order**: Panduan 4 langkah mudah memesan katering.
+- **Tombol Keranjang**: Ikon troli di kanan atas yang menampilkan jumlah pesanan yang dipilih.
+
+### 2.3 Eksplorasi Menu &amp; Filter Interaktif
+Pelanggan dapat menyaring menu berdasarkan:
+1. **Kategori Paket**: Semua Kategori, Nasi Box, Prasmanan, Snack Box, Tumpeng, dll.
+2. **Kasta Menu**:
+   - **Silver**: Pilihan hemat, praktis, dan terjangkau untuk konsumsi harian/rapat.
+   - **Gold**: Pilihan favorit dengan lauk komplit dan variatif.
+   - **Premium**: Pilihan eksklusif dan mewah untuk acara jamuan penting.
+3. **Kartu Menu**: Menampilkan foto resolusi tinggi, nama paket, harga per porsi, minimal pemesanan, dan rincian lauk utama.
+
+### 2.4 Fitur &quot;Lihat Lebih Banyak&quot; Menu
+- Secara default, halaman utama menampilkan **4 paket menu unggulan** agar tampilan tetap bersih (*clean*).
+- Untuk melihat seluruh menu lainnya, klik tombol **&quot;Lihat Semua Menu Lengkap (X Menu)&quot;**.
+- Seluruh menu akan muncul dengan **animasi terjun ke bawah (*smooth cascading waterfall animation*)**.
+
+### 2.5 Keranjang Belanja &amp; Integrasi Pesan WhatsApp
+1. Pada menu yang diinginkan, tentukan jumlah porsi (sesuai batas minimal order) lalu klik tombol **+ Keranjang**.
+2. Buka keranjang belanja di pojok kanan atas untuk melihat ringkasan item, subtotal harga, dan estimasi uang muka (DP).
+3. Isi formulir pemesanan:
+   - Nama Pemesan
+   - Nomor WhatsApp
+   - Tanggal &amp; Jam Acara
+   - Alamat Pengiriman Acara
+   - Catatan Khusus (opsional)
+4. Klik tombol **Pesan via WhatsApp Resmi**. Sistem akan otomatis memformat pesan WhatsApp rapi dan mengarahkan langsung ke nomor admin katering.
+
+### 2.6 Galeri Interaktif &amp; Testimoni
+- **Galeri Foto Efek Fokus Blur**: Foto galeri tampil dengan efek *soft blur* yang estetik. Ketika kursor mouse diarahkan (*hover*) ke foto, gambar akan menjadi tajam dan jelas seketika.
+- **Carousel Testimoni Otomatis**: Menampilkan 10 ulasan pelanggan terpilih yang berganti secara halus setiap **3,5 detik** sekali.
+
+---
+
+## 3. PANDUAN ADMINISTRATOR (ADMIN BACKEND PORTAL)
+
+### 3.1 Akses Masuk &amp; Login Admin
+1. Buka tautan `/login` (misal: `http://127.0.0.1:8000/login`).
+2. Masukkan kredensial:
+   - **Email Login**: `admin@cateringnusantara.com` (atau email akun admin Anda)
+   - **Kata Sandi**: Kata sandi Anda
+3. Centang opsi *&quot;Ingat Saya&quot;* jika ingin sesi tetap tersimpan.
+4. Klik **Masuk ke Dashboard**.
+
+### 3.2 Dashboard Pengelola
+Halaman dashboard (`/admin/dashboard`) menyajikan:
+- **Kartu Sambutan Admin**: Menyediakan tombol aksi cepat *+ Tambah Menu Baru* dan *Kelola Kategori*.
+- **4 Kartu Statistik**:
+  1. *Total Menu Aktif*
+  2. *Menu Favorit (Best Seller)*
+  3. *Rata-rata Harga / Pax*
+  4. *Kategori Terdaftar*
+- **Pencarian Instan (*Real-time Search*)**: Ketik nama menu pada kotak pencarian untuk menemukan menu dalam hitungan milidetik.
+- **Filter Tab Cepat**: Saring produk berdasarkan kategori atau kasta menu langsung di dashboard.
+
+### 3.3 Manajemen Paket Menu
+#### A. Menambah Menu Baru (`/admin/products/create`):
+1. Klik tombol **Tambah Menu Baru** pada navbar atau dashboard.
+2. Isi kolom formulir:
+   - **Nama Paket Menu**: Misal *Nasi Box Ayam Bakar Madu Spesial*.
+   - **Kasta / Tier**: Pilih Silver, Gold, atau Premium.
+   - **Kategori Paket**: Pilih Nasi Box, Prasmanan, dll.
+   - **Kategori Acara**: Kantor, Pernikahan, Ulang Tahun, Syukuran, atau Umum.
+   - **Harga per Porsi**: Masukkan nominal angka (format ribuan terisi otomatis).
+   - **Minimal Order**: Jumlah minimal pembelian (misal: 20 porsi).
+   - **Jenis Kemasan**: Misal *Box Kertas Food Grade Tebal*.
+   - **Menu Utama**: Rincian lauk dan masakan lengkap.
+   - **Termasuk Pelengkap**: Nasi, air mineral, buah, kerupuk.
+   - **Deskripsi Singkat**: Catatan keunggulan bumbu atau penyajian.
+   - **Upload Foto**: Pilih foto hidangan (JPG/PNG/WEBP, maksimal 10MB).
+   - **Opsi Checklist**: Tandai *Best Seller* atau *Status Aktif*.
+3. Klik **Simpan Paket Menu**.
+
+#### B. Mengubah / Mengedit Menu (`/admin/products/{id}/edit`):
+1. Pada kartu menu di dashboard, klik tombol **Edit Menu**.
+2. Lakukan perubahan data atau ganti foto jika diperlukan.
+3. Klik **Perbarui Paket Menu**.
+
+#### C. Menghapus Menu:
+1. Klik tombol **Hapus** pada kartu menu yang bersangkutan.
+2. Konfirmasi dialog pop-up untuk menghapus menu secara permanen dari katalog.
+
+### 3.4 Fitur Format Otomatis Ribuan Rupiah
+- Saat admin mengetik angka harga pada kolom formulir (misal `45000`), sistem secara cerdas langsung memformat input menjadi `45.000` (atau `1.500.000` untuk nominal jutaan).
+- Di sisi server, sistem secara otomatis membersihkan tanda titik/koma sehingga data tersimpan aman dan akurat dalam database.
+
+### 3.5 Manajemen Kategori Menu (`/admin/categories`)
+1. Akses menu **Kelola Kategori** dari navigasi atas.
+2. **Tambah Kategori**: Masukkan nama kategori baru (misal *Hampers Hari Raya*) pada form sebelah kiri, lalu klik *Simpan Kategori*.
+3. **Lihat &amp; Hapus Kategori**: Daftar kategori tampil pada tabel sebelah kanan dengan tombol hapus berikon SVG.
+4. Terdapat tombol **Kembali ke Dashboard** di bagian atas untuk kembali kapan saja.
+
+### 3.6 Pengaturan Profil &amp; Kata Sandi Admin (`/profile`)
+1. Klik menu dropdown profil di pojok kanan atas navbar -&gt; pilih **Edit Profil Saya**.
+2. **Ubah Data Profil**: Perbarui Nama Lengkap Admin atau Alamat Email -&gt; klik *Simpan Perubahan*.
+3. **Ubah Kata Sandi**: Masukkan kata sandi saat ini, kata sandi baru, dan konfirmasi kata sandi baru -&gt; klik *Simpan Kata Sandi Baru*.
+4. **Hapus Akun**: Tersedia opsi hapus akun dengan konfirmasi kata sandi jika pengelola ingin menghapus akses akun.
+
+### 3.7 Navigasi Bolak-Balik &amp; Keamanan Sesi Logout
+- **Mode Pratinjau (*Live Preview*)**: Admin dapat mengklik tombol **&quot;Lihat Website&quot;** kapan saja untuk mengecek tampilan katalog customer tanpa khawatir sesi admin tertutup.
+- **Tombol Kembali Praktis**: Saat berada di landing page customer dalam keadaan login, tersedia tombol **&quot;Dashboard Admin&quot;** di navigasi atas dan tombol mengambang di pojok kiri bawah untuk kembali ke panel admin dengan 1 klik.
+- **Keamanan Anti-Back History**: Setelah admin menekan **Keluar (Log Out)**, seluruh sesi langsung dihapus dan browser dicegah menampilkan histori dashboard jika tombol *Back* ditekan.
+
+---
+
+## 4. PANDUAN INSTALASI &amp; MENJALANKAN APLIKASI
+
+Bagi staf teknis atau developer yang ingin menjalankan aplikasi secara lokal:
+
+### Prasyarat Sistem:
+- PHP &gt;= 8.2 (dengan ekstensi `pdo_mysql`, `mbstring`, `fileinfo`, `gd`)
+- MySQL atau MariaDB (tersedia di Laragon / XAMPP)
+- Composer
+- Node.js (v18+) &amp; NPM
+
+### Langkah Menjalankan:
+1. Buka terminal pada folder proyek `c:/laragon/www/catering_nusantara`.
+2. Salin environment &amp; atur konfigurasi database di file `.env`:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=catering_nusantara
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+3. Jalankan migrasi database &amp; seeder:
+   ```bash
+   php artisan migrate
+   ```
+4. Pastikan symlink folder penyimpanan foto telah aktif:
+   ```bash
+   php artisan storage:link
+   ```
+5. Kompilasi aset frontend:
+   ```bash
+   npm run build
+   ```
+6. Jalankan server lokal:
+   ```bash
+   php artisan serve
+   ```
+7. Buka browser pada alamat: [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+---
+
+## 5. TANYA JAWAB (FAQ) &amp; BANTUAN TEKNIS
+
+**Q1: Bagaimana cara mengganti nomor WhatsApp tujuan pemesanan?**
+&gt; Nomor WhatsApp dapat diubah langsung melalui konfigurasi nomor WhatsApp di file `welcome.blade.php`.
+
+**Q2: Mengapa foto hidangan yang diunggah tidak muncul?**
+&gt; Pastikan perintah `php artisan storage:link` telah dijalankan di terminal agar folder `storage/app/public` terhubung ke `public/storage`.
+
+**Q3: Apakah foto dengan ukuran besar (di atas 2MB) bisa diunggah?**
+&gt; Ya, batas maksimal upload file telah ditingkatkan hingga **10MB (10.240 KB)** dengan format JPG, PNG, dan WEBP.
+
+---
+
+&gt; [!NOTE]
+&gt; Dokumentasi ini disusun secara resmi oleh **Kelompok 3** (**Glenn Marcel**, **Keyza Maulidya Putri Sandra**, **Veer Sadzwan Al Amudi**) sebagai panduan operasional aplikasi Catering Nusantara.
+</pre></body></html>

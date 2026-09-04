@@ -19,8 +19,9 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // Panggil Seeder Produk
+        // Panggil Seeder Kategori & Produk
         $this->call([
+            CategorySeeder::class,
             ProductSeeder::class,
         ]);
     }

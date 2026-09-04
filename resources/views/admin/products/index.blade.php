@@ -108,8 +108,8 @@
                         <div>
                             {{-- Foto Produk --}}
                             <div class="relative h-48 rounded-2xl overflow-hidden bg-neutral-100">
-                                @if($product->image)
-                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                                @if($product->image_url || $product->image)
+                                    <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='/images/PaketGoldAyamBakar.png';">
                                 @else
                                     <div class="w-full h-full flex items-center justify-center text-neutral-400 text-xs font-medium">
                                         Tidak Ada Foto

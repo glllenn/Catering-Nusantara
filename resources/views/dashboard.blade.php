@@ -65,61 +65,61 @@
                 </div>
             </div>
 
-            {{-- 2. RINGKASAN STATISTIK RINGKAS (4 CARDS) --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {{-- 2. RINGKASAN STATISTIK RINGKAS (4 CARDS: 2 COLUMNS ON MOBILE) --}}
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
                 {{-- Card 1: Total Menu Aktif --}}
-                <div class="bg-white p-5 rounded-3xl border border-neutral-200/80 shadow-xs flex items-center justify-between">
+                <div class="bg-white p-4 sm:p-5 rounded-3xl border border-neutral-200/80 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
-                        <p class="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">TOTAL MENU AKTIF</p>
-                        <h4 class="text-2xl font-black text-neutral-900 mt-1">{{ $totalProducts ?? count($products) }}</h4>
-                        <p class="text-[11px] text-neutral-500 mt-0.5">Paket siap dipesan</p>
+                        <p class="text-[10px] sm:text-[11px] font-bold text-neutral-400 uppercase tracking-wider">TOTAL MENU</p>
+                        <h4 class="text-xl sm:text-2xl font-black text-neutral-900 mt-0.5 sm:mt-1">{{ $totalProducts ?? count($products) }}</h4>
+                        <p class="text-[10px] sm:text-[11px] text-neutral-500 mt-0.5">Paket aktif</p>
                     </div>
-                    <div class="w-12 h-12 rounded-2xl bg-[#faf4ea] text-[#a4864b] flex items-center justify-center shrink-0">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-[#faf4ea] text-[#a4864b] flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                         </svg>
                     </div>
                 </div>
 
                 {{-- Card 2: Menu Best Seller --}}
-                <div class="bg-white p-5 rounded-3xl border border-neutral-200/80 shadow-xs flex items-center justify-between">
+                <div class="bg-white p-4 sm:p-5 rounded-3xl border border-neutral-200/80 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
-                        <p class="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">MENU FAVORIT</p>
-                        <h4 class="text-2xl font-black text-neutral-900 mt-1">{{ $bestsellerCount ?? $products->where('is_bestseller', true)->count() }}</h4>
-                        <p class="text-[11px] text-neutral-500 mt-0.5">Pilihan Best Seller</p>
+                        <p class="text-[10px] sm:text-[11px] font-bold text-neutral-400 uppercase tracking-wider">FAVORIT</p>
+                        <h4 class="text-xl sm:text-2xl font-black text-neutral-900 mt-0.5 sm:mt-1">{{ $bestsellerCount ?? $products->where('is_bestseller', true)->count() }}</h4>
+                        <p class="text-[10px] sm:text-[11px] text-neutral-500 mt-0.5">Best Seller</p>
                     </div>
-                    <div class="w-12 h-12 rounded-2xl bg-[#faf4ea] text-[#a4864b] flex items-center justify-center shrink-0">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-[#faf4ea] text-[#a4864b] flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
                         </svg>
                     </div>
                 </div>
 
                 {{-- Card 3: Rata-Rata Harga / Pax --}}
-                <div class="bg-white p-5 rounded-3xl border border-neutral-200/80 shadow-xs flex items-center justify-between">
+                <div class="bg-white p-4 sm:p-5 rounded-3xl border border-neutral-200/80 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
-                        <p class="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">RATA-RATA HARGA</p>
-                        <h4 class="text-2xl font-black text-neutral-900 mt-1">
+                        <p class="text-[10px] sm:text-[11px] font-bold text-neutral-400 uppercase tracking-wider">RATA-RATA</p>
+                        <h4 class="text-base sm:text-2xl font-black text-neutral-900 mt-0.5 sm:mt-1 truncate max-w-[120px]">
                             Rp {{ number_format(($products->avg('price') ?? 0), 0, ',', '.') }}
                         </h4>
-                        <p class="text-[11px] text-neutral-500 mt-0.5">Estimasi per porsi</p>
+                        <p class="text-[10px] sm:text-[11px] text-neutral-500 mt-0.5">Per porsi</p>
                     </div>
-                    <div class="w-12 h-12 rounded-2xl bg-[#faf4ea] text-[#a4864b] flex items-center justify-center shrink-0">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-[#faf4ea] text-[#a4864b] flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
                 </div>
 
                 {{-- Card 4: Kategori Paket --}}
-                <div class="bg-white p-5 rounded-3xl border border-neutral-200/80 shadow-xs flex items-center justify-between">
+                <div class="bg-white p-4 sm:p-5 rounded-3xl border border-neutral-200/80 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
-                        <p class="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">KATEGORI MENU</p>
-                        <h4 class="text-2xl font-black text-neutral-900 mt-1">{{ $totalCategories ?? (isset($categories) ? count($categories) : 0) }}</h4>
-                        <p class="text-[11px] text-neutral-500 mt-0.5">Kategori aktif terdaftar</p>
+                        <p class="text-[10px] sm:text-[11px] font-bold text-neutral-400 uppercase tracking-wider">KATEGORI</p>
+                        <h4 class="text-xl sm:text-2xl font-black text-neutral-900 mt-0.5 sm:mt-1">{{ $totalCategories ?? (isset($categories) ? count($categories) : 0) }}</h4>
+                        <p class="text-[10px] sm:text-[11px] text-neutral-500 mt-0.5">Kategori aktif</p>
                     </div>
-                    <div class="w-12 h-12 rounded-2xl bg-neutral-100 text-neutral-600 flex items-center justify-center shrink-0">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-neutral-100 text-neutral-600 flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                         </svg>
                     </div>
@@ -153,18 +153,18 @@
                 {{-- Filter Tabs Category & Tier --}}
                 <div class="space-y-2.5 pt-3 border-t border-neutral-100">
                     {{-- Kategori --}}
-                    <div class="flex flex-wrap items-center gap-2">
-                        <span class="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mr-1">Kategori:</span>
+                    <div class="flex flex-wrap items-center gap-2 overflow-x-auto pb-1">
+                        <span class="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mr-1 shrink-0">Kategori:</span>
                         <button type="button" @click="activeTab = 'all_category'" 
                             :class="activeTab === 'all_category' ? 'bg-[#1a120b] text-white shadow-xs' : 'bg-[#fdfbf7] text-neutral-600 hover:text-neutral-900 border border-neutral-200'"
-                            class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer">
+                            class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer shrink-0">
                             Semua Kategori
                         </button>
                         @if(isset($categories))
                             @foreach($categories as $cat)
                                 <button type="button" @click="activeTab = '{{ Str::slug($cat->name) }}'" 
                                     :class="activeTab === '{{ Str::slug($cat->name) }}' ? 'bg-[#1a120b] text-white shadow-xs' : 'bg-[#fdfbf7] text-neutral-600 hover:text-neutral-900 border border-neutral-200'"
-                                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer">
+                                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer shrink-0">
                                     {{ $cat->name }}
                                 </button>
                             @endforeach
@@ -172,26 +172,26 @@
                     </div>
 
                     {{-- Kasta / Tier --}}
-                    <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-neutral-100">
-                        <span class="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mr-1">Kasta Menu:</span>
+                    <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-neutral-100 overflow-x-auto pb-1">
+                        <span class="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mr-1 shrink-0">Kasta Menu:</span>
                         <button type="button" @click="activeTier = 'all_tier'" 
                             :class="activeTier === 'all_tier' ? 'bg-[#a4864b] text-white shadow-xs' : 'bg-[#fdfbf7] text-neutral-600 hover:text-neutral-900 border border-neutral-200'"
-                            class="px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer">
+                            class="px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer shrink-0">
                             Semua Kasta
                         </button>
                         <button type="button" @click="activeTier = 'silver'" 
                             :class="activeTier === 'silver' ? 'bg-[#a4864b] text-white shadow-xs' : 'bg-[#fdfbf7] text-neutral-600 hover:text-neutral-900 border border-neutral-200'"
-                            class="px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer">
+                            class="px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer shrink-0">
                             Silver
                         </button>
                         <button type="button" @click="activeTier = 'gold'" 
                             :class="activeTier === 'gold' ? 'bg-[#a4864b] text-white shadow-xs' : 'bg-[#fdfbf7] text-neutral-600 hover:text-neutral-900 border border-neutral-200'"
-                            class="px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer">
+                            class="px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer shrink-0">
                             Gold
                         </button>
                         <button type="button" @click="activeTier = 'premium'" 
                             :class="activeTier === 'premium' ? 'bg-[#a4864b] text-white shadow-xs' : 'bg-[#fdfbf7] text-neutral-600 hover:text-neutral-900 border border-neutral-200'"
-                            class="px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer">
+                            class="px-3 py-1 rounded-full text-xs font-semibold transition cursor-pointer shrink-0">
                             Premium
                         </button>
                     </div>
@@ -217,8 +217,10 @@
                         <div>
                             {{-- Foto Produk --}}
                             <div class="relative h-48 rounded-2xl overflow-hidden bg-neutral-100">
-                                @if($product->image)
-                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                                @if($product->image_url || $product->image)
+                                    <img src="{{ $product->image_url ?? asset('storage/' . $product->image) }}" alt="{{ $product->name }}" 
+                                        class="w-full h-full object-cover"
+                                        onerror="this.onerror=null; this.src='/images/PaketGoldAyamBakar.png';">
                                 @else
                                     <div class="w-full h-full flex items-center justify-center text-neutral-400 text-xs font-medium">
                                         Tidak Ada Foto

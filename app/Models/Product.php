@@ -52,14 +52,31 @@ class Product extends Model
     ];
 
     /**
-     * Accessor untuk mendapatkan URL lengkap gambar produk (Sangat berguna untuk React FE)
+     * Accessor untuk mendapatkan URL lengkap gambar produk dengan fallback otomatis
      */
     public function getImageUrlAttribute(): ?string
     {
-        if ($this->image && Storage::disk('public')->exists($this->image)) {
+        if (!$this->image) {
+            return null;
+        }
+
+        // 1. Cek di storage/app/public
+        if (Storage::disk('public')->exists($this->image)) {
             return asset('storage/' . $this->image);
         }
 
-        return null; // Atau return URL gambar placeholder default jika tidak ada gambar
+        // 2. Cek di public/images/products/ (nama file saja)
+        $filename = basename($this->image);
+        if (file_exists(public_path('images/products/' . $filename))) {
+            return asset('images/products/' . $filename);
+        }
+
+        // 3. Cek di public/images/
+        if (file_exists(public_path('images/' . $filename))) {
+            return asset('images/' . $filename);
+        }
+
+        // 4. Default URL ke storage
+        return asset('storage/' . $this->image);
     }
 }

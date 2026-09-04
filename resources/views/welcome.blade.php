@@ -60,7 +60,7 @@
     </style>
 </head>
 
-<body x-data
+<body x-data="{ mobileNavOpen: false }"
     class="font-['Plus_Jakarta_Sans',sans-serif] bg-[#fdfbf7] text-neutral-800 antialiased selection:bg-[#a4864b] selection:text-white overflow-x-hidden">
 
     <!-- ========================================== -->
@@ -90,28 +90,28 @@
     <!-- 🧭 2. NAVBAR (ORIGINAL HEADER & ISLAND)    -->
     <!-- ========================================== -->
     <header id="site-header"
-        class="fixed top-0 left-0 w-full z-40 transition-all duration-500 py-5 sm:py-6 px-6 sm:px-10 lg:px-16">
+        class="fixed top-0 left-0 w-full z-40 transition-all duration-500 py-5 sm:py-6 px-4 sm:px-10 lg:px-16">
         
         <div id="header-inner"
             class="w-full max-w-7xl mx-auto flex items-center justify-between transition-all duration-500">
             
             {{-- Logo & Nama Usaha (Kiri) --}}
-            <a href="#beranda" class="flex items-center gap-3.5 shrink-0 group">
+            <a href="#beranda" class="flex items-center gap-3 shrink-0 group">
                 <img src="{{ asset('images/logo.png') }}" alt="Catering Nusantara Logo"
-                    class="h-11 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                    class="h-9 sm:h-11 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                     onerror="this.onerror=null; this.src='/image/logo.png';" />
                 <div class="flex flex-col text-left">
-                    <span class="font-['Perandory','Playfair_Display',serif] text-lg sm:text-xl lg:text-2xl font-bold tracking-wider text-white transition-colors duration-300" id="nav-brand-title">
+                    <span class="font-['Perandory','Playfair_Display',serif] text-base sm:text-xl lg:text-2xl font-bold tracking-wider text-white transition-colors duration-300" id="nav-brand-title">
                         CATERING NUSANTARA
                     </span>
-                    <span class="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#e4c990] font-medium transition-colors duration-300" id="nav-brand-sub">
+                    <span class="text-[9px] sm:text-[11px] uppercase tracking-[0.25em] text-[#e4c990] font-medium transition-colors duration-300" id="nav-brand-sub">
                         Cita Rasa Autentik
                     </span>
                 </div>
             </a>
 
-            {{-- Link Navigasi Bahasa Indonesia (Font Size Diperbesar & Jelas) --}}
-            <nav id="nav-menu" class="hidden md:flex items-center gap-7 lg:gap-9 text-sm lg:text-[15px] font-semibold tracking-wide">
+            {{-- Link Navigasi Desktop Bahasa Indonesia --}}
+            <nav id="nav-menu" class="hidden md:flex items-center gap-6 lg:gap-9 text-sm lg:text-[15px] font-semibold tracking-wide">
                 <a href="#beranda" class="nav-item text-white/90 hover:text-white transition-colors duration-200">
                     Beranda
                 </a>
@@ -132,8 +132,8 @@
                 </a>
             </nav>
 
-            {{-- Tombol Keranjang Belanja & Admin Panel (Kanan) --}}
-            <div class="flex items-center gap-3">
+            {{-- Tombol Keranjang Belanja, Admin & Hamburger (Kanan) --}}
+            <div class="flex items-center gap-2 sm:gap-3">
                 @auth
                     <a href="{{ route('admin.dashboard') }}" 
                         class="hidden sm:inline-flex items-center gap-2 bg-[#1a120b]/90 hover:bg-[#1a120b] border border-[#a4864b]/40 text-white font-bold py-2.5 px-4 rounded-full text-xs transition shadow-lg backdrop-blur-sm">
@@ -142,10 +142,11 @@
                     </a>
                 @endauth
 
+                {{-- Tombol Keranjang --}}
                 <button type="button" @click="$store.cart.toggle()" id="nav-cart-btn"
-                    class="relative p-2.5 sm:p-3 rounded-full text-white hover:bg-white/15 transition-all flex items-center justify-center cursor-pointer border border-white/20"
+                    class="relative p-2 sm:p-3 rounded-full text-white hover:bg-white/15 transition-all flex items-center justify-center cursor-pointer border border-white/20"
                     title="Buka Keranjang">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
                             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
@@ -155,10 +156,77 @@
                         style="display: none;">
                     </span>
                 </button>
+
+                {{-- Tombol Hamburger Menu (Khusus Mobile) --}}
+                <button type="button" 
+                    @click="mobileNavOpen = !mobileNavOpen" 
+                    id="nav-hamburger-btn"
+                    class="md:hidden relative p-2 sm:p-2.5 rounded-full text-white hover:bg-white/15 transition-all flex items-center justify-center cursor-pointer border border-white/20"
+                    aria-label="Menu Navigasi">
+                    <svg x-show="!mobileNavOpen" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg x-show="mobileNavOpen" class="w-5 h-5 sm:w-6 sm:h-6 text-[#e4c990]" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
             </div>
 
         </div>
     </header>
+
+    <!-- ========================================================= -->
+    <!-- 📱 2.1 MOBILE NAVIGATION DRAWER (HAMBURGER MODAL)         -->
+    <!-- ========================================================= -->
+    <div x-show="mobileNavOpen" 
+        x-transition:enter="transition ease-out duration-300 transform"
+        x-transition:enter-start="-translate-y-full opacity-0"
+        x-transition:enter-end="translate-y-0 opacity-100"
+        x-transition:leave="transition ease-in duration-200 transform"
+        x-transition:leave-start="translate-y-0 opacity-100"
+        x-transition:leave-end="-translate-y-full opacity-0"
+        @click.away="mobileNavOpen = false"
+        class="fixed inset-x-0 top-0 z-35 pt-24 pb-8 px-6 bg-[#0d0805]/95 backdrop-blur-2xl border-b border-[#a4864b]/30 shadow-2xl md:hidden text-center"
+        style="display: none;">
+        
+        <div class="max-w-sm mx-auto flex flex-col gap-1.5 pt-2">
+            <a href="#beranda" @click="mobileNavOpen = false" 
+                class="py-2.5 px-4 rounded-xl text-sm font-bold text-white/90 hover:text-white hover:bg-white/10 transition">
+                Beranda
+            </a>
+            <a href="#tentang-kami" @click="mobileNavOpen = false" 
+                class="py-2.5 px-4 rounded-xl text-sm font-bold text-white/90 hover:text-white hover:bg-white/10 transition">
+                Tentang Kami
+            </a>
+            <a href="#paket" @click="mobileNavOpen = false" 
+                class="py-2.5 px-4 rounded-xl text-sm font-bold text-white/90 hover:text-white hover:bg-white/10 transition">
+                Paket Menu
+            </a>
+            <a href="#galeri" @click="mobileNavOpen = false" 
+                class="py-2.5 px-4 rounded-xl text-sm font-bold text-white/90 hover:text-white hover:bg-white/10 transition">
+                Galeri Portofolio
+            </a>
+            <a href="#testimoni" @click="mobileNavOpen = false" 
+                class="py-2.5 px-4 rounded-xl text-sm font-bold text-white/90 hover:text-white hover:bg-white/10 transition">
+                Testimoni Pelanggan
+            </a>
+            <a href="#cara_pemesanan" @click="mobileNavOpen = false" 
+                class="py-2.5 px-4 rounded-xl text-sm font-bold text-white/90 hover:text-white hover:bg-white/10 transition">
+                Cara Order
+            </a>
+
+            @auth
+                <div class="pt-3 border-t border-white/10 mt-2">
+                    <a href="{{ route('admin.dashboard') }}" @click="mobileNavOpen = false" 
+                        class="w-full py-3 px-5 rounded-xl bg-[#a4864b] hover:bg-[#8f723c] text-white text-xs font-bold transition shadow-lg flex items-center justify-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>
+                        <span>Buka Panel Dashboard Admin</span>
+                    </a>
+                </div>
+            @endauth
+        </div>
+    </div>
+
 
     <!-- ========================================================= -->
     <!-- 👑 3. SECTION BERANDA DENGAN FILMSTRIP BERGERAK (HERO)    -->
@@ -584,9 +652,10 @@
                         class="bg-[#fdfbf7] rounded-3xl overflow-hidden border border-neutral-200/80 hover:border-[#a4864b]/60 transition-all duration-300 cursor-pointer group flex flex-col p-4 reveal-on-scroll">
                         
                         <div class="relative aspect-square w-full rounded-2xl overflow-hidden bg-neutral-100">
-                            @if($product->image)
-                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
-                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            @if($product->image_url || $product->image)
+                                <img src="{{ $product->image_url ?? asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    onerror="this.onerror=null; this.src='/images/PaketGoldAyamBakar.png';">
                             @else
                                 <div class="w-full h-full flex items-center justify-center text-neutral-400 text-xs font-medium bg-neutral-100">
                                     Foto Menu
@@ -652,7 +721,7 @@
 
             <div class="absolute inset-0" @click="closeModal()"></div>
 
-            <div class="relative w-full max-w-2xl bg-white rounded-3xl overflow-hidden z-10 my-auto border border-neutral-200"
+            <div class="relative w-full max-w-2xl bg-white rounded-3xl overflow-hidden z-10 my-auto border border-neutral-200 max-h-[90vh] overflow-y-auto"
                 @click.stop>
 
                 <button @click="closeModal()"
@@ -664,9 +733,10 @@
                     <div class="p-6 sm:p-8 space-y-6">
                         <div class="flex items-start gap-4">
                             <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-neutral-100 shrink-0">
-                                <img :src="selectedProduct.image ? '/storage/' + selectedProduct.image : '/images/herobaru.jpg'"
+                                <img :src="selectedProduct.image_url ? selectedProduct.image_url : (selectedProduct.image ? '/storage/' + selectedProduct.image : '/images/herobaru.jpg')"
                                     :alt="selectedProduct.name" 
-                                    class="w-full h-full object-cover">
+                                    class="w-full h-full object-cover"
+                                    onerror="this.onerror=null; this.src='/images/herobaru.jpg';">
                             </div>
                             <div class="space-y-1">
                                 <span class="text-xs font-bold uppercase tracking-wider text-[#a4864b]" x-text="selectedProduct.package_category || 'Paket Menu'"></span>
@@ -1373,6 +1443,7 @@
             const brandSub = document.getElementById('nav-brand-sub');
             const navItems = document.querySelectorAll('.nav-item');
             const cartBtn = document.getElementById('nav-cart-btn');
+            const hamburgerBtn = document.getElementById('nav-hamburger-btn');
             const hero = document.getElementById('beranda');
 
             function updateNavbar() {
@@ -1385,11 +1456,11 @@
                     header.classList.add('py-3');
                     inner.classList.add(
                         'max-w-4xl', 'bg-white/95', 'backdrop-blur-md', 'rounded-full', 
-                        'px-6', 'py-2.5', 'border', 'border-neutral-200/90', 'shadow-lg'
+                        'px-4', 'sm:px-6', 'py-2', 'sm:py-2.5', 'border', 'border-neutral-200/90', 'shadow-lg'
                     );
                     if (brandTitle) {
                         brandTitle.classList.remove('text-white');
-                        brandTitle.classList.add('text-neutral-900', 'text-base');
+                        brandTitle.classList.add('text-neutral-900', 'text-sm', 'sm:text-base');
                     }
                     if (brandSub) brandSub.classList.add('hidden');
                     navItems.forEach(item => {
@@ -1398,18 +1469,22 @@
                     });
                     if (cartBtn) {
                         cartBtn.classList.remove('text-white', 'hover:bg-white/15', 'border-white/20');
-                        cartBtn.classList.add('text-neutral-800', 'hover:bg-neutral-100', 'border-transparent');
+                        cartBtn.classList.add('text-neutral-800', 'hover:bg-neutral-100', 'border-neutral-200');
+                    }
+                    if (hamburgerBtn) {
+                        hamburgerBtn.classList.remove('text-white', 'hover:bg-white/15', 'border-white/20');
+                        hamburgerBtn.classList.add('text-neutral-800', 'hover:bg-neutral-100', 'border-neutral-200');
                     }
                 } else {
                     header.classList.add('py-5', 'sm:py-6');
                     header.classList.remove('py-3');
                     inner.classList.remove(
                         'max-w-4xl', 'bg-white/95', 'backdrop-blur-md', 'rounded-full', 
-                        'px-6', 'py-2.5', 'border', 'border-neutral-200/90', 'shadow-lg'
+                        'px-4', 'sm:px-6', 'py-2', 'sm:py-2.5', 'border', 'border-neutral-200/90', 'shadow-lg'
                     );
                     if (brandTitle) {
                         brandTitle.classList.add('text-white');
-                        brandTitle.classList.remove('text-neutral-900', 'text-base');
+                        brandTitle.classList.remove('text-neutral-900', 'text-sm', 'sm:text-base');
                     }
                     if (brandSub) brandSub.classList.remove('hidden');
                     navItems.forEach(item => {
@@ -1418,7 +1493,11 @@
                     });
                     if (cartBtn) {
                         cartBtn.classList.add('text-white', 'hover:bg-white/15', 'border-white/20');
-                        cartBtn.classList.remove('text-neutral-800', 'hover:bg-neutral-100', 'border-transparent');
+                        cartBtn.classList.remove('text-neutral-800', 'hover:bg-neutral-100', 'border-neutral-200');
+                    }
+                    if (hamburgerBtn) {
+                        hamburgerBtn.classList.add('text-white', 'hover:bg-white/15', 'border-white/20');
+                        hamburgerBtn.classList.remove('text-neutral-800', 'hover:bg-neutral-100', 'border-neutral-200');
                     }
                 }
             }

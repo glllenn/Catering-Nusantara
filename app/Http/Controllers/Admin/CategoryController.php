@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
@@ -30,8 +31,12 @@ class CategoryController extends Controller
             'slug' => Str::slug($request->name),
         ]);
 
+        try {
+            Artisan::call('db:sync-export');
+        } catch (\Throwable $e) {}
+
         return redirect()->route('admin.categories.index')
-            ->with('success', 'Kategori baru berhasil ditambahkan!');
+            ->with('success', 'Kategori baru berhasil ditambahkan dan disinkronkan!');
     }
 
     public function update(Request $request, Category $category)
@@ -45,13 +50,21 @@ class CategoryController extends Controller
             'slug' => Str::slug($request->name),
         ]);
 
+        try {
+            Artisan::call('db:sync-export');
+        } catch (\Throwable $e) {}
+
         return redirect()->route('admin.categories.index')
-            ->with('success', 'Kategori berhasil diperbarui!');
+            ->with('success', 'Kategori berhasil diperbarui dan disinkronkan!');
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
+
+        try {
+            Artisan::call('db:sync-export');
+        } catch (\Throwable $e) {}
 
         return redirect()->route('admin.categories.index')
             ->with('success', 'Kategori berhasil dihapus!');

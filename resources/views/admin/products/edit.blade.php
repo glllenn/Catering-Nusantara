@@ -235,9 +235,9 @@
                                     Ganti Foto Paket Hidangan (Opsional)
                                 </label>
                                 
-                                @if($product->image)
+                                @if($product->image_url || $product->image)
                                     <div class="my-3 flex items-center gap-4 bg-[#fdfbf7] p-3 rounded-2xl border border-neutral-200 max-w-md">
-                                        <img src="{{ asset('storage/' . $product->image) }}" alt="Preview" class="w-20 h-20 object-cover rounded-xl border border-neutral-200 shadow-2xs">
+                                        <img src="{{ $product->image_url }}" alt="Preview" class="w-20 h-20 object-cover rounded-xl border border-neutral-200 shadow-2xs" onerror="this.onerror=null; this.src='/images/PaketGoldAyamBakar.png';">
                                         <div class="text-xs space-y-0.5">
                                             <p class="font-bold text-neutral-800">Foto Saat Ini</p>
                                             <p class="text-neutral-400">Pilih file baru di bawah ini hanya jika ingin mengganti foto saat ini.</p>
