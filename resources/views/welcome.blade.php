@@ -823,9 +823,9 @@
                     $galleryFilters = [
                         'semua' => 'Semua Foto',
                         'wedding' => 'Prasmanan & Wedding',
-                        'nasibox' => 'Paket Nasi Box',
+                        'nasibox' => 'Paket Nasi Box & Bento',
                         'tumpeng' => 'Tumpeng Nusantara',
-                        'pasundaan' => 'Menu Pasundaan & Kebuli'
+                        'pasundaan' => 'Menu Pasundaan & Tradisional'
                     ];
                 @endphp
 
@@ -862,18 +862,33 @@
                         </div>
                     </div>
 
-                    {{-- Foto 2: Portrait (Nasi Box) --}}
+                    {{-- Foto 2: Portrait (makananbaru - Bento Box Preparation) --}}
                     <div x-show="activeTab === 'semua' || activeTab === 'nasibox'"
                         x-transition:enter="transition ease-out duration-300 transform"
                         x-transition:enter-start="opacity-0 scale-95"
                         x-transition:enter-end="opacity-100 scale-100"
                         class="group relative aspect-[3/4] w-full rounded-3xl overflow-hidden bg-neutral-900 border border-neutral-200/80 shadow-md cursor-pointer reveal-on-scroll delay-100">
+                        <img src="{{ asset('images/makananbaru.jpeg') }}" alt="Penyajian Bento Nasi Box"
+                            class="w-full h-full object-cover filter blur-[2.5px] brightness-[0.88] scale-100 group-hover:filter-none group-hover:blur-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-out"
+                            onerror="this.src='/images/products/makananbaru.jpeg';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-[#e4c990]">Nasi Box &amp; Bento</span>
+                            <h4 class="text-white text-base sm:text-lg font-bold">Penyajian Bento Box Higienis &amp; Presisi</h4>
+                        </div>
+                    </div>
+
+                    {{-- Foto 3: Landscape (Nasi Box Packaging) --}}
+                    <div x-show="activeTab === 'semua' || activeTab === 'nasibox'"
+                        x-transition:enter="transition ease-out duration-300 transform"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        class="group relative aspect-[4/3] w-full rounded-3xl overflow-hidden bg-neutral-900 border border-neutral-200/80 shadow-md cursor-pointer reveal-on-scroll delay-150">
                         <img src="{{ asset('images/Box.png') }}" alt="Persiapan Nasi Box"
                             class="w-full h-full object-cover filter blur-[2.5px] brightness-[0.88] scale-100 group-hover:filter-none group-hover:blur-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-out"
                             onerror="this.src='/image/herobaru.jpg';">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
-                            <span class="text-[10px] font-bold uppercase tracking-widest text-[#e4c990]">Nasi Box</span>
-                            <h4 class="text-white text-base sm:text-lg font-bold">Pengemasan Higienis &amp; Tepat Waktu</h4>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-[#e4c990]">Nasi Box Praktis</span>
+                            <h4 class="text-white text-base sm:text-lg font-bold">Pengemasan Rapi &amp; Higienis Siap Kirim</h4>
                         </div>
                     </div>
 
@@ -882,7 +897,7 @@
                 {{-- ==================== KOLOM 2 ==================== --}}
                 <div class="flex flex-col gap-6 lg:gap-8">
                     
-                    {{-- Foto 3: Portrait (Tumpeng) --}}
+                    {{-- Foto 4: Portrait (Tumpeng) --}}
                     <div x-show="activeTab === 'semua' || activeTab === 'tumpeng'"
                         x-transition:enter="transition ease-out duration-300 transform"
                         x-transition:enter-start="opacity-0 scale-95"
@@ -897,12 +912,27 @@
                         </div>
                     </div>
 
-                    {{-- Foto 4: Landscape (Menu Premium) --}}
+                    {{-- Foto 5: Portrait/Square (makanannew - Catering Nusantara Signature Box) --}}
                     <div x-show="activeTab === 'semua' || activeTab === 'nasibox'"
                         x-transition:enter="transition ease-out duration-300 transform"
                         x-transition:enter-start="opacity-0 scale-95"
                         x-transition:enter-end="opacity-100 scale-100"
-                        class="group relative aspect-[4/3] w-full rounded-3xl overflow-hidden bg-neutral-900 border border-neutral-200/80 shadow-md cursor-pointer reveal-on-scroll delay-100">
+                        class="group relative aspect-[3/4] w-full rounded-3xl overflow-hidden bg-neutral-900 border border-neutral-200/80 shadow-md cursor-pointer reveal-on-scroll delay-100">
+                        <img src="{{ asset('images/makanannew.jpeg') }}" alt="Signature Catering Nusantara Box"
+                            class="w-full h-full object-cover filter blur-[2.5px] brightness-[0.88] scale-100 group-hover:filter-none group-hover:blur-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-out"
+                            onerror="this.src='/images/products/makanannew.jpeg';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-[#e4c990]">Signature Box</span>
+                            <h4 class="text-white text-base sm:text-lg font-bold">Paket Nasi Box Spesial Catering Nusantara</h4>
+                        </div>
+                    </div>
+
+                    {{-- Foto 6: Landscape (Menu Premium) --}}
+                    <div x-show="activeTab === 'semua' || activeTab === 'nasibox'"
+                        x-transition:enter="transition ease-out duration-300 transform"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        class="group relative aspect-[4/3] w-full rounded-3xl overflow-hidden bg-neutral-900 border border-neutral-200/80 shadow-md cursor-pointer reveal-on-scroll delay-150">
                         <img src="{{ asset('images/PaketPremiumChickenSalted.png') }}" alt="Salted Egg Chicken"
                             class="w-full h-full object-cover filter blur-[2.5px] brightness-[0.88] scale-100 group-hover:filter-none group-hover:blur-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-out"
                             onerror="this.src='/image/herobaru.jpg';">
@@ -917,7 +947,7 @@
                 {{-- ==================== KOLOM 3 ==================== --}}
                 <div class="flex flex-col gap-6 lg:gap-8">
                     
-                    {{-- Foto 5: Tall Portrait (Pasundaan) --}}
+                    {{-- Foto 7: Tall Portrait (Pasundaan) --}}
                     <div x-show="activeTab === 'semua' || activeTab === 'pasundaan'"
                         x-transition:enter="transition ease-out duration-300 transform"
                         x-transition:enter-start="opacity-0 scale-95"
@@ -932,7 +962,7 @@
                         </div>
                     </div>
 
-                    {{-- Foto 6: Landscape (Paket Gold) --}}
+                    {{-- Foto 8: Landscape (Paket Gold) --}}
                     <div x-show="activeTab === 'semua' || activeTab === 'nasibox'"
                         x-transition:enter="transition ease-out duration-300 transform"
                         x-transition:enter-start="opacity-0 scale-95"
